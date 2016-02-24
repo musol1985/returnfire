@@ -16,7 +16,7 @@ import com.returnfire.server.scenes.LobbyScene;
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.entity.network.core.msg","com.entity.network.core.bean"}, gameName="ReturnFire", version=1)
+@Network(messagesPackage={"com.returnfire.bean"}, gameName="ReturnFire", version=1)
 public class Server  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
@@ -29,6 +29,6 @@ public class Server  extends EntityGame{
 
     @Override
 	public String getPersistPath() {
-		return "/persist/server";
+		return "persist/server";
 	}
 }

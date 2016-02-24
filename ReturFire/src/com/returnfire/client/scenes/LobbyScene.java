@@ -16,6 +16,9 @@ import com.entity.network.core.listeners.LobbyClientMessageListener;
  */
 public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener, NetWorld, NetPlayer>{
 
+
+    
+    
     @Override
     public void onPlayerReady(NetPlayer player) {
         

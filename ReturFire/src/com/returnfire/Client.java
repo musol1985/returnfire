@@ -19,7 +19,7 @@ import com.returnfire.client.scenes.MainScene;
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.entity.network.core.msg","com.entity.network.core.bean"}, gameName="ReturnFire", version=1)
+@Network(messagesPackage={"com.returnfire.bean"}, gameName="ReturnFire", version=1)
 public class Client  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
@@ -33,7 +33,7 @@ public class Client  extends EntityGame{
     
     @Override
 	public String getPersistPath() {
-		return "/persist/client";
+		return "persist/client";
 	}
 
 	@SceneEntity(preLoad=false, singleton=false, first = false)

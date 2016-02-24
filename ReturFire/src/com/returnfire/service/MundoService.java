@@ -32,7 +32,9 @@ public class MundoService extends WorldService<MundoDAO, JugadorDAO, CeldaDAO>{
 
 	@Override
 	public JugadorDAO createNewPlayer(String name) {
-		return null;
+            JugadorDAO jugador=new JugadorDAO();
+            jugador.setId(name);
+            return jugador;
 	}
 
 }

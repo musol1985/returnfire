@@ -37,10 +37,7 @@ public class MainScene extends Scene<Client>{
     }
     
     private boolean showDialog(String msg){
-    	int dialogButton = JOptionPane.YES_NO_OPTION;
-	    JOptionPane.showConfirmDialog (null, msg,"Warning",dialogButton);
-	    
-	    return dialogButton==JOptionPane.YES_OPTION;
+	return JOptionPane.showConfirmDialog (null, msg,"Warning",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
     }
     
 }

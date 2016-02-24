@@ -5,11 +5,12 @@
  */
 package com.returnfire.client.scenes;
 
-import com.entity.network.core.bean.NetPlayer;
 import com.entity.network.core.bean.NetWorld;
 import com.entity.network.core.items.WorldsScene;
 import com.entity.network.core.listeners.WorldsMessageListener;
 import com.returnfire.Client;
+import com.returnfire.bean.JugadorDAO;
+import com.returnfire.bean.MundoDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Edu
  */
-public class CreateScene extends  WorldsScene<WorldsMessageListener, NetWorld, NetPlayer, Client>{
+public class CreateScene extends  WorldsScene<WorldsMessageListener, MundoDAO, JugadorDAO, Client>{
 
     @Override
     public void showLobby() {
@@ -26,6 +27,13 @@ public class CreateScene extends  WorldsScene<WorldsMessageListener, NetWorld, N
                     } catch (Exception ex) {
             Logger.getLogger(CreateScene.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public MundoDAO createWorld() {
+        MundoDAO mundo=new MundoDAO();
+        mundo.setId("MundoPruebas");
+        return mundo;
     }
     
 }
