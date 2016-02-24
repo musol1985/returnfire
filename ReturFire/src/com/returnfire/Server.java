@@ -26,4 +26,9 @@ public class Server  extends EntityGame{
     @SceneEntity(preLoad=false, singleton=false, first = true)
     public LobbyScene lobby;
 
+
+    @Override
+	public String getPersistPath() {
+		return "/persist/server";
+	}
 }

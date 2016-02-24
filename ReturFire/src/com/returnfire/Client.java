@@ -31,7 +31,12 @@ public class Client  extends EntityGame{
 
   
     
-    @SceneEntity(preLoad=false, singleton=false, first = false)
+    @Override
+	public String getPersistPath() {
+		return "/persist/client";
+	}
+
+	@SceneEntity(preLoad=false, singleton=false, first = false)
     public CreateScene create;
 
     @SceneEntity(preLoad=false, singleton=false, first = false)

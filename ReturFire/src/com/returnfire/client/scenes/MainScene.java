@@ -18,21 +18,29 @@ public class MainScene extends Scene<Client>{
 
     @Override
     public void onLoadScene() throws Exception {
-            
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        JOptionPane.showConfirmDialog (null, "Create game?","Warning",dialogButton);
-        
+
         EntityManager.getGame().getNet().setIp("localhost");
         EntityManager.getGame().getNet().setPort(4260);
-
-        if(dialogButton == JOptionPane.YES_OPTION){ 
-            getApp().showScene(getApp().create);
-        }else{
-            getApp().showScene(getApp().lobby);
-        }
         
+        if(isCreateGame()){
+        	getApp().setPath(getApp().getPath()+"/owner");
+        	getApp().showScene(getApp().create);
+        }else{
+        	getApp().setPath(getApp().getPath()+"/joined");
+        	getApp().showScene(getApp().lobby);
+        }
     }
 
   
+    public boolean isCreateGame(){
+        return showDialog("Create game?");	    
+    }
+    
+    private boolean showDialog(String msg){
+    	int dialogButton = JOptionPane.YES_NO_OPTION;
+	    JOptionPane.showConfirmDialog (null, msg,"Warning",dialogButton);
+	    
+	    return dialogButton==JOptionPane.YES_OPTION;
+    }
     
 }
