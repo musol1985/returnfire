@@ -15,8 +15,16 @@ public class MundoService extends WorldService<MundoDAO, JugadorDAO, CeldaDAO>{
 
 
 	@Override
+	public boolean isCellInLimits(Vector2 celldId) {
+		return super.isCellInLimits(celldId);
+	}
+
+
+	/**
+	 * Solo se llama en el server. El cliente NO puede crear una nueva celda
+	 */
+	@Override	
 	public CeldaDAO createNewCell(Vector2 cellId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -24,7 +32,6 @@ public class MundoService extends WorldService<MundoDAO, JugadorDAO, CeldaDAO>{
 
 	@Override
 	public JugadorDAO createNewPlayer(String name) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
