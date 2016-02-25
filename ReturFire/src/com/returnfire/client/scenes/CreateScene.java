@@ -5,12 +5,13 @@
  */
 package com.returnfire.client.scenes;
 
-import com.entity.network.core.bean.NetWorld;
+import com.entity.network.core.dao.NetWorldDAO;
 import com.entity.network.core.items.WorldsScene;
 import com.entity.network.core.listeners.WorldsMessageListener;
 import com.returnfire.Client;
 import com.returnfire.bean.JugadorDAO;
 import com.returnfire.bean.MundoDAO;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,9 +32,7 @@ public class CreateScene extends  WorldsScene<WorldsMessageListener, MundoDAO, J
 
     @Override
     public MundoDAO createWorld() {
-        MundoDAO mundo=new MundoDAO();
-        mundo.setId("MundoPruebas");
-        return mundo;
+        return new MundoDAO("MundoPruebas");                
     }
     
 }

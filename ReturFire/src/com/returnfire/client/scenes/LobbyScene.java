@@ -5,8 +5,8 @@
  */
 package com.returnfire.client.scenes;
 
-import com.entity.network.core.bean.NetPlayer;
-import com.entity.network.core.bean.NetWorld;
+import com.entity.network.core.dao.NetPlayerDAO;
+import com.entity.network.core.dao.NetWorldDAO;
 import com.entity.network.core.items.LobbyClientScene;
 import com.entity.network.core.listeners.LobbyClientMessageListener;
 
@@ -14,14 +14,16 @@ import com.entity.network.core.listeners.LobbyClientMessageListener;
  *
  * @author Edu
  */
-public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener, NetWorld, NetPlayer>{
+public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener, NetWorldDAO, NetPlayerDAO>{
 
 
     
     
     @Override
-    public void onPlayerReady(NetPlayer player) {
-        
+    public void onPlayerReady(NetPlayerDAO player) {
+        if(!player.isAdmin() && "Player2".equals(player)){
+        	startGame();
+        }
     }
     
 }

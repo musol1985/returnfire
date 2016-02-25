@@ -3,5 +3,10 @@
 	<classpathentry kind="src" path="ReturFire/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Entity"/>
+	<classpathentry kind="lib" path="lib/jme3-core-3.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/jme3-effects-3.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/jme3-jbullet-3.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/jme3-networking-3.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/jme3-terrain-3.1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
