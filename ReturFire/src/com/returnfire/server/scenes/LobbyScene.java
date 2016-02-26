@@ -5,24 +5,23 @@
  */
 package com.returnfire.server.scenes;
 
-import com.entity.core.items.Scene;
-import com.entity.network.core.dao.NetPlayerDAO;
-import com.entity.network.core.dao.NetWorldDAO;
 import com.entity.network.core.items.LobbyServerScene;
 import com.entity.network.core.listeners.LobbyServerMessageListener;
-import com.returnfire.Server;
+import com.returnfire.dao.JugadorDAO;
+import com.returnfire.dao.MundoDAO;
+import com.returnfire.service.MundoService;
 
 /**
  *
  * @author Edu
  */
-public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, NetWorldDAO, NetPlayerDAO>{
+public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, MundoService, MundoDAO, JugadorDAO>{
 
 
-
-    @Override
-    public void onPlayerJoined(NetPlayerDAO player) {
-       
-    }
+	@Override
+	public void onPlayerJoined(JugadorDAO player) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

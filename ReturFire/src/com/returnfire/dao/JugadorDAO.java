@@ -1,4 +1,4 @@
-package com.returnfire.bean;
+package com.returnfire.dao;
 
 import com.entity.network.core.dao.NetPlayerDAO;
 import com.jme3.network.serializing.Serializable;

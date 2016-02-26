@@ -5,21 +5,20 @@
  */
 package com.returnfire.client.scenes;
 
-import com.entity.network.core.dao.NetWorldDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.entity.network.core.items.WorldsScene;
 import com.entity.network.core.listeners.WorldsMessageListener;
 import com.returnfire.Client;
-import com.returnfire.bean.JugadorDAO;
-import com.returnfire.bean.MundoDAO;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.returnfire.dao.MundoDAO;
+import com.returnfire.service.MundoService;
 
 /**
  *
  * @author Edu
  */
-public class CreateScene extends  WorldsScene<WorldsMessageListener, MundoDAO, JugadorDAO, Client>{
+public class CreateScene extends  WorldsScene<WorldsMessageListener, MundoService, MundoDAO, Client>{
 
     @Override
     public void showLobby() {

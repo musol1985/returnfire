@@ -5,25 +5,31 @@
  */
 package com.returnfire.client.scenes;
 
-import com.entity.network.core.dao.NetPlayerDAO;
-import com.entity.network.core.dao.NetWorldDAO;
 import com.entity.network.core.items.LobbyClientScene;
 import com.entity.network.core.listeners.LobbyClientMessageListener;
+import com.returnfire.dao.JugadorDAO;
+import com.returnfire.service.MundoService;
 
 /**
  *
  * @author Edu
  */
-public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener, NetWorldDAO, NetPlayerDAO>{
+public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,MundoService, JugadorDAO>{
 
 
     
     
     @Override
-    public void onPlayerReady(NetPlayerDAO player) {
+    public void onPlayerReady(JugadorDAO player) {
         if(!player.isAdmin() && "Player2".equals(player)){
         	startGame();
         }
     }
+
+	@Override
+	public void onStartGame() {
+		
+		
+	}
     
 }
