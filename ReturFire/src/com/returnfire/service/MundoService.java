@@ -35,6 +35,7 @@ public class MundoService extends NetWorldService<MundoModel, JugadorModel, Celd
 	public JugadorDAO createNewPlayerDAO(String name) {
             JugadorDAO jugador=new JugadorDAO();
             jugador.setId(name);
+            jugador.setPosition(new Vector3f());
             return jugador;
 	}
 
@@ -57,6 +58,11 @@ public class MundoService extends NetWorldService<MundoModel, JugadorModel, Celd
 			posInicial.addLocal(10,0,10);
 		}
 	}
+
+    @Override
+    public MundoModel createTempNetWorld() {
+        return new MundoModel();
+    }
 
 
 	

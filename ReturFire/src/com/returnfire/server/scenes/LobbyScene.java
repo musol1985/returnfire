@@ -7,6 +7,7 @@ package com.returnfire.server.scenes;
 
 import com.entity.network.core.items.LobbyServerScene;
 import com.entity.network.core.listeners.LobbyServerMessageListener;
+import com.returnfire.Server;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.service.MundoService;
@@ -15,7 +16,7 @@ import com.returnfire.service.MundoService;
  *
  * @author Edu
  */
-public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, MundoService, MundoDAO, JugadorDAO>{
+public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, MundoService, MundoDAO, JugadorDAO, Server>{
 
 
 	@Override
@@ -23,5 +24,10 @@ public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, Mun
 		// TODO Auto-generated method stub
 		
 	}
+
+    @Override
+    public void onStarGame() {
+        getApp().showScene(getApp().inGame);
+    }
     
 }

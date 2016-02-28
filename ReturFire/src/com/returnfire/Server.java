@@ -10,13 +10,15 @@ import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
 import com.entity.core.EntityManager;
 import com.returnfire.server.scenes.LobbyScene;
+import com.returnfire.service.MundoService;
 
 
 /**
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.returnfire.bean"}, gameName="ReturnFire", version=1)
+@Network(messagesPackage={"com.returnfire.dao"}, gameName="ReturnFire", version=1,
+worldService = MundoService.class)
 public class Server  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
@@ -25,6 +27,8 @@ public class Server  extends EntityGame{
     
     @SceneEntity(preLoad=false, singleton=false, first = true)
     public LobbyScene lobby;
+    @SceneEntity(preLoad=false, singleton=false, first = false)
+    public LobbyScene inGame;
 
 
     @Override

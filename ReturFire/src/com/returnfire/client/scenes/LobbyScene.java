@@ -20,8 +20,8 @@ public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,Mund
     
     
     @Override
-    public void onPlayerReady(JugadorDAO player) {
-        if(!player.isAdmin() && "Player2".equals(player)){
+    public void onNewPlayer(JugadorDAO player) {
+        if(!player.isAdmin() && "Player2".equals(player.getId())){
         	startGame();
         }
     }
