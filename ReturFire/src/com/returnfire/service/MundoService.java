@@ -52,7 +52,7 @@ public class MundoService extends NetWorldService<MundoModel, JugadorModel, Celd
 		float x=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()-offset);
 		float z=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()-offset);
 		Vector3f posInicial=new Vector3f(x, 0f, z);
-		//We put the players near
+		//Ponemos los jugadores cerca
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
 			posInicial.addLocal(10,0,10);

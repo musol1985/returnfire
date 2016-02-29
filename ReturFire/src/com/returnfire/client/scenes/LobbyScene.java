@@ -7,6 +7,7 @@ package com.returnfire.client.scenes;
 
 import com.entity.network.core.items.LobbyClientScene;
 import com.entity.network.core.listeners.LobbyClientMessageListener;
+import com.returnfire.Client;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.service.MundoService;
 
@@ -14,7 +15,7 @@ import com.returnfire.service.MundoService;
  *
  * @author Edu
  */
-public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,MundoService, JugadorDAO>{
+public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,MundoService, JugadorDAO, Client>{
 
 
     
@@ -28,7 +29,7 @@ public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,Mund
 
 	@Override
 	public void onStartGame() {
-		
+		getApp().showScene(getApp().inGame);
 		
 	}
     
