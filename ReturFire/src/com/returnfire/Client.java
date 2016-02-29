@@ -12,7 +12,7 @@ import com.entity.core.EntityManager;
 import com.returnfire.client.scenes.CreateScene;
 import com.returnfire.client.scenes.LobbyScene;
 import com.returnfire.client.scenes.MainScene;
-import com.returnfire.service.MundoService;
+import com.returnfire.service.ClientMundoService;
 
 
 
@@ -20,7 +20,7 @@ import com.returnfire.service.MundoService;
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.returnfire.dao"}, gameName="ReturnFire", version=1, worldService = MundoService.class)
+@Network(messagesPackage={"com.returnfire.dao"}, gameName="ReturnFire", version=1, worldService = ClientMundoService.class)
 public class Client  extends EntityGame{
     
     public static void main(String[] args)throws Exception{

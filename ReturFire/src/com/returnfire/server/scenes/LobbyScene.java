@@ -10,13 +10,13 @@ import com.entity.network.core.listeners.LobbyServerMessageListener;
 import com.returnfire.Server;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
-import com.returnfire.service.MundoService;
+import com.returnfire.service.ServerMundoService;
 
 /**
  *
  * @author Edu
  */
-public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, MundoService, MundoDAO, JugadorDAO, Server>{
+public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, ServerMundoService, MundoDAO, JugadorDAO, Server>{
 
 
 	@Override

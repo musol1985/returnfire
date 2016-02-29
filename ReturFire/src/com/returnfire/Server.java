@@ -10,7 +10,7 @@ import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
 import com.entity.core.EntityManager;
 import com.returnfire.server.scenes.LobbyScene;
-import com.returnfire.service.MundoService;
+import com.returnfire.service.ServerMundoService;
 
 
 /**
@@ -18,7 +18,7 @@ import com.returnfire.service.MundoService;
  * @author Edu
  */
 @Network(messagesPackage={"com.returnfire.dao"}, gameName="ReturnFire", version=1,
-worldService = MundoService.class)
+worldService = ServerMundoService.class)
 public class Server  extends EntityGame{
     
     public static void main(String[] args)throws Exception{

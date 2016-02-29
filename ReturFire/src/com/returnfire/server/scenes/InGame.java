@@ -8,13 +8,13 @@ package com.returnfire.server.scenes;
 import com.entity.network.core.items.InGameServerScene;
 import com.entity.network.core.listeners.InGameServerMessageListener;
 import com.returnfire.models.MundoModel;
-import com.returnfire.service.MundoService;
+import com.returnfire.service.ServerMundoService;
 
 /**
  *
  * @author Edu
  */
-public class InGame extends InGameServerScene<InGameServerMessageListener, MundoModel, MundoService> {
+public class InGame extends InGameServerScene<InGameServerMessageListener, MundoModel, ServerMundoService> {
 
 
 }

@@ -12,21 +12,17 @@ import com.entity.network.core.items.WorldsScene;
 import com.entity.network.core.listeners.WorldsMessageListener;
 import com.returnfire.Client;
 import com.returnfire.dao.MundoDAO;
-import com.returnfire.service.MundoService;
+import com.returnfire.service.ServerMundoService;
 
 /**
  *
  * @author Edu
  */
-public class CreateScene extends  WorldsScene<WorldsMessageListener, MundoService, MundoDAO, Client>{
+public class CreateScene extends  WorldsScene<WorldsMessageListener, ServerMundoService, MundoDAO, Client>{
 
     @Override
     public void showLobby() {
-        try {
-            getApp().showScene(getApp().lobby);
-                    } catch (Exception ex) {
-            Logger.getLogger(CreateScene.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        getApp().showScene(getApp().lobby);
     }
 
     @Override

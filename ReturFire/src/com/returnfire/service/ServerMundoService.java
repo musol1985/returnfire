@@ -2,33 +2,23 @@ package com.returnfire.service;
 
 import java.util.Random;
 
-import com.entity.network.core.service.NetWorldService;
+import com.entity.network.core.service.impl.ServerNetWorldService;
 import com.entity.utils.Utils;
 import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;
-import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 
-public class MundoService extends NetWorldService<MundoModel, JugadorModel, CeldaDAO, MundoDAO, JugadorDAO>{
+public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO>{
 	
 
 	@Override
 	public boolean isCellInLimits(Vector2 celldId) {
 		return super.isCellInLimits(celldId);
 	}
-
-
-	/**
-	 * Solo se llama en el server. El cliente NO puede crear una nueva celda
-	 */
-	@Override	
-	public CeldaDAO createNewCell(Vector2 cellId) {
-		return null;
-	}
-
 
 
 	@Override
@@ -62,6 +52,16 @@ public class MundoService extends NetWorldService<MundoModel, JugadorModel, Celd
     @Override
     public MundoModel createTempNetWorld() {
         return new MundoModel();
+    }
+
+    @Override
+    public CeldaModel createNewCell(Vector2 cellId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Class getCellClass() {
+        return CeldaModel.class;
     }
 
 
