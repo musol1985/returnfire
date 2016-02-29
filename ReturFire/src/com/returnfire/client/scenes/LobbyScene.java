@@ -29,7 +29,7 @@ public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,Serv
 
 	@Override
 	public void onStartGame() {
-		
+		getApp().showScene(getApp().inGame);
 		
 	}
     

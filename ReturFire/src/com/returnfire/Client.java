@@ -10,6 +10,7 @@ import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
 import com.entity.core.EntityManager;
 import com.returnfire.client.scenes.CreateScene;
+import com.returnfire.client.scenes.InGame;
 import com.returnfire.client.scenes.LobbyScene;
 import com.returnfire.client.scenes.MainScene;
 import com.returnfire.service.ClientMundoService;
@@ -30,18 +31,20 @@ public class Client  extends EntityGame{
     @SceneEntity(preLoad=false, singleton=false, first = true)
     public MainScene main;
 
-  
-    
-    @Override
-	public String getPersistPath() {
-		return "persist/client";
-	}
-
 	@SceneEntity(preLoad=false, singleton=false, first = false)
     public CreateScene create;
 
     @SceneEntity(preLoad=false, singleton=false, first = false)
     public LobbyScene lobby;
        
+    @SceneEntity(preLoad=false, singleton=false, first = false)
+    public InGame inGame;
+    
 
+  
+    
+    @Override
+	public String getPersistPath() {
+		return "persist/client";
+	}
 }
