@@ -9,6 +9,7 @@ import com.entity.anot.entities.SceneEntity;
 import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
 import com.entity.core.EntityManager;
+import com.returnfire.server.scenes.InGame;
 import com.returnfire.server.scenes.LobbyScene;
 import com.returnfire.service.ServerMundoService;
 
@@ -28,7 +29,7 @@ public class Server  extends EntityGame{
     @SceneEntity(preLoad=false, singleton=false, first = true)
     public LobbyScene lobby;
     @SceneEntity(preLoad=false, singleton=false, first = false)
-    public LobbyScene inGame;
+    public InGame inGame;
 
 
     @Override

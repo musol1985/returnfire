@@ -5,10 +5,12 @@ import com.returnfire.dao.MundoDAO;
 
 
 public class MundoModel extends NetWorld<MundoDAO, CeldaModel>{
-
+        public static final int CELL_SIZE=512;
+        
 	@Override
 	public int getCellSize() {
-		return 100;
+		return CELL_SIZE;
 	}
 
+        
 }

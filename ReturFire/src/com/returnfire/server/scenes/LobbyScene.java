@@ -5,6 +5,8 @@
  */
 package com.returnfire.server.scenes;
 
+import com.entity.anot.network.MessageListener;
+import com.entity.anot.network.WorldService;
 import com.entity.network.core.items.LobbyServerScene;
 import com.entity.network.core.listeners.LobbyServerMessageListener;
 import com.returnfire.Server;
@@ -18,16 +20,30 @@ import com.returnfire.service.ServerMundoService;
  */
 public class LobbyScene extends LobbyServerScene<LobbyServerMessageListener, ServerMundoService, MundoDAO, JugadorDAO, Server>{
 
+    @MessageListener
+    private LobbyServerMessageListener listener;
+    
+    @WorldService
+    private ServerMundoService service;
 
-	@Override
-	public void onPlayerJoined(JugadorDAO player) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onPlayerJoined(JugadorDAO player) {
+
+    }
 
     @Override
     public void onStarGame() {
         getApp().showScene(getApp().inGame);
+    }
+
+    @Override
+    public LobbyServerMessageListener getListener() {
+        return listener;
+    }
+
+    @Override
+    public ServerMundoService getService() {
+        return service;
     }
     
 }

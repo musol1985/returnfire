@@ -40,10 +40,13 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		
 		Random rnd=new Random(world.getDao().getSeed());
 		
-		int offset=50;
+		int offset=10;
 		
-		float x=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()-offset);
-		float z=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()-offset);
+		float x=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()*MundoModel.CELL_SIZE-offset);
+		float z=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()*MundoModel.CELL_SIZE-offset);
+                
+                x=600;
+                z=600;
 		Vector3f posInicial=new Vector3f(x, 0f, z);
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){

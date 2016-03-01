@@ -6,7 +6,7 @@ import com.entity.network.core.dao.NetWorldDAO;
 import com.jme3.network.serializing.Serializable;
 @Serializable
 public class MundoDAO extends NetWorldDAO<JugadorDAO>{
-	public static final int MAX_REAL_SIZE=5000;
+	public static final int MAX_REAL_SIZE=5;
 	
 	public MundoDAO(){
 		super();
