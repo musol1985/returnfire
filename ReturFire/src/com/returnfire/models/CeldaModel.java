@@ -14,7 +14,7 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.returnfire.dao.CeldaDAO;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
-	@TerrainComponent(LOD = false, realSize = MundoModel.CELL_SIZE)
+	@TerrainComponent(LOD = false, realSize = MundoModel.CELL_SIZE, chunkSize = MundoModel.CELL_SIZE/4)
 	@MaterialComponent(asset="Materials/Terrain.j3m")
 	private TerrainQuad terrain;
 

@@ -23,7 +23,7 @@ worldService = ServerMundoService.class)
 public class Server  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
-        EntityManager.startGame(Server.class, true);
+        EntityManager.startGame(Server.class, true, true);
     }
     
     @SceneEntity(preLoad=false, singleton=false, first = true)

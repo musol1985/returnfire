@@ -25,7 +25,7 @@ import com.returnfire.service.ClientMundoService;
 public class Client  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
-        EntityManager.startGame(Client.class, true);                
+        EntityManager.startGame(Client.class);                
     }
     
     @SceneEntity(preLoad=false, singleton=false, first = true)

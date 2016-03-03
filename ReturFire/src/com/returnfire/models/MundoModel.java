@@ -13,7 +13,7 @@ import com.returnfire.dao.MundoDAO;
 
 
 public class MundoModel extends NetWorld<MundoDAO, CeldaModel>{
-        public static final int CELL_SIZE=512;
+        public static final int CELL_SIZE=256;        
         
         @WaterEffect(waterHeight = -1.5f)
         private WaterFilter agua;
