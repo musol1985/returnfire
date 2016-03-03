@@ -1,7 +1,7 @@
 Material My Material : Common/MatDefs/Terrain/TerrainLighting.j3md {
      MaterialParameters {
         DiffuseMap : Repeat Textures/desert.jpg
-        DiffuseMap_0_scale : 18.0
+        DiffuseMap_0_scale : 48.0
      }
     AdditionalRenderState {
     }

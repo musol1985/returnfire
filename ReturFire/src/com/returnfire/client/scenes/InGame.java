@@ -9,6 +9,7 @@ import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.adapters.listeners.IScrollCameraListener;
 import com.entity.anot.Entity;
 import com.entity.anot.ScrollCameraNode;
+import com.entity.anot.Sky;
 import com.entity.anot.components.lights.AmbientLightComponent;
 import com.entity.anot.components.lights.DirectionalLightComponent;
 import com.entity.anot.network.MessageListener;
@@ -20,6 +21,7 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -30,11 +32,14 @@ import com.returnfire.service.ClientMundoService;
  * @author Edu
  */
 public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService> {
-    @Entity(attach=false)
+    @Entity
     private MundoModel world;
     
     @Entity(attach = false)
     private JugadorModel player;
+    
+    @Sky(texture = "Textures/sky.jpg")
+    private Spatial sky;
     
     @WorldService
     private ClientMundoService service;
@@ -43,7 +48,7 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     private InGameClientMessageListener listener;
     
             
-    @ScrollCameraNode(speed = 100)
+    @ScrollCameraNode(speed = 100, debug = true)
     private ScrollCameraAdapter camera;
     
     @AmbientLightComponent(color = {1,1,1,1}, mult = 1.2f)
@@ -88,6 +93,8 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
                 getService().updatePlayerLocation(camera.getWorldTranslation());
             }
         });
+   
+        camera.setLocalTranslation(getService().getPlayerDAO().getPosition());
     }
 
 
