@@ -50,12 +50,6 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
             
     @ScrollCameraNode(speed = 100, debug = true)
     private ScrollCameraAdapter camera;
-    
-    @AmbientLightComponent(color = {1,1,1,1}, mult = 1.2f)
-    private AmbientLight ambient;
-
-    @DirectionalLightComponent(color = {1,1,1,1},direction = {1,1,1})
-    private DirectionalLight directional;
 
     
     @Override
