@@ -66,6 +66,8 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		celda.setId(new CellId(cellId, System.currentTimeMillis()));
 		
 		//Aplicar la logica de colocar arboles, terreno, etc.
+                Random rnd=new Random(world.getDao().getSeed());
+                celda.generar(rnd);
 		
 		return celda;
 	}

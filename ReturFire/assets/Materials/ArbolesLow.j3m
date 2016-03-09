@@ -1,0 +1,12 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Flip Textures/ArbolesLow.png
+        Diffuse : 1.0 1.0 1.0 1.0
+        UseMaterialColors : false
+     }
+    AdditionalRenderState {
+      FaceCull Back
+      Wireframe Off
+      DepthWrite On
+    }
+}
