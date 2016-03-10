@@ -3,17 +3,22 @@ package com.returnfire.models;
 import com.entity.anot.Entity;
 import com.entity.anot.Service;
 import com.entity.anot.components.model.MaterialComponent;
+import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.terrain.CustomHeightTerrain;
 import com.entity.anot.components.terrain.TerrainComponent;
 import com.entity.anot.modificators.ApplyToComponent;
 import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
+import com.entity.core.IEntity;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorldCell;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
@@ -22,8 +27,6 @@ import com.jme3.scene.shape.Box;
 import com.jme3.terrain.Terrain;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
-import com.jme3.terrain.heightmap.ImageBasedHeightMap;
-import com.jme3.texture.Texture;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.estaticos.ArbolDAO;
 import com.returnfire.models.batchs.ArbolesBatch;
@@ -34,6 +37,10 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     @TerrainComponent(LOD = true, realSize = MundoModel.CELL_SIZE, chunkSize = MundoModel.CELL_SIZE/4)
     @MaterialComponent(asset="Materials/Terrain.j3m")
     private TerrainQuad terrain;
+    
+    @PhysicsBodyComponent
+    @ApplyToComponent(component = "terrain")
+    private RigidBodyControl terrainBody;
     
     @Entity
     private ArbolesBatch arboles;
@@ -54,18 +61,17 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
        }
        
        
-        addBox(ColorRGBA.Green, new Vector3f(5,0,5));
+        /*addBox(ColorRGBA.Green, new Vector3f(5,0,5));
         addBox(ColorRGBA.Blue, new Vector3f(MundoModel.CELL_SIZE-5,0,5));
         addBox(ColorRGBA.Red, new Vector3f(5,0,MundoModel.CELL_SIZE-5));
-        addBox(ColorRGBA.Yellow, new Vector3f(MundoModel.CELL_SIZE-5,0,MundoModel.CELL_SIZE-5));
+        addBox(ColorRGBA.Yellow, new Vector3f(MundoModel.CELL_SIZE-5,0,MundoModel.CELL_SIZE-5));*/
         
         terrain.setShadowMode(RenderQueue.ShadowMode.Receive);
         
         for(ArbolDAO arbolDAO:dao.getArboles()){
            arbolDAO.getPos().y= terrain.getHeight(new Vector2f(arbolDAO.getPos().x, arbolDAO.getPos().z))-15;
-           ArbolModel arbol= factory.crearArbol(null, arbolDAO);
+           ArbolModel arbol= factory.crearArbol(null, arbolDAO, dao);
            arboles.attachEntity(arbol);
-           log.info("Arbol creado!!!->"+arbol);
         }
         arboles.getNode().setShadowMode(shadowMode.Cast);
         arboles.batch();
@@ -88,9 +94,17 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         geom.setShadowMode(RenderQueue.ShadowMode.Cast);
         attachChild(geom);
         geom.move(pos);
+        
+        RigidBodyControl bo=new RigidBodyControl(new BoxCollisionShape(new Vector3f(2.5f,2.5f,2.5f)),0f);
+        geom.addControl(bo);
+        EntityManager.getGame().getPhysics().add(bo);
     }  
     
+
     public MundoModel getMundo(){
         return (MundoModel)((IWorldInGameScene)EntityManager.getCurrentScene()).getWorld();
     }
+    
+    
+    
 }

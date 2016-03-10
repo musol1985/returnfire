@@ -7,7 +7,11 @@ package com.returnfire.models.batchs;
 
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
+import com.jme3.math.Vector2f;
+import com.returnfire.dao.CeldaDAO;
+import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.estaticos.ArbolDAO;
+import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.ArbolModel;
 
 /**
@@ -16,8 +20,9 @@ import com.returnfire.models.elementos.ArbolModel;
  */
 public class ModelFactory extends BaseService{
     @Instance(attachTo = "")
-    public ArbolModel crearArbol(ArbolModel arbol, ArbolDAO dao){
-        arbol.move(dao.getPos());
+    public ArbolModel crearArbol(ArbolModel arbol, ArbolDAO dao, CeldaDAO celda){
+        Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
+        arbol.move(dao.getPos().add(realPos.x,0,realPos.y));
         return arbol;
     }  
 }

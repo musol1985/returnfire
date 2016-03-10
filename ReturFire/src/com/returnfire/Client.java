@@ -5,6 +5,7 @@
  */
 package com.returnfire;
 
+import com.entity.anot.Physics;
 import com.entity.anot.entities.SceneEntity;
 import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
@@ -23,6 +24,7 @@ import com.returnfire.service.ClientMundoService;
  */
 @Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos","com.returnfire.dao.elementos.estaticos"},
         gameName="ReturnFire", version=1, worldService = ClientMundoService.class)
+@Physics(debug = true)
 public class Client  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
