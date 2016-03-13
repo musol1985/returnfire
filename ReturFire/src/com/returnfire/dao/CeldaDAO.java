@@ -15,19 +15,24 @@ public class CeldaDAO extends NetWorldCellDAO{
         
         private List<ArbolDAO> arboles;
         
-        public void generar(Random rnd){
-            arboles=new ArrayList<ArbolDAO>();
-            int numArboles=Utils.getRandomBetween(rnd, 10,30);
-            for(int i=0;i<numArboles;i++){
-                int x=Utils.getRandomBetween(rnd, 0, MundoModel.CELL_SIZE-1);
-                int z=Utils.getRandomBetween(rnd, 0, MundoModel.CELL_SIZE-1);
-                arboles.add(ArbolDAO.getNew(new Vector3f(x,0,z)));
+        public void generar(Random rnd, MundoModel mundo){
+            if(!mundo.dao.isSide(getId())){
+                arboles=new ArrayList<ArbolDAO>();
+                int numArboles=Utils.getRandomBetween(rnd, 10,30);
+                for(int i=0;i<numArboles;i++){
+                    int x=Utils.getRandomBetween(rnd, 0, MundoModel.CELL_SIZE-1);
+                    int z=Utils.getRandomBetween(rnd, 0, MundoModel.CELL_SIZE-1);
+                    arboles.add(ArbolDAO.getNew(new Vector3f(x,0,z)));
+                }
             }
         }
 
     public List<ArbolDAO> getArboles() {
         return arboles;
     }
-        
+    
+    public boolean hasArboles(){
+        return arboles!=null;
+    }
         
 }

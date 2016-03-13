@@ -13,7 +13,7 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.estaticos.ArbolDAO;
 
-@ModelEntity(asset = "Models/pino.j3o")
+@ModelEntity(asset = "Models/palm_03.j3o")
 public class ArbolModel extends EstaticoModel<ArbolDAO>{
     @PhysicsBodyComponent
     @CustomCollisionShape(methodName = "getColisionShape")

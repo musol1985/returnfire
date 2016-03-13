@@ -22,7 +22,7 @@ public class ModelFactory extends BaseService{
     @Instance(attachTo = "")
     public ArbolModel crearArbol(ArbolModel arbol, ArbolDAO dao, CeldaDAO celda){
         Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        arbol.move(dao.getPos().add(realPos.x,0,realPos.y));
+        arbol.move(dao.getPos());//.add(realPos.x,0,realPos.y));
         return arbol;
     }  
 }

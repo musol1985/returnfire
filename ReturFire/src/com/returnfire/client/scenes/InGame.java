@@ -37,7 +37,10 @@ import com.returnfire.service.ClientMundoService;
 
 @ComposedKeyInput(inputs = {
     @KeyInputMapping(action = "up", keys = {KeyInput.KEY_W}),
-    @KeyInputMapping(action = "down", keys = {KeyInput.KEY_S})
+    @KeyInputMapping(action = "down", keys = {KeyInput.KEY_S}),
+    @KeyInputMapping(action = "left", keys = {KeyInput.KEY_A}),
+    @KeyInputMapping(action = "right", keys = {KeyInput.KEY_D}),
+    @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE})
 })
 public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService> {
     @Entity
@@ -97,10 +100,13 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
         });
    
         camera.setLocalTranslation(getService().getPlayerDAO().getPosition());
+        
+        player.cargarVehiculo();
+        player.getVehiculo().attach(world);
     }
 
-    @Input(action = "up")
-    public void up(boolean value, float tpf){
+    @Input(action = "space")
+    public void space(boolean value, float tpf){
         System.out.println("UP!!!"+value);
         if(value){
           Geometry bulletg = new Geometry("bullet", new Sphere(30, 30, 1));
@@ -120,6 +126,29 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     
     @Input(action = "down")
     public void down( boolean value, float tpf){
-        System.out.println("DOWN!!!");
+        if(player.hasVehicle()){
+            player.getVehiculo().onBrake(value);
+        }
+    }
+    
+    @Input(action = "up")
+    public void up( boolean value, float tpf){
+        if(player.hasVehicle()){
+            player.getVehiculo().onAccelerate(value);
+        }
+    }
+    
+    @Input(action = "left")
+    public void left( boolean value, float tpf){
+        if(player.hasVehicle()){
+            player.getVehiculo().onLeft(value);
+        }
+    }
+    
+    @Input(action = "right")
+    public void right( boolean value, float tpf){
+        if(player.hasVehicle()){
+            player.getVehiculo().onRight(value);
+        }
     }
 }

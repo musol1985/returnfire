@@ -49,6 +49,7 @@ public class HeightService extends BaseService{
                         setHeightAtPoint(MAX_HEIGHT, x, z);
                     }
                 }
+                setHeightAtPoint(MAX_HEIGHT+0.1f, 50, 50);
                 return true;
             }
     };

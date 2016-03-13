@@ -32,6 +32,7 @@ import com.returnfire.dao.elementos.estaticos.ArbolDAO;
 import com.returnfire.models.batchs.ArbolesBatch;
 import com.returnfire.models.batchs.ModelFactory;
 import com.returnfire.models.elementos.ArbolModel;
+import com.returnfire.service.HeightService;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
     @TerrainComponent(LOD = true, realSize = MundoModel.CELL_SIZE, chunkSize = MundoModel.CELL_SIZE/4)
@@ -53,6 +54,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         super.onInstance(builder, params); //To change body of generated methods, choose Tools | Templates.
         
        terrain.move(MundoModel.CELL_SIZE/2, -10, MundoModel.CELL_SIZE/2);
+       //terrainBody.setPhysicsLocation(new Vector3f(terrain.getWorldTranslation().x+MundoModel.CELL_SIZE/2, -10, terrain.getWorldTranslation().z+MundoModel.CELL_SIZE/2));
        
        if(getMundo().dao.isLowerRightCorner(dao.getId())){
            terrain.rotate(0,FastMath.PI,0);
@@ -68,13 +70,15 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         terrain.setShadowMode(RenderQueue.ShadowMode.Receive);
         
-        for(ArbolDAO arbolDAO:dao.getArboles()){
-           arbolDAO.getPos().y= terrain.getHeight(new Vector2f(arbolDAO.getPos().x, arbolDAO.getPos().z))-15;
-           ArbolModel arbol= factory.crearArbol(null, arbolDAO, dao);
-           arboles.attachEntity(arbol);
+        if(dao.hasArboles()){
+            for(ArbolDAO arbolDAO:dao.getArboles()){
+               arbolDAO.getPos().y= HeightService.MAX_HEIGHT-10;//terrain.getHeight(new Vector2f(arbolDAO.getPos().x, arbolDAO.getPos().z));
+               ArbolModel arbol= factory.crearArbol(null, arbolDAO, dao);
+               arboles.attachEntity(arbol);
+            }
+            arboles.getNode().setShadowMode(shadowMode.Cast);
+            arboles.batch();
         }
-        arboles.getNode().setShadowMode(shadowMode.Cast);
-        arboles.batch();
     }
     
     @CustomHeightTerrain

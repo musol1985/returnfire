@@ -16,7 +16,8 @@ import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
-	
+        private Random rnd;
+        
     @Override
     public Class<CeldaModel> getCellClass() {
         return CeldaModel.class;
@@ -38,7 +39,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 	public void preload() {
 		world.getDao().setSeed(System.currentTimeMillis());
 		
-		Random rnd=new Random(world.getDao().getSeed());
+		rnd=new Random(world.getDao().getSeed());
 		
 		int offset=10;
 		
@@ -51,7 +52,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
-			posInicial.addLocal(10,0,10);
+			posInicial.addLocal(300,0,300);
 		}
 	}
 
@@ -66,8 +67,10 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		celda.setId(new CellId(cellId, System.currentTimeMillis()));
 		
 		//Aplicar la logica de colocar arboles, terreno, etc.
-                Random rnd=new Random(world.getDao().getSeed());
-                celda.generar(rnd);
+                if(rnd==null)
+                    rnd=new Random(world.getDao().getSeed());
+                
+                celda.generar(rnd, getWorld());
 		
 		return celda;
 	}
