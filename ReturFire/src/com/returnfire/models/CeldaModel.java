@@ -9,17 +9,13 @@ import com.entity.anot.components.terrain.TerrainComponent;
 import com.entity.anot.modificators.ApplyToComponent;
 import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
-import com.entity.core.IEntity;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorldCell;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
-import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
@@ -28,10 +24,13 @@ import com.jme3.terrain.Terrain;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.returnfire.dao.CeldaDAO;
-import com.returnfire.dao.elementos.estaticos.ArbolDAO;
-import com.returnfire.models.batchs.ArbolesBatch;
+import com.returnfire.dao.elementos.EstaticoDAO;
+import com.returnfire.dao.elementos.environment.RockDAO;
+import com.returnfire.dao.elementos.environment.ArbolDAO;
+import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.batchs.ModelFactory;
-import com.returnfire.models.elementos.ArbolModel;
+import com.returnfire.models.elementos.EstaticoModel;
+import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.service.HeightService;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
@@ -44,7 +43,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     private RigidBodyControl terrainBody;
     
     @Entity
-    private ArbolesBatch arboles;
+    private EstaticosBatch estaticos;
     
     @Service
     private ModelFactory factory;
@@ -70,14 +69,20 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         terrain.setShadowMode(RenderQueue.ShadowMode.Receive);
         
-        if(dao.hasArboles()){
-            for(ArbolDAO arbolDAO:dao.getArboles()){
-               arbolDAO.getPos().y= HeightService.MAX_HEIGHT-10;//terrain.getHeight(new Vector2f(arbolDAO.getPos().x, arbolDAO.getPos().z));
-               ArbolModel arbol= factory.crearArbol(null, arbolDAO, dao);
-               arboles.attachEntity(arbol);
+        if(dao.hasEstaticos()){
+            for(EstaticoDAO estaticoDAO:dao.getEstaticos()){
+                if(estaticoDAO instanceof RockDAO){
+                    estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
+                    EstaticoModel roca=factory.crearRoca((RockDAO)estaticoDAO, dao);
+                    estaticos.attachEntity(roca);
+                }else if(estaticoDAO instanceof ArbolDAO){
+                    estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
+                    EstaticoModel arbol=factory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);
+                    estaticos.attachEntity(arbol);
+                }
             }
-            arboles.getNode().setShadowMode(shadowMode.Cast);
-            arboles.batch();
+            estaticos.getNode().setShadowMode(shadowMode.Cast);
+            estaticos.batch();
         }
     }
     

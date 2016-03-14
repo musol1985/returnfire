@@ -5,6 +5,7 @@
  */
 package com.returnfire.models;
 
+import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.core.EntityManager;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
@@ -22,22 +23,22 @@ import com.jme3.scene.shape.Cylinder;
  * @author Edu
  */
 public class VehiculoModel {
-    private VehicleControl vehicle;
+    public VehicleControl vehicle;
     private final float accelerationForce = 1000.0f;
     private final float brakeForce = 100.0f;
     private float steeringValue = 0;
     private float accelerationValue = 0;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
-    private Node vehicleNode;
+    public Node vehicleNode;
     
-    public VehiculoModel(){
+    public VehiculoModel(Vector3f pos){
         Material mat = new Material(EntityManager.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         mat.getAdditionalRenderState().setWireframe(true);
         mat.setColor("Color", ColorRGBA.Red);
         
         CompoundCollisionShape compoundShape = new CompoundCollisionShape();
         BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.5f, 1f, 3f));
-        compoundShape.addChildShape(box, new Vector3f(0, 1, 0));
+        compoundShape.addChildShape(box, new Vector3f(0, 2, 0));
 
         //create vehicle node
         vehicleNode=(Node)EntityManager.getAssetManager().loadModel("Models/vehicles/hammer.j3o");
@@ -58,33 +59,37 @@ public class VehiculoModel {
         Vector3f wheelAxle = new Vector3f(-1, 0, 0); // was -1, 0, 0
         float radius = 0.5f;
         float restLength = 0.3f;
-        float yOff = 0.5f;
+        float yOff = 1f;
         float xOff = 1f;
         float zOff = 2f;
 
 
         Node node1 = (Node)vehicleNode.getChild("wheel_fl");
-        vehicle.addWheel(node1, new Vector3f(-node1.getLocalTranslation().x,0,-node1.getLocalTranslation().y),
+        vehicle.addWheel(node1, new Vector3f(-node1.getLocalTranslation().x,yOff,-node1.getLocalTranslation().y),
                 wheelDirection, wheelAxle, restLength, radius, true);
 
         Node node2 = (Node)vehicleNode.getChild("wheel_fr");
-        vehicle.addWheel(node2, new Vector3f(-node2.getLocalTranslation().x,0,-node1.getLocalTranslation().y),
+        vehicle.addWheel(node2, new Vector3f(-node2.getLocalTranslation().x,yOff,-node1.getLocalTranslation().y),
                 wheelDirection, wheelAxle, restLength, radius, true);
 
         Node node3 = (Node)vehicleNode.getChild("wheel_rl");
-        vehicle.addWheel(node3, new Vector3f(-node3.getLocalTranslation().x,0,-node3.getLocalTranslation().y),
+        vehicle.addWheel(node3, new Vector3f(-node3.getLocalTranslation().x,yOff,-node3.getLocalTranslation().y),
                 wheelDirection, wheelAxle, restLength, radius, false);
 
         Node node4 = (Node)vehicleNode.getChild("wheel_rr");
-        vehicle.addWheel(node4, new Vector3f(-node4.getLocalTranslation().x,0,-node4.getLocalTranslation().y),
+        vehicle.addWheel(node4, new Vector3f(-node4.getLocalTranslation().x,yOff,-node4.getLocalTranslation().y),
                 wheelDirection, wheelAxle, restLength, radius, false);
         
-        vehicle.setPhysicsLocation(new Vector3f(100,30,100));
+        vehicle.setPhysicsLocation(pos.add(0,50,0));
     }
     
     public void attach(MundoModel mundo){
         mundo.attachChild(vehicleNode);
         EntityManager.getGame().getPhysics().add(vehicle);
+    }
+    
+    public void attachCamera(ScrollCameraAdapter cam){
+        vehicleNode.attachChild(cam);
     }
     
     public void onLeft(boolean value){

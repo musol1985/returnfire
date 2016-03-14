@@ -15,6 +15,7 @@ import com.jme3.network.serializing.Serializable;
 @Serializable
 public abstract class EstaticoDAO<T extends EstaticoDAO>{
     protected Vector3f pos;
+    protected float ang;
     protected int vida;
 
     public Vector3f getPos() {
@@ -31,6 +32,14 @@ public abstract class EstaticoDAO<T extends EstaticoDAO>{
 
     public void setVida(int vida) {
         this.vida = vida;
+    }
+
+    public float getAng() {
+        return ang;
+    }
+
+    public void setAng(float ang) {
+        this.ang = ang;
     }
     
 

@@ -15,6 +15,6 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     }
     
     public void cargarVehiculo(){
-        vehiculo=new VehiculoModel();
+        vehiculo=new VehiculoModel(dao.getPosition());
     }
 }

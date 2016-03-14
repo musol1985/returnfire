@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.dao.elementos.estaticos;
+package com.returnfire.dao.elementos.environment;
 
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
@@ -17,10 +17,11 @@ import com.returnfire.dao.elementos.EstaticoDAO;
 public class ArbolDAO extends EstaticoDAO {
     public static final int VIDA_INICIAL=100;
     
-    public static ArbolDAO getNew(Vector3f posicion) {
+    public static ArbolDAO getNew(Vector3f posicion, float ang) {
         ArbolDAO arbol=new ArbolDAO();
         arbol.setVida(VIDA_INICIAL);
         arbol.setPos(posicion.clone());
+        arbol.setAng(ang);
         return arbol;
     }
 

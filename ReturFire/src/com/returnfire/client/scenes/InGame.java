@@ -5,10 +5,10 @@
  */
 package com.returnfire.client.scenes;
 
-import com.entity.adapters.ScrollCameraAdapter;
-import com.entity.adapters.listeners.IScrollCameraListener;
+import com.entity.adapters.FollowCameraAdapter;
+import com.entity.adapters.listeners.IFollowCameraListener;
 import com.entity.anot.Entity;
-import com.entity.anot.ScrollCameraNode;
+import com.entity.anot.FollowCameraNode;
 import com.entity.anot.Sky;
 import com.entity.anot.components.input.ComposedKeyInput;
 import com.entity.anot.components.input.Input;
@@ -59,8 +59,8 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     private InGameClientMessageListener listener;
     
             
-    @ScrollCameraNode(speed = 100, debug = true)
-    private ScrollCameraAdapter camera;
+    @FollowCameraNode( debug = false)
+    private FollowCameraAdapter camera;
 
     
     @Override
@@ -92,9 +92,10 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
 
         getApp().getFlyByCamera().setMoveSpeed(30);
         
-        camera.setListener(new IScrollCameraListener() {
+        camera.setListener(new IFollowCameraListener() {
             @Override
-            public void onUpdate(ScrollCameraAdapter adapter) {
+            public void onUpdate(FollowCameraAdapter adapter) {
+                camera.setLocalTranslation(player.getVehiculo().vehicle.getPhysicsLocation());
                 getService().updatePlayerLocation(camera.getWorldTranslation());
             }
         });
@@ -102,7 +103,11 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
         camera.setLocalTranslation(getService().getPlayerDAO().getPosition());
         
         player.cargarVehiculo();
+        //player.getVehiculo().attachCamera(camera);
+        getService().updatePlayerLocation(player.getVehiculo().vehicleNode.getWorldTranslation());
         player.getVehiculo().attach(world);
+        
+        //camera.followTo(player.getVehiculo().vehicleNode);
     }
 
     @Input(action = "space")
