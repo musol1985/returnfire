@@ -9,6 +9,7 @@ import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.JugadorDAO.VEHICULOS;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.factory.VehiculosFactory;
+import com.returnfire.service.HeightService;
 
 public class JugadorModel extends NetPlayer<JugadorDAO>{
     private VehiculoModel vehiculo;
@@ -51,9 +52,9 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     		throw new RuntimeException("TODO DETACH!!!");
     	
     	vehiculo=newV;
-    	
-    	vehiculo.setPosicionInicial(dao.getPosition().add(0, 30, 0));
+    	    	
     	vehiculo.attachToParent(getMundo());    	
+        vehiculo.setPosicionInicial(dao.getPosition().add(0, HeightService.MAX_HEIGHT+30, 0));
     }
     
     public MundoModel getMundo(){

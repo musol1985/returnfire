@@ -9,6 +9,7 @@ import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.HammerModel;
 
 /**
  *
@@ -18,7 +19,7 @@ public class VehiculosFactory extends BaseService{
 
     
     @Instance(attachTo = "")
-    public VehiculoModel crearHammer(VehiculoModel hammer, JugadorModel jugador){
+    public HammerModel crearHammer(HammerModel hammer, JugadorModel jugador){
         return hammer;
     } 
     

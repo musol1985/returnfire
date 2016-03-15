@@ -33,6 +33,11 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 		player.setPosition(new Vector3f());
 	}
 
+    @Override
+    public Class<JugadorModel> getPlayerClass() {
+        return JugadorModel.class;
+    }
+
 
 
 	

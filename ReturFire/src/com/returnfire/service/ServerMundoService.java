@@ -52,6 +52,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
+                        j.setVehiculo(JugadorDAO.VEHICULOS.HAMMER);
 			posInicial.addLocal(300,0,300);
 		}
 	}
@@ -76,6 +77,10 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 	}
 
 
+    @Override
+    public Class<JugadorModel> getPlayerClass() {
+        return JugadorModel.class;
+    }
 
 
 	

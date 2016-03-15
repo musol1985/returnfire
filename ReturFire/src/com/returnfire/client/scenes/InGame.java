@@ -26,6 +26,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Sphere;
+import com.returnfire.dao.MundoDAO;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.service.ClientMundoService;
@@ -42,9 +43,9 @@ import com.returnfire.service.ClientMundoService;
     @KeyInputMapping(action = "right", keys = {KeyInput.KEY_D}),
     @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE})
 })
-public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService> implements IFollowCameraListener{
+public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService>{
     @Entity
-    private MundoModel world;
+    public MundoModel world;
     
     @Entity(attach=false)
     private JugadorModel player;
@@ -59,7 +60,7 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     private InGameClientMessageListener listener;
     
             
-    @FollowCameraNode( listenerField="world", debug = false)
+    @FollowCameraNode(debug = false)
     private FollowCameraAdapter camera;
 
     
@@ -88,14 +89,18 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
         super.onLoadScene(); //To change body of generated methods, choose Tools | Templates.
 
         player.seleccionarVehiculo();
-        camera.followTo(player.getVehiculo());
+        camera.attachToParent(world);
+        //camera.followTo(player.getVehiculo());
+        camera.setListener(new IFollowCameraListener() {
+            @Override
+            public void onUpdate(FollowCameraAdapter adapter) {
+                getService().updatePlayerLocation(player.getPosicion());
+                camera.setLocalTranslation(player.getPosicion());
+            }
+        });
+        
+        world.cargarJugadores();
     }
-    
-
-	@Override
-	public void onUpdate(FollowCameraAdapter adapter) {
-		getService().updatePlayerLocation(player.getPosicion());
-	}
 
     @Input(action = "space")
     public void space(boolean value, float tpf){
