@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.models;
+package com.returnfire.models.elementos;
 
 import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.core.EntityManager;
@@ -14,15 +14,14 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Cylinder;
+import com.returnfire.models.MundoModel;
 
 /**
  *
  * @author Edu
  */
-public class VehiculoModel {
+public class VehiculoModelOld {
     public VehicleControl vehicle;
     private final float accelerationForce = 1000.0f;
     private final float brakeForce = 100.0f;
@@ -31,7 +30,7 @@ public class VehiculoModel {
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
     public Node vehicleNode;
     
-    public VehiculoModel(Vector3f pos){
+    public VehiculoModelOld(Vector3f pos){
         Material mat = new Material(EntityManager.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         mat.getAdditionalRenderState().setWireframe(true);
         mat.setColor("Color", ColorRGBA.Red);

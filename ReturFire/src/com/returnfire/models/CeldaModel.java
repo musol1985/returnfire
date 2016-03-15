@@ -28,9 +28,9 @@ import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.batchs.EstaticosBatch;
-import com.returnfire.models.batchs.ModelFactory;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
+import com.returnfire.models.factory.ModelFactory;
 import com.returnfire.service.HeightService;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
@@ -71,15 +71,16 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         if(dao.hasEstaticos()){
             for(EstaticoDAO estaticoDAO:dao.getEstaticos()){
-                if(estaticoDAO instanceof RockDAO){
-                    estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
-                    EstaticoModel roca=factory.crearRoca((RockDAO)estaticoDAO, dao);
-                    estaticos.attachEntity(roca);
+            	EstaticoModel model=null;
+            	estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
+            	
+                if(estaticoDAO instanceof RockDAO){                    
+                    model=factory.crearRoca((RockDAO)estaticoDAO, dao);                    
                 }else if(estaticoDAO instanceof ArbolDAO){
-                    estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
-                    EstaticoModel arbol=factory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);
-                    estaticos.attachEntity(arbol);
+                    model=factory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);   
                 }
+                
+                estaticos.attachEntity(model);
             }
             estaticos.getNode().setShadowMode(shadowMode.Cast);
             estaticos.batch();

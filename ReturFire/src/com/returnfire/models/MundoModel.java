@@ -1,6 +1,8 @@
 package com.returnfire.models;
 
 import com.entity.adapters.DirectionalLightShadow;
+import com.entity.adapters.FollowCameraAdapter;
+import com.entity.adapters.listeners.IFollowCameraListener;
 import com.entity.anot.Service;
 import com.entity.anot.components.lights.AmbientLightComponent;
 import com.entity.anot.components.lights.DirectionalLightComponent;
@@ -12,7 +14,7 @@ import com.jme3.light.AmbientLight;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.water.WaterFilter;
 import com.returnfire.dao.MundoDAO;
-import com.returnfire.models.batchs.ModelFactory;
+import com.returnfire.models.factory.ModelFactory;
 import com.returnfire.service.HeightService;
 
 
@@ -45,6 +47,4 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel>{
         return heightService;
     }
 
-
-        
 }

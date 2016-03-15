@@ -42,11 +42,11 @@ import com.returnfire.service.ClientMundoService;
     @KeyInputMapping(action = "right", keys = {KeyInput.KEY_D}),
     @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE})
 })
-public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService> {
+public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService> implements IFollowCameraListener{
     @Entity
     private MundoModel world;
     
-    @Entity(attach = false)
+    @Entity(attach=false)
     private JugadorModel player;
     
     @Sky(texture = "Textures/sky.jpg")
@@ -59,7 +59,7 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     private InGameClientMessageListener listener;
     
             
-    @FollowCameraNode( debug = false)
+    @FollowCameraNode( listenerField="world", debug = false)
     private FollowCameraAdapter camera;
 
     
@@ -86,29 +86,16 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     @Override
     public void onLoadScene() throws Exception {
         super.onLoadScene(); //To change body of generated methods, choose Tools | Templates.
-        
-        
 
-
-        getApp().getFlyByCamera().setMoveSpeed(30);
-        
-        camera.setListener(new IFollowCameraListener() {
-            @Override
-            public void onUpdate(FollowCameraAdapter adapter) {
-                camera.setLocalTranslation(player.getVehiculo().vehicle.getPhysicsLocation());
-                getService().updatePlayerLocation(camera.getWorldTranslation());
-            }
-        });
-   
-        camera.setLocalTranslation(getService().getPlayerDAO().getPosition());
-        
-        player.cargarVehiculo();
-        //player.getVehiculo().attachCamera(camera);
-        getService().updatePlayerLocation(player.getVehiculo().vehicleNode.getWorldTranslation());
-        player.getVehiculo().attach(world);
-        
-        //camera.followTo(player.getVehiculo().vehicleNode);
+        player.seleccionarVehiculo();
+        camera.followTo(player.getVehiculo());
     }
+    
+
+	@Override
+	public void onUpdate(FollowCameraAdapter adapter) {
+		getService().updatePlayerLocation(player.getPosicion());
+	}
 
     @Input(action = "space")
     public void space(boolean value, float tpf){
@@ -156,4 +143,5 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
             player.getVehiculo().onRight(value);
         }
     }
+
 }
