@@ -10,6 +10,7 @@ import com.entity.core.items.BaseService;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.HammerModel;
+import com.returnfire.models.elementos.vehicles.HammerModelRemote;
 
 /**
  *
@@ -17,11 +18,22 @@ import com.returnfire.models.elementos.vehicles.HammerModel;
  */
 public class VehiculosFactory extends BaseService{
 
+ 
+    public VehiculoModel crearHammer(JugadorModel jugador){
+        if(jugador.isRemote()){
+        	return crearHammerLocal(null, jugador);
+        }else{
+        	return crearHammerRemoto(null, jugador);
+        }
+    } 
     
     @Instance(attachTo = "")
-    public HammerModel crearHammer(HammerModel hammer, JugadorModel jugador){
+    public HammerModel crearHammerLocal(HammerModel hammer,JugadorModel jugador ){
         return hammer;
     } 
     
-
+    @Instance(attachTo = "")
+    public HammerModelRemote crearHammerRemoto(HammerModelRemote hammer,JugadorModel jugador){
+        return hammer;
+    } 
 }

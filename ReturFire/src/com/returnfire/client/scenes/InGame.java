@@ -84,11 +84,9 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
         return listener;
     }
 
-    @Override
-    public void onLoadScene() throws Exception {
-        super.onLoadScene(); //To change body of generated methods, choose Tools | Templates.
-
-        player.seleccionarVehiculo();
+	@Override
+	public void onLoadPlayer()throws Exception {
+		player.seleccionarVehiculo();
         camera.attachToParent(world);
         //camera.followTo(player.getVehiculo());
         camera.setListener(new IFollowCameraListener() {
@@ -98,9 +96,12 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
                 camera.setLocalTranslation(player.getPosicion());
             }
         });
-        
-        world.cargarJugadores();
-    }
+	}
+
+	@Override
+	public void onLoadRemotePlayers() throws Exception{
+		world.cargarJugadores();
+	}
 
     @Input(action = "space")
     public void space(boolean value, float tpf){
@@ -148,5 +149,6 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
             player.getVehiculo().onRight(value);
         }
     }
+
 
 }

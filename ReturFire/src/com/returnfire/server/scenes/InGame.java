@@ -9,16 +9,16 @@ import com.entity.anot.Entity;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
 import com.entity.network.core.items.InGameServerScene;
-import com.entity.network.core.listeners.InGameServerMessageListener;
 import com.returnfire.Server;
 import com.returnfire.models.MundoModel;
+import com.returnfire.server.listeners.InGameServerListener;
 import com.returnfire.service.ServerMundoService;
 
 /**
  *
  * @author Edu
  */
-public class InGame extends InGameServerScene<InGameServerMessageListener, MundoModel, ServerMundoService, Server> {
+public class InGame extends InGameServerScene<InGameServerListener, MundoModel, ServerMundoService, Server> {
 
     @Entity(attach=false)
     private MundoModel world;
@@ -27,7 +27,7 @@ public class InGame extends InGameServerScene<InGameServerMessageListener, Mundo
     private ServerMundoService service;
     
     @MessageListener
-    private InGameServerMessageListener listener;
+    private InGameServerListener listener;
     
     @Override
     public MundoModel getWorld() {
@@ -40,7 +40,7 @@ public class InGame extends InGameServerScene<InGameServerMessageListener, Mundo
     }
 
     @Override
-    public InGameServerMessageListener getListener() {
+    public InGameServerListener getListener() {
         return listener;
     }
 

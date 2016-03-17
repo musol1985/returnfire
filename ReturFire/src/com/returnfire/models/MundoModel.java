@@ -57,7 +57,7 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
     }
 
     public void cargarJugadores()throws Exception{
-        for(JugadorModel j:players){
+        for(JugadorModel j:players.values()){
             j.seleccionarVehiculo();
             //j.getVehiculo().attachToParent(vehiculos);  
         }               

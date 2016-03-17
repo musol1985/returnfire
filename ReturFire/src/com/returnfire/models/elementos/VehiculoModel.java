@@ -6,80 +6,107 @@
 package com.returnfire.models.elementos;
 
 import com.entity.adapters.ScrollCameraAdapter;
-import com.entity.anot.components.model.VehicleComponent;
-import com.entity.anot.components.model.WheelComponent;
-import com.entity.anot.components.model.collision.CustomCollisionShape;
-import com.entity.core.items.Model;
-import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
+import com.entity.anot.network.NetSync;
+import com.entity.core.IBuilder;
+import com.entity.core.items.NetworkModel;
 import com.jme3.bullet.control.VehicleControl;
+import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.JugadorDAO;
+import com.returnfire.models.JugadorModel;
+import com.returnfire.msg.sync.Posicion;
 
 /**
  *
  * @author Edu
  */
-public abstract class VehiculoModel extends Model{
-	
-	
-	@VehicleComponent(mass=400.0f,
-			wheels={
-				@WheelComponent(nodeName="wheel_fl", offset={1.5f,1f,2.5f}, frontWheel=true),
-				@WheelComponent(nodeName="wheel_fr", offset={-1.5f,1f,2.5f}, frontWheel=true),
-				@WheelComponent(nodeName="wheel_rl", offset={1.5f,1f,-2.5f}),
-				@WheelComponent(nodeName="wheel_rr", offset={-1.5f,1f,-2.5f}),
-			})
-	@CustomCollisionShape(methodName="getCollisionShape")
-    public VehicleControl vehicle;
+public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkModel{	
+	protected float steeringValue = 0;
+    protected float accelerationValue = 0;     
+    protected JugadorModel player;
+    
+    @NetSync(timeout=10)
+    public Posicion posicion;
+    
     
 
-    private float steeringValue = 0;
-    private float accelerationValue = 0;        
+    @Override
+	public String getName() {
+		return player.dao.getId()+"#";
+	}
 
+	@Override
+	public void onInstance(IBuilder builder, Object[] params) {
+		player=(JugadorModel) params[0];
+	}
+
+	public abstract T getBody();    
     
     public void setPosicionInicial(Vector3f pos){
-    	vehicle.setPhysicsLocation(pos);
+    	getBody().setPhysicsLocation(pos);
     }
-    
-    public abstract CompoundCollisionShape getCollisionShape();
     
     public void attachCamera(ScrollCameraAdapter cam){
         attachChild(cam);
     }
     
     public void onLeft(boolean value){
-    	if (value) {
-            steeringValue += .5f;
-        } else {
-            steeringValue += -.5f;
-        }
-        vehicle.steer(steeringValue);
+    	if(isVehicleControl()){
+	       	 if (value) {
+	                steeringValue += .5f;
+	            } else {
+	                steeringValue += -.5f;
+	            }
+	       	getVehicleControl().steer(steeringValue);
+	   	}else{
+	   		throw new RuntimeException("No vehicle control onLeft!!");
+	   	}
     }
     
     public void onRight(boolean value){
-        if (value) {
-            steeringValue += -.5f;
-        } else {
-            steeringValue += .5f;
-        }
-        vehicle.steer(steeringValue);
+        if(isVehicleControl()){
+        	 if (value) {
+                 steeringValue += -.5f;
+             } else {
+                 steeringValue += .5f;
+             }
+        	getVehicleControl().steer(steeringValue);
+    	}else{
+    		throw new RuntimeException("No vehicle control onRight!!");
+    	}
     }
     
     public void onAccelerate(boolean value){
-        if (value) {
-            accelerationValue += getAccelerationForce();
-        } else {
-            accelerationValue -= getAccelerationForce();
-        }
-        vehicle.accelerate(accelerationValue);
+        if(isVehicleControl()){
+        	if (value) {
+                accelerationValue += getAccelerationForce();
+            } else {
+                accelerationValue -= getAccelerationForce();
+            }
+        	getVehicleControl().accelerate(accelerationValue);
+    	}else{
+    		throw new RuntimeException("No vehicle control onAccelerate!!");
+    	}
     }
     
     public void onBrake(boolean value){
-        if (value) {
-            vehicle.brake(getBrakeForce());
-        } else {
-            vehicle.brake(0f);
-        }
+    	if(isVehicleControl()){
+	        if (value) {
+	        	getVehicleControl().brake(getBrakeForce());
+	        } else {
+	        	getVehicleControl().brake(0f);
+	        }
+    	}else{
+    		throw new RuntimeException("No vehicle control onbrake!!");
+    	}
+    }
+    
+    public boolean isVehicleControl(){
+    	return getBody() instanceof VehicleControl;
+    }
+    
+    public VehicleControl getVehicleControl(){
+    	return (VehicleControl)getBody();
     }
     
     
@@ -91,11 +118,15 @@ public abstract class VehiculoModel extends Model{
     	return 100.0f;
     }
     
-    public JugadorDAO.VEHICULOS getTipoVehiculo(){
-    	return JugadorDAO.VEHICULOS.HAMMER;
-    }
+    public abstract JugadorDAO.VEHICULOS getTipoVehiculo();    
     
     public Vector3f getPhysicsLocation(){
-    	return vehicle.getPhysicsLocation();
+    	return getBody().getPhysicsLocation();
     }
+
+	public JugadorModel getPlayer() {
+		return player;
+	}
+    
+    
 }

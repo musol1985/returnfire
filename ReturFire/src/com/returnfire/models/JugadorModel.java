@@ -40,10 +40,11 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     	}
     	
     	VehiculoModel newV=null;
-    	
+
     	if(tipo==VEHICULOS.HAMMER){
-    		newV=factory.crearHammer(null, this);
-    	}    	    	
+    		newV=factory.crearHammer(this);
+    	}    
+    	
     	
     	if(newV==vehiculo)
     		throw new RuntimeException("Mismo vehiculo!!!!!");
@@ -55,6 +56,10 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     	    	
     	vehiculo.attachToParent(getMundo());    	
         vehiculo.setPosicionInicial(dao.getPosition().add(0, HeightService.MAX_HEIGHT+30, 0));
+        
+        if(!isRemote()){
+        	vehiculo.netControl();
+        }
     }
     
     public MundoModel getMundo(){
