@@ -16,8 +16,6 @@ import java.util.Random;
  */
 @Serializable
 public class RockDAO extends EstaticoDAO {
-    public static final int VIDA_INICIAL=100;
-    
     public enum ROCK_TYPE{BROWN_1,BROWN_2,BROWN_3,GREY_1, GREY_2, GREY_3};
     
     protected ROCK_TYPE tipo;
@@ -28,10 +26,8 @@ public class RockDAO extends EstaticoDAO {
     
     public static RockDAO getNew(Vector3f posicion, float ang, ROCK_TYPE tipo) {
         RockDAO rock=new RockDAO();
-        rock.setVida(VIDA_INICIAL);
         rock.setPos(posicion.clone());
         rock.ang=ang;
-
         return rock;
     }
 
@@ -42,6 +38,11 @@ public class RockDAO extends EstaticoDAO {
     public void setTipo(ROCK_TYPE tipo) {
         this.tipo = tipo;
     }
+
+	@Override
+	public int getVidaInicial() {
+		return INDESTRUCTIBLE;
+	}
 
 
 }

@@ -15,15 +15,18 @@ import com.returnfire.dao.elementos.EstaticoDAO;
  */
 @Serializable
 public class ArbolDAO extends EstaticoDAO {
-    public static final int VIDA_INICIAL=100;
     
     public static ArbolDAO getNew(Vector3f posicion, float ang) {
         ArbolDAO arbol=new ArbolDAO();
-        arbol.setVida(VIDA_INICIAL);
         arbol.setPos(posicion.clone());
         arbol.setAng(ang);
         return arbol;
     }
+
+	@Override
+	public int getVidaInicial() {
+		return 100;
+	}
 
 
 }

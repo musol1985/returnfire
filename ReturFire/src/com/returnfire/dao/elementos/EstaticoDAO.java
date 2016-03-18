@@ -14,6 +14,10 @@ import com.jme3.network.serializing.Serializable;
  */
 @Serializable
 public abstract class EstaticoDAO<T extends EstaticoDAO>{
+	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA}
+	
+	public static final int INDESTRUCTIBLE=-1;
+	
     protected Vector3f pos;
     protected float ang;
     protected int vida;
@@ -43,4 +47,5 @@ public abstract class EstaticoDAO<T extends EstaticoDAO>{
     }
     
 
+    public abstract int getVidaInicial();
 }
