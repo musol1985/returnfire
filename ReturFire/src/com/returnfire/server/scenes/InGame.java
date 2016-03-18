@@ -6,6 +6,7 @@
 package com.returnfire.server.scenes;
 
 import com.entity.anot.Entity;
+import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
 import com.entity.network.core.items.InGameServerScene;
@@ -18,6 +19,7 @@ import com.returnfire.service.ServerMundoService;
  *
  * @author Edu
  */
+@ActivateNetSync
 public class InGame extends InGameServerScene<InGameServerListener, MundoModel, ServerMundoService, Server> {
 
     @Entity(attach=false)

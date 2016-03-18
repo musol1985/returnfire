@@ -53,7 +53,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
                         j.setVehiculo(JugadorDAO.VEHICULOS.HAMMER);
-			posInicial.addLocal(300,0,300);
+			posInicial.addLocal(20,0,20);
 		}
 	}
 

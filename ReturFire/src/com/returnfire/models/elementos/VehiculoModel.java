@@ -43,6 +43,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 	public abstract T getBody();    
     
     public void setPosicionInicial(Vector3f pos){
+        setLocalTranslation(pos);
     	getBody().setPhysicsLocation(pos);
     }
     

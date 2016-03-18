@@ -20,7 +20,7 @@ public class VehiculosFactory extends BaseService{
 
  
     public VehiculoModel crearHammer(JugadorModel jugador){
-        if(jugador.isRemote()){
+        if(!jugador.isRemote()){
         	return crearHammerLocal(null, jugador);
         }else{
         	return crearHammerRemoto(null, jugador);

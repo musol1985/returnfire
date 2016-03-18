@@ -13,7 +13,7 @@ import com.returnfire.models.elementos.VehiculoModel;
 @ModelEntity(asset = "Models/vehicles/hammer.j3o", attach = false)
 public class HammerModelRemote extends VehiculoModel<RigidBodyControl>{
 
-	@PhysicsBodyComponent(mass=400f)
+	@PhysicsBodyComponent(mass=400f, type = PhysicsBodyComponent.PhysicsBodyType.KINEMATIC_BODY)
 	@CustomCollisionShape(methodName="getCollisionShape")
 	public RigidBodyControl body;
 	

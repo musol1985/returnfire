@@ -13,6 +13,7 @@ import com.entity.anot.Sky;
 import com.entity.anot.components.input.ComposedKeyInput;
 import com.entity.anot.components.input.Input;
 import com.entity.anot.components.input.KeyInputMapping;
+import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
 import com.entity.network.core.items.InGameClientScene;
@@ -43,6 +44,7 @@ import com.returnfire.service.ClientMundoService;
     @KeyInputMapping(action = "right", keys = {KeyInput.KEY_D}),
     @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE})
 })
+@ActivateNetSync
 public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService>{
     @Entity
     public MundoModel world;
