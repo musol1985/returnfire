@@ -36,7 +36,7 @@ public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,Serv
     @Override
     public void onLoadScene() throws Exception {
         super.onLoadScene(); //To change body of generated methods, choose Tools | Templates.
-        //startGame();
+        startGame();
     }
     
 }

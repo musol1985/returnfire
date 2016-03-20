@@ -8,7 +8,7 @@ import com.returnfire.msg.sync.Posicion;
 public class InGameServerListener extends InGameServerMessageListener {
 
 	public void onPosicion(Posicion msg, String modelId) throws Exception{
-		NetPlayer player=(NetPlayer)getEntity().getService().getWorld().players.get(modelId);
-		player.dao.setPosition(msg.pos);
+		/*NetPlayer player=(NetPlayer)getEntity().getService().getWorld().players.get(modelId);
+		player.dao.setPosition(msg.pos);*/
 	}
 }

@@ -22,7 +22,7 @@ import com.returnfire.service.ClientMundoService;
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos","com.returnfire.dao.elementos.estaticos"},
+@Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos","com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync"},
         gameName="ReturnFire", version=1, worldService = ClientMundoService.class)
 @Physics(debug = false, active = false)
 public class Client  extends EntityGame{

@@ -18,7 +18,7 @@ import com.returnfire.service.ServerMundoService;
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos","com.returnfire.dao.elementos.estaticos"}
+@Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos","com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync"}
         , gameName="ReturnFire", version=1,
 worldService = ServerMundoService.class)
 public class Server  extends EntityGame{
