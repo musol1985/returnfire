@@ -18,13 +18,14 @@ import com.returnfire.service.ServerMundoService;
  *
  * @author Edu
  */
-@Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos","com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync"}
+@Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos",
+    "com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync","com.returnfire.msg"}
         , gameName="ReturnFire", version=1,
 worldService = ServerMundoService.class)
 public class Server  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
-        EntityManager.startGame(Server.class, true, true);
+        EntityManager.startGame(Server.class, true, false);
     }
     
     @SceneEntity(preLoad=false, singleton=false, first = true)

@@ -6,6 +6,7 @@
 package com.returnfire.models.factory;
 
 import com.entity.anot.Instance;
+import com.entity.core.EntityManager;
 import com.entity.core.items.BaseService;
 import com.jme3.math.Quaternion;
 import com.returnfire.models.JugadorModel;
@@ -27,12 +28,15 @@ public class BalasFactory extends BaseService{
 	
 	public BulletModel crearBala(MundoModel world, String from, BALAS tipo, MsgOnDisparar msg)throws Exception{
 		JugadorModel player=world.getPlayers().get(from);
+                if(player==null && EntityManager.getGame().getNet().isNetClientGame() && EntityManager.getGame().getNet().getWorldService().getPlayer().dao.getId().equals(from))
+                    player=(JugadorModel)EntityManager.getGame().getNet().getWorldService().getPlayer();
+                
 		if(player!=null){
 			if(player.hasVehicle()){
 				BulletModel bala=null;
 				
 				if(tipo==BALAS.NORMAL){
-					world.getBalasFactory().crearBalaNormal(null);
+					bala=world.getBalasFactory().crearBalaNormal(null);
 				}
 				
 				if(msg==null){

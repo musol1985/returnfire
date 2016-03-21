@@ -1,5 +1,6 @@
 package com.returnfire.service;
 
+import com.entity.anot.RunOnGLThread;
 import java.util.Random;
 
 import com.entity.network.core.beans.CellId;
@@ -90,7 +91,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		return 50;
 	}
 	
-	
+	@RunOnGLThread
 	public void disparar(String from, BALAS tipo)throws Exception{
 		//Crea la bala y la attach
 		BulletModel bala=getWorld().getBalasFactory().crearBala(getWorld(), from, tipo);

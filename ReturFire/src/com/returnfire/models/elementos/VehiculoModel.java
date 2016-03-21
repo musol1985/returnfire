@@ -32,7 +32,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     @NetSync(timeout=10)
     public Posicion posicion;
     
-	@SubModelComponent(name="arma")
+	@SubModelComponent(name="gun")
 	protected Node arma;
     
 

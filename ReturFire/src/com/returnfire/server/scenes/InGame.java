@@ -5,7 +5,9 @@
  */
 package com.returnfire.server.scenes;
 
+import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.anot.Entity;
+import com.entity.anot.ScrollCameraNode;
 import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
@@ -31,6 +33,11 @@ public class InGame extends InGameServerScene<InGameServerListener, MundoModel, 
     @MessageListener
     private InGameServerListener listener;
     
+    
+                
+    @ScrollCameraNode(debug = false, speed = 100)
+    private ScrollCameraAdapter camera;
+    
     @Override
     public MundoModel getWorld() {
         return world;
@@ -49,5 +56,11 @@ public class InGame extends InGameServerScene<InGameServerListener, MundoModel, 
     @Override
     public void showLobby() {
         getApp().showScene(getApp().lobby);
+    }
+    
+    
+    @Override
+    public void onLoadRemotePlayers() throws Exception{
+            world.cargarJugadores();
     }
 }

@@ -18,16 +18,9 @@ import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
 import com.entity.network.core.items.InGameClientScene;
 import com.entity.network.core.listeners.InGameClientMessageListener;
-import com.jme3.bullet.collision.shapes.SphereCollisionShape;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.renderer.queue.RenderQueue;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Sphere;
-import com.returnfire.dao.MundoDAO;
+import com.returnfire.client.listeners.InGameClientListener;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.service.ClientMundoService;
@@ -45,7 +38,7 @@ import com.returnfire.service.ClientMundoService;
     @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE})
 })
 @ActivateNetSync
-public class InGame extends InGameClientScene<InGameClientMessageListener, MundoModel, JugadorModel,  ClientMundoService>{
+public class InGame extends InGameClientScene<InGameClientListener, MundoModel, JugadorModel,  ClientMundoService>{
     @Entity
     public MundoModel world;
     
@@ -59,7 +52,7 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     private ClientMundoService service;
     
     @MessageListener
-    private InGameClientMessageListener listener;
+    private InGameClientListener listener;
     
             
     @FollowCameraNode(debug = false)
@@ -82,7 +75,7 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
     }
 
     @Override
-    public InGameClientMessageListener getListener() {
+    public InGameClientListener getListener() {
         return listener;
     }
 

@@ -21,8 +21,8 @@ import com.jme3.math.Vector3f;
 public abstract class BulletModel<T extends PhysicsRigidBody> extends NetworkModel{	
 	public enum BALAS{NORMAL, GRANDE}
 	
-    @PhysicsBodyComponent(type=PhysicsBodyType.KINEMATIC_BODY,mass=1f)
-    @CustomCollisionShape(methodName = "getColisionShape")
+    @PhysicsBodyComponent(type=PhysicsBodyType.RIGID_BODY,mass=1f)
+    @CustomCollisionShape(methodName = "getCollisionShape")
     public RigidBodyControl body;
     
     public VehiculoModel from;
@@ -42,11 +42,12 @@ public abstract class BulletModel<T extends PhysicsRigidBody> extends NetworkMod
     	idBala=id;
     	from=vehiculo;
     	
-    	setLocalTranslation(pos);
-    	getBody().getPhysicsLocation(pos);
+    	setLocalTranslation(pos.addLocal(10, 0, 0));
+    	getBody().getPhysicsLocation(pos.addLocal(10, 0, 0));
     	
     	setLocalRotation(rotation);    	
     	
-    	body.setLinearVelocity(new Vector3f(0,0,10f));
+    	body.setLinearVelocity(new Vector3f(0,0,500f));
+        
     }
 }
