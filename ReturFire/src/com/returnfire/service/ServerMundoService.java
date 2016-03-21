@@ -2,7 +2,6 @@ package com.returnfire.service;
 
 import java.util.Random;
 
-import com.entity.core.EntityManager;
 import com.entity.network.core.beans.CellId;
 import com.entity.network.core.service.impl.ServerNetWorldService;
 import com.entity.utils.Utils;
@@ -14,6 +13,9 @@ import com.returnfire.dao.MundoDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
+import com.returnfire.models.elementos.BulletModel;
+import com.returnfire.models.elementos.BulletModel.BALAS;
+import com.returnfire.msg.MsgOnDisparar;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
         private Random rnd;
@@ -83,5 +85,24 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
     }
 
 
+	@Override
+	public int getCellCacheSize() {
+		return 50;
+	}
 	
+	
+	public void disparar(String from, BALAS tipo)throws Exception{
+		//Crea la bala y la attach
+		BulletModel bala=getWorld().getBalasFactory().crearBala(getWorld(), from, tipo);
+		if(bala!=null){
+			MsgOnDisparar msg=new MsgOnDisparar();
+			msg.id=bala.idBala;
+			msg.from=from;
+			msg.tipo=tipo;
+			msg.position=bala.getWorldTranslation();
+			msg.rotation=bala.getWorldRotation().toAngles(new float[3]);
+			
+			msg.send();
+		}
+	}
 }

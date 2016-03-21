@@ -22,7 +22,7 @@ import com.returnfire.service.ServerMundoService;
 @ActivateNetSync
 public class InGame extends InGameServerScene<InGameServerListener, MundoModel, ServerMundoService, Server> {
 
-    @Entity(attach=false)
+    @Entity
     private MundoModel world;
     
     @WorldService

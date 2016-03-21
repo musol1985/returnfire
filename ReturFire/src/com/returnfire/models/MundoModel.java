@@ -7,12 +7,15 @@ import com.entity.anot.components.lights.AmbientLightComponent;
 import com.entity.anot.components.lights.DirectionalLightComponent;
 import com.entity.anot.components.shadows.DirectionalShadowComponent;
 import com.entity.anot.effects.WaterEffect;
+import com.entity.core.EntityManager;
 import com.entity.network.core.models.NetWorld;
 import com.jme3.light.AmbientLight;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.water.WaterFilter;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.models.batchs.VehiculosBatch;
+import com.returnfire.models.elementos.BulletModel;
+import com.returnfire.models.factory.BalasFactory;
 import com.returnfire.service.HeightService;
 
 
@@ -37,6 +40,12 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         
         @Entity
         private VehiculosBatch vehiculos;
+        
+        @Entity
+        private VehiculosBatch balas;
+        
+        @Service
+        private BalasFactory balasFactory;
 
         
 	@Override
@@ -61,5 +70,18 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
             j.seleccionarVehiculo();
             //j.getVehiculo().attachToParent(vehiculos);  
         }               
+    }
+
+	public VehiculosBatch getBalas() {
+		return balas;
+	}
+
+	public BalasFactory getBalasFactory() {
+		return balasFactory;
+	}
+
+    public void addBala(BulletModel bullet){
+		balas.attachEntity(bullet);
+    	balas.batch();  	
     }
 }

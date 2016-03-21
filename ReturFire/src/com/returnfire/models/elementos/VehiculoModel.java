@@ -6,14 +6,18 @@
 package com.returnfire.models.elementos;
 
 import com.entity.adapters.ScrollCameraAdapter;
+import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.network.NetSync;
 import com.entity.core.IBuilder;
 import com.entity.core.items.NetworkModel;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.models.JugadorModel;
+import com.returnfire.models.elementos.BulletModel.BALAS;
+import com.returnfire.msg.MsgDisparar;
 import com.returnfire.msg.sync.Posicion;
 
 /**
@@ -28,6 +32,8 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     @NetSync(timeout=10)
     public Posicion posicion;
     
+	@SubModelComponent(name="arma")
+	protected Node arma;
     
 
     @Override
@@ -40,7 +46,11 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 		player=(JugadorModel) params[0];
 	}
 
-	public abstract T getBody();    
+	public abstract T getBody();
+	
+	public Node getArma(){
+		return arma;
+	}
     
     public void setPosicionInicial(Vector3f pos){
         setLocalTranslation(pos);
@@ -129,5 +139,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 		return player;
 	}
     
-    
+    public void disparar(){
+    	new MsgDisparar(BALAS.NORMAL, player.getDao().getId()).send();
+    }
 }

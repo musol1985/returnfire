@@ -9,6 +9,8 @@ import com.returnfire.dao.MundoDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
+import com.returnfire.models.elementos.BulletModel;
+import com.returnfire.msg.MsgOnDisparar;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
     @Override
@@ -38,7 +40,21 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
         return JugadorModel.class;
     }
 
+	@Override
+	public int getCellCacheSize() {
+		return 20;
+	}
 
 
+	public void onDisparar(MsgOnDisparar onDisparar)throws Exception{
+		//Crea la bala, pero a diferencia dle server, no la attacha
+		BulletModel bala=getWorld().getBalasFactory().crearBala(getWorld(), onDisparar.from, onDisparar.tipo, onDisparar);
+		//Solo attach si está en rango de vision
+		if(bala!=null){
+			if(bala.getWorldTranslation().distance(player.getVehiculo().getWorldTranslation())<100f){
+				getWorld().addBala(bala);
+			}
+		}
+	}
 	
 }

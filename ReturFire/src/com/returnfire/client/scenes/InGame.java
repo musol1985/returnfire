@@ -107,7 +107,7 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
 
     @Input(action = "space")
     public void space(boolean value, float tpf){
-        System.out.println("UP!!!"+value);
+        /*System.out.println("UP!!!"+value);
         if(value){
           Geometry bulletg = new Geometry("bullet", new Sphere(30, 30, 1));
         Material mat = new Material(app.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -121,7 +121,10 @@ public class InGame extends InGameClientScene<InGameClientMessageListener, Mundo
         bulletNode.setLinearVelocity(app.getCamera().getDirection().mult(25));
         app.getRootNode().attachChild(bulletg);
         app.getPhysics().add(bulletNode);
-        }
+        }*/
+    	 if(value && player.hasVehicle()){
+             player.getVehiculo().disparar();
+         }
     }
     
     @Input(action = "down")
