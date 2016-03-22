@@ -33,8 +33,10 @@ public class MainScene extends Scene<Client>{
 
   
     public boolean isCreateGame(){
-        return true;
-        //return showDialog("Create game?");	    
+        if(Client.isTest1Player())
+            return true;
+        //return true;
+        return showDialog("Create game?");	    
     }
     
     private boolean showDialog(String msg){

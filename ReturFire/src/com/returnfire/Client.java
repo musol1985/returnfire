@@ -46,7 +46,9 @@ public class Client  extends EntityGame{
     @SceneEntity(preLoad=false, singleton=false, first = false)
     public InGame inGame;
     
-
+    public static boolean isTest1Player(){
+        return false;
+    }
   
     
     @Override
