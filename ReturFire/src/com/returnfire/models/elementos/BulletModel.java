@@ -6,6 +6,7 @@
 package com.returnfire.models.elementos;
 
 import com.entity.anot.OnCollision;
+import com.entity.anot.OnUpdate;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
@@ -31,6 +32,7 @@ public abstract class BulletModel extends Model{
     
     public VehiculoModel from;
     public String idBala;
+    private long t;
 
 	public RigidBodyControl getBody(){
 		return body;
@@ -46,12 +48,12 @@ public abstract class BulletModel extends Model{
     	idBala=id;
     	from=vehiculo;
     	
-    	setLocalTranslation(pos.addLocal(10, 0, 0));
-    	getBody().getPhysicsLocation(pos.addLocal(10, 0, 0));
-    	
-    	setLocalRotation(rotation);    	
-    	
-    	body.setLinearVelocity(new Vector3f(0,0,500f));
+    	setLocalTranslation(pos.add(0,1,0));
+        setLocalRotation(rotation);    	
+
+        body.setLinearVelocity(rotation.mult(new Vector3f(0,-75f,0)));
+        
+        t=System.currentTimeMillis();
     }
     
     @OnCollision
@@ -60,5 +62,12 @@ public abstract class BulletModel extends Model{
     		new MsgOnImpactoBala(idBala).send();
     	}
     	GameContext.getMundo().getBalas().eliminar(this);
+    }
+    
+    @OnUpdate
+    public void onUpdate(float tpf){        
+        if(System.currentTimeMillis()-t>2000){
+            GameContext.getMundo().getBalas().eliminar(this);
+        }
     }
 }

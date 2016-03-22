@@ -11,6 +11,7 @@ import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorldCell;
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -29,7 +30,6 @@ import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
-import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.factory.ModelFactory;
 import com.returnfire.service.HeightService;
 
@@ -85,6 +85,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             estaticos.getNode().setShadowMode(shadowMode.Cast);
             estaticos.batch();
         }
+        
+        terrainBody.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+        terrainBody.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
     }
     
     @CustomHeightTerrain

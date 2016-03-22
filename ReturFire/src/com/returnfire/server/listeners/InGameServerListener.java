@@ -1,6 +1,8 @@
 package com.returnfire.server.listeners;
 
 import com.entity.network.core.listeners.InGameServerMessageListener;
+import com.entity.utils.Vector2;
+import com.jme3.network.HostedConnection;
 import com.returnfire.msg.MsgDisparar;
 import com.returnfire.msg.sync.Posicion;
 import com.returnfire.server.scenes.InGame;
@@ -17,4 +19,5 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
 	public void onDisparar(MsgDisparar msg)throws Exception{
 		getEntity().getService().disparar(msg.from, msg.tipo);
 	}
+
 }

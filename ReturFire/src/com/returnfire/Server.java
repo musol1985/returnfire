@@ -5,6 +5,8 @@
  */
 package com.returnfire;
 
+import com.entity.anot.Executor;
+import com.entity.anot.Physics;
 import com.entity.anot.entities.SceneEntity;
 import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
@@ -22,10 +24,12 @@ import com.returnfire.service.ServerMundoService;
     "com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync","com.returnfire.msg"}
         , gameName="ReturnFire", version=1,
 worldService = ServerMundoService.class)
+@Physics(debug = true, active = true)
+@Executor
 public class Server  extends EntityGame{
     
     public static void main(String[] args)throws Exception{
-        EntityManager.startGame(Server.class, true, false);
+        EntityManager.startGame(Server.class, true, true);
     }
     
     @SceneEntity(preLoad=false, singleton=false, first = true)

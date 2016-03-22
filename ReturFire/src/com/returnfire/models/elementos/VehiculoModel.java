@@ -10,10 +10,11 @@ import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.network.NetSync;
 import com.entity.core.IBuilder;
 import com.entity.core.items.NetworkModel;
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
+import com.jme3.scene.Geometry;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.BulletModel.BALAS;
@@ -32,8 +33,8 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     @NetSync(timeout=10)
     public Posicion posicion;
     
-	@SubModelComponent(name="gun")
-	protected Node arma;
+	@SubModelComponent(name="arma")
+	protected Geometry arma;
     
 
     @Override
@@ -44,11 +45,15 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 	@Override
 	public void onInstance(IBuilder builder, Object[] params) {
 		player=(JugadorModel) params[0];
+                if(player.isMe()){
+                    getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+                    getBody().setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+                }
 	}
 
 	public abstract T getBody();
 	
-	public Node getArma(){
+	public Geometry getArma(){
 		return arma;
 	}
     
