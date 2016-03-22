@@ -12,7 +12,7 @@ import com.entity.core.items.BatchModel;
  *
  * @author Edu
  */
-@BatchModelEntity(name="estaticos",autoBatch = false)
+@BatchModelEntity(name="vehiculos",autoBatch = false)
 public class VehiculosBatch extends BatchModel{
 
 }

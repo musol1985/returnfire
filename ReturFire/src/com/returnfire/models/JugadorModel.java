@@ -1,10 +1,9 @@
 package com.returnfire.models;
 
 import com.entity.anot.Service;
-import com.entity.core.EntityManager;
-import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetPlayer;
 import com.jme3.math.Vector3f;
+import com.returnfire.GameContext;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.JugadorDAO.VEHICULOS;
 import com.returnfire.models.elementos.VehiculoModel;
@@ -54,17 +53,14 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     	
     	vehiculo=newV;
     	    	
-    	vehiculo.attachToParent(getMundo());    	
+    	vehiculo.attachToParent(GameContext.getMundo());    	
         vehiculo.setPosicionInicial(dao.getPosition().add(0, HeightService.MAX_HEIGHT+30, 0));
         
         if(!isRemote()){
         	vehiculo.netControl();
         }
     }
-    
-    public MundoModel getMundo(){
-        return (MundoModel)((IWorldInGameScene)EntityManager.getCurrentScene()).getWorld();
-    }
+
     
     public Vector3f getPosicion(){
     	if(vehiculo!=null)

@@ -7,6 +7,7 @@ package com.returnfire.dao.elementos;
 
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
+import com.returnfire.dao.elementos.environment.ArbolDAO;
 
 /**
  *
@@ -48,4 +49,17 @@ public abstract class EstaticoDAO<T extends EstaticoDAO>{
     
 
     public abstract int getVidaInicial();
+    
+    public String getId(){
+    	return getTipo().name()+"#"+pos;
+    }
+    
+    
+    public ELEMENTOS_ESTATICOS getTipo(){
+    	if(this instanceof ArbolDAO){
+    		return ELEMENTOS_ESTATICOS.ARBOL;
+    	}else{
+    		return ELEMENTOS_ESTATICOS.ROCA;
+    	}
+    }
 }

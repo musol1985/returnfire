@@ -15,6 +15,7 @@ import com.returnfire.dao.elementos.EstaticoDAO;
  */
 @Serializable
 public class ArbolDAO extends EstaticoDAO {
+	public static final String TEMPLATE="arbol";
     
     public static ArbolDAO getNew(Vector3f posicion, float ang) {
         ArbolDAO arbol=new ArbolDAO();
@@ -27,6 +28,5 @@ public class ArbolDAO extends EstaticoDAO {
 	public int getVidaInicial() {
 		return 100;
 	}
-
 
 }

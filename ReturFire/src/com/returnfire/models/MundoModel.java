@@ -8,14 +8,17 @@ import com.entity.anot.components.lights.DirectionalLightComponent;
 import com.entity.anot.components.shadows.DirectionalShadowComponent;
 import com.entity.anot.effects.WaterEffect;
 import com.entity.core.EntityManager;
+import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorld;
 import com.jme3.light.AmbientLight;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.water.WaterFilter;
 import com.returnfire.dao.MundoDAO;
+import com.returnfire.models.batchs.BalasBatch;
 import com.returnfire.models.batchs.VehiculosBatch;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.factory.BalasFactory;
+import com.returnfire.service.ClientMundoService;
 import com.returnfire.service.HeightService;
 
 
@@ -42,7 +45,7 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         private VehiculosBatch vehiculos;
         
         @Entity
-        private VehiculosBatch balas;
+        private BalasBatch balas;
         
         @Service
         private BalasFactory balasFactory;
@@ -72,7 +75,7 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         }               
     }
 
-	public VehiculosBatch getBalas() {
+	public BalasBatch getBalas() {
 		return balas;
 	}
 
@@ -81,7 +84,8 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
 	}
 
     public void addBala(BulletModel bullet){
-		balas.attachEntity(bullet);
-    	balas.batch();  	
+		balas.nueva(bullet);	
     }
+    
+ 
 }

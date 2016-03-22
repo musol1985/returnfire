@@ -18,7 +18,7 @@ import java.util.Random;
 public class RockDAO extends EstaticoDAO {
     public enum ROCK_TYPE{BROWN_1,BROWN_2,BROWN_3,GREY_1, GREY_2, GREY_3};
     
-    protected ROCK_TYPE tipo;
+    protected ROCK_TYPE subTipo;
     
     public static RockDAO getNew(Vector3f posicion, float ang, Random rnd) {
         return getNew(posicion, ang,  ROCK_TYPE.values()[rnd.nextInt(ROCK_TYPE.values().length)]);
@@ -31,12 +31,12 @@ public class RockDAO extends EstaticoDAO {
         return rock;
     }
 
-    public ROCK_TYPE getTipo() {
-        return tipo;
+    public ROCK_TYPE getSubTipo() {
+        return subTipo;
     }
 
-    public void setTipo(ROCK_TYPE tipo) {
-        this.tipo = tipo;
+    public void setSubTipo(ROCK_TYPE subTipo) {
+        this.subTipo = subTipo;
     }
 
 	@Override

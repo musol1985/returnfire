@@ -5,20 +5,24 @@
  */
 package com.returnfire.models.elementos;
 
+import com.entity.anot.OnCollision;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
-import com.entity.core.items.NetworkModel;
+import com.entity.core.items.Model;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.returnfire.GameContext;
+import com.returnfire.models.elementos.environment.ArbolModel;
+import com.returnfire.msg.MsgOnImpactoBala;
 
 /**
  *
  * @author Edu
  */
-public abstract class BulletModel<T extends PhysicsRigidBody> extends NetworkModel{	
+public abstract class BulletModel extends Model{	
 	public enum BALAS{NORMAL, GRANDE}
 	
     @PhysicsBodyComponent(type=PhysicsBodyType.RIGID_BODY,mass=1f)
@@ -48,6 +52,13 @@ public abstract class BulletModel<T extends PhysicsRigidBody> extends NetworkMod
     	setLocalRotation(rotation);    	
     	
     	body.setLinearVelocity(new Vector3f(0,0,500f));
-        
+    }
+    
+    @OnCollision
+    public void onImpactarArbol(ArbolModel arbol)throws Exception{
+    	if(GameContext.isServer()){
+    		new MsgOnImpactoBala(idBala).send();
+    	}
+    	GameContext.getMundo().getBalas().eliminar(this);
     }
 }

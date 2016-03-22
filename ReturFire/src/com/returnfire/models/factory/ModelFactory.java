@@ -34,9 +34,9 @@ public class ModelFactory extends BaseService{
     
     public EstaticoModel crearRoca(RockDAO dao, CeldaDAO celda){
         EstaticoModel model=null;
-        if(dao.getTipo()==RockDAO.ROCK_TYPE.BROWN_1){
+        if(dao.getSubTipo()==RockDAO.ROCK_TYPE.BROWN_1){
             model= crearRockBrown1(null, dao, celda);
-        }else if(dao.getTipo()==RockDAO.ROCK_TYPE.BROWN_2){
+        }else if(dao.getSubTipo()==RockDAO.ROCK_TYPE.BROWN_2){
             model= crearRockBrown2(null, dao, celda);
         }else{ //if(dao.getTipo()==RockDAO.ROCK_TYPE.BROWN_3){
             model= crearRockBrown3(null, dao, celda);
