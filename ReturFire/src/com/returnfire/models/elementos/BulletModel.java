@@ -37,6 +37,8 @@ public abstract class BulletModel extends Model{
 	public RigidBodyControl getBody(){
 		return body;
 	}
+	
+	public abstract int getDanyo();
 
     
     public void setFrom(VehiculoModel vehiculo){
@@ -59,6 +61,7 @@ public abstract class BulletModel extends Model{
     @OnCollision
     public void onImpactarArbol(ArbolModel arbol)throws Exception{
     	if(GameContext.isServer()){
+    		arbol.onImpacto(this);
     		new MsgOnImpactoBala(idBala).send();
     	}
     	GameContext.getMundo().getBalas().eliminar(this);

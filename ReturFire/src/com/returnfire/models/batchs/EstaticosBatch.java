@@ -7,6 +7,7 @@ package com.returnfire.models.batchs;
 
 import com.entity.anot.entities.BatchModelEntity;
 import com.entity.core.items.BatchModel;
+import com.returnfire.models.CeldaModel;
 
 /**
  *
@@ -14,5 +15,7 @@ import com.entity.core.items.BatchModel;
  */
 @BatchModelEntity(name="estaticos",autoBatch = false)
 public class EstaticosBatch extends BatchModel{
-
+	public CeldaModel getCelda(){
+		return (CeldaModel)getParent();
+	}
 }

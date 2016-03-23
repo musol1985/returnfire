@@ -14,14 +14,14 @@ import com.entity.network.core.items.IWorldInGameScene;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.returnfire.dao.elementos.EstaticoDAO;
-import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.MundoModel;
+import com.returnfire.models.batchs.EstaticosBatch;
 
 /**
  *
  * @author Edu
  */
-public abstract class EstaticoModel<T extends EstaticoDAO> extends Model {
+public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<EstaticosBatch> {
     protected T dao;
     @PhysicsBodyComponent
     @CustomCollisionShape(methodName = "getColisionShape")
@@ -49,4 +49,25 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model {
         
         setDao((T)params[0]);
     }
+     
+     /**
+      * Retorna true si destruye el elemento
+      * @param bala
+      * @return
+      */
+     public boolean onImpacto(BulletModel bala){
+    	 if(dao.isDestructible()){
+    		 if(dao.addDanyo(bala.getDanyo())){
+    			 eliminar();
+    			 return true;
+    		 }
+    	 }
+    	 
+    	 return false;
+     }
+     
+     
+     public void eliminar(){
+    	 
+     }
 }

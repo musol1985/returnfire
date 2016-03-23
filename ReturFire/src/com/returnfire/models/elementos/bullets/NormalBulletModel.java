@@ -11,4 +11,9 @@ public class NormalBulletModel extends BulletModel{
     public SphereCollisionShape getCollisionShape() {
         return new SphereCollisionShape(0.2f);    
     }
+
+	@Override
+	public int getDanyo() {
+		return 50;
+	}
 }

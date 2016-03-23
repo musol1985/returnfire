@@ -17,7 +17,7 @@ import com.returnfire.dao.elementos.environment.ArbolDAO;
 public abstract class EstaticoDAO<T extends EstaticoDAO>{
 	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA}
 	
-	public static final int INDESTRUCTIBLE=-1;
+	public static final int INDESTRUCTIBLE=-9999;
 	
     protected Vector3f pos;
     protected float ang;
@@ -61,5 +61,23 @@ public abstract class EstaticoDAO<T extends EstaticoDAO>{
     	}else{
     		return ELEMENTOS_ESTATICOS.ROCA;
     	}
+    }
+    
+    public boolean isDestructible(){
+    	return vida!=INDESTRUCTIBLE;
+    }
+    
+    /**
+     * Retorna true si el elemento ha sido destruido 
+     * @param danyo
+     * @return
+     */
+    public boolean addDanyo(int danyo){
+    	vida-=danyo;
+    	return isDestruido();
+    }
+    
+    public boolean isDestruido(){
+    	return vida<=0;
     }
 }
