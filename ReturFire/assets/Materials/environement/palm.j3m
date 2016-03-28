@@ -1,6 +1,10 @@
 Material My Material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
         DiffuseMap : Textures/environement/Palm_Tree.png
+        GlowMap : Textures/environement/Palm_Tree_glow.png
+        UseMaterialColors : false
+        Ambient  : 0 0 0 1
+        Diffuse  : 1 1 1 1
      }
     AdditionalRenderState {
     }

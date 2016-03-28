@@ -16,10 +16,11 @@ import com.entity.anot.components.input.KeyInputMapping;
 import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
+import com.entity.core.EntityManager;
 import com.entity.network.core.items.InGameClientScene;
-import com.entity.network.core.listeners.InGameClientMessageListener;
 import com.jme3.input.KeyInput;
 import com.jme3.scene.Spatial;
+import com.returnfire.client.gui.DebugGUI;
 import com.returnfire.client.listeners.InGameClientListener;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -81,6 +82,7 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
 
 	@Override
 	public void onLoadPlayer()throws Exception {
+           EntityManager.getGame().getStateManager().attach(new DebugGUI());
 		player.seleccionarVehiculo();
         camera.attachToParent(world);
         //camera.followTo(player.getVehiculo());

@@ -16,6 +16,7 @@ import com.returnfire.client.scenes.InGame;
 import com.returnfire.client.scenes.LobbyScene;
 import com.returnfire.client.scenes.MainScene;
 import com.returnfire.service.ClientMundoService;
+import com.simsilica.lemur.GuiGlobals;
 
 
 
@@ -45,6 +46,15 @@ public class Client  extends EntityGame{
        
     @SceneEntity(preLoad=false, singleton=false, first = false)
     public InGame inGame;
+
+    @Override
+    public void simpleInitApp() {
+        GuiGlobals.initialize(this);
+        super.simpleInitApp(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
     
     public static boolean isTest1Player(){
         return false;

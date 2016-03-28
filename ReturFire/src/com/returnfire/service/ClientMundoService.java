@@ -2,7 +2,6 @@ package com.returnfire.service;
 
 import com.entity.anot.RunOnGLThread;
 import com.entity.network.core.service.impl.ClientNetWorldService;
-import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
@@ -11,6 +10,7 @@ import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.BulletModel;
+import com.returnfire.msg.MsgOnBalaEstatico;
 import com.returnfire.msg.MsgOnDisparar;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -61,5 +61,15 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
     @RunOnGLThread
     public void onImpactoBala(String bala)throws Exception{
     	getWorld().getBalas().eliminar(bala);
+    }
+    
+    @RunOnGLThread
+    public void onImpactoBalaEstatico(MsgOnBalaEstatico msg)throws Exception{
+    	getWorld().getBalas().eliminar(msg.idBala);
+        
+        CeldaModel cell=getCellById(msg.cellId.id);
+        if(cell!=null){
+            cell.eliminarEstatico(msg.idEstatico);
+        }
     }
 }

@@ -8,13 +8,18 @@ package com.returnfire.models.elementos;
 import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.network.NetSync;
+import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
 import com.entity.core.items.NetworkModel;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.shape.Sphere;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.BulletModel.BALAS;
@@ -33,8 +38,10 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     @NetSync(timeout=10)
     public Posicion posicion;
     
-	@SubModelComponent(name="arma")
-	protected Geometry arma;
+	@SubModelComponent(name="gun")
+	protected Node arma;
+        @SubModelComponent(name="gunEmitter")
+	protected Node armaEmitter;
     
 
     @Override
@@ -47,15 +54,19 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 		player=(JugadorModel) params[0];
                 if(player.isMe()){
                     getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
-                    getBody().setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+                    //getBody().setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
                 }
 	}
 
 	public abstract T getBody();
 	
-	public Geometry getArma(){
+	public Node getArma(){
 		return arma;
 	}
+        
+    public Node getArmaEmitter(){
+        return armaEmitter;
+    }
     
     public void setPosicionInicial(Vector3f pos){
         setLocalTranslation(pos);

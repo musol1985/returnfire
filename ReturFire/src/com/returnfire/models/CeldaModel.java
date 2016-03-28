@@ -86,8 +86,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             estaticos.batch();
         }
         
-        terrainBody.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
-        terrainBody.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+        /*terrainBody.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+        terrainBody.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);*/
     }
     
     @CustomHeightTerrain
@@ -118,6 +118,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         return (MundoModel)((IWorldInGameScene)EntityManager.getCurrentScene()).getWorld();
     }
     
-    
+    public void eliminarEstatico(String estaticoId){
+        estaticos.dettachEntity(estaticoId);
+        estaticos.batch();
+    }
     
 }

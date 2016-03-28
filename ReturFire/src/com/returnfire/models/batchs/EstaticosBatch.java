@@ -8,6 +8,7 @@ package com.returnfire.models.batchs;
 import com.entity.anot.entities.BatchModelEntity;
 import com.entity.core.items.BatchModel;
 import com.returnfire.models.CeldaModel;
+import com.returnfire.models.elementos.EstaticoModel;
 
 /**
  *
@@ -18,4 +19,9 @@ public class EstaticosBatch extends BatchModel{
 	public CeldaModel getCelda(){
 		return (CeldaModel)getParent();
 	}
+        
+        public void eliminar(EstaticoModel model){
+            dettachEntity(model);
+            batch();
+        }
 }

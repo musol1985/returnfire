@@ -14,6 +14,7 @@ import com.entity.network.core.items.IWorldInGameScene;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.returnfire.dao.elementos.EstaticoDAO;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.batchs.EstaticosBatch;
 
@@ -48,6 +49,8 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
         super.onInstance(builder, params); 
         
         setDao((T)params[0]);
+        
+         setName(dao.getId());
     }
      
      /**
@@ -68,6 +71,10 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      
      
      public void eliminar(){
-    	 
+    	 getParentModel().eliminar(this);
+     }
+     
+     public CeldaModel getCelda(){
+         return getParentModel().getCelda();
      }
 }

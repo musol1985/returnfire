@@ -23,11 +23,16 @@ public  class Posicion extends NetMessage<VehiculoModel>{
 	}
 	@Override
 	public void onReceive(VehiculoModel model) {		
-		model.setLocalTranslation(pos);		
-		model.getBody().setLinearVelocity(vel);
-		
-		model.setLocalRotation(new Quaternion().fromAngles(direccion));
-		model.getBody().setAngularVelocity(velAngular);
+		//model.setLocalTranslation(pos);	
+            if(!model.getBody().isKinematic()){
+                model.getBody().setPhysicsLocation(pos);			
+                model.getBody().setPhysicsRotation(new Quaternion().fromAngles(direccion));		
+            }else{
+                model.setLocalTranslation(pos);
+                model.setLocalRotation(new Quaternion().fromAngles(direccion));
+            }
+            model.getBody().setLinearVelocity(vel);	
+            model.getBody().setAngularVelocity(velAngular);
 		
 		model.getPlayer().dao.setPosition(pos);
 	}

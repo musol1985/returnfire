@@ -6,9 +6,8 @@ import com.entity.anot.Service;
 import com.entity.anot.components.lights.AmbientLightComponent;
 import com.entity.anot.components.lights.DirectionalLightComponent;
 import com.entity.anot.components.shadows.DirectionalShadowComponent;
+import com.entity.anot.effects.BloomEffect;
 import com.entity.anot.effects.WaterEffect;
-import com.entity.core.EntityManager;
-import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorld;
 import com.jme3.light.AmbientLight;
 import com.jme3.post.filters.BloomFilter;
@@ -18,15 +17,15 @@ import com.returnfire.models.batchs.BalasBatch;
 import com.returnfire.models.batchs.VehiculosBatch;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.factory.BalasFactory;
-import com.returnfire.service.ClientMundoService;
 import com.returnfire.service.HeightService;
 
 
 public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         public static final int CELL_SIZE=256;   
         
-        //@BloomEffect(bloomIntensity = 2.45f, downSamplingFactor = 2, blurScale = 1.37f, exposureCutOff = 0.2f, exposurePower = 3.30f)
-        private BloomFilter bloom;
+        @BloomEffect(mode=BloomFilter.GlowMode.Objects, bloomIntensity = 2f, downSamplingFactor = 1, blurScale = 1.5f, exposureCutOff = 0f, exposurePower = 1.3f)
+        public BloomFilter bloom;
+
 
         @WaterEffect(waterHeight = 10f)
         private WaterFilter agua;

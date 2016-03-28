@@ -1,0 +1,10 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Textures/bala.jpg
+        GlowColor : 1 0.0 0.0 1.0
+        UseMaterialColors : true
+        Diffuse : 1 0.0 0.0 1.0
+     }
+    AdditionalRenderState {
+    }
+}

@@ -1,6 +1,6 @@
 Material My Material : Common/MatDefs/Terrain/TerrainLighting.j3md {
      MaterialParameters {
-        DiffuseMap : Repeat Textures/desert.jpg
+        DiffuseMap : Repeat Textures/sand.jpg
         DiffuseMap_0_scale : 16.0
         DiffuseMap_1_scale : 0.0
         isTerrainGrid : false
