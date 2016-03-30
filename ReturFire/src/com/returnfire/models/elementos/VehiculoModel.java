@@ -5,7 +5,9 @@
  */
 package com.returnfire.models.elementos;
 
+import com.entity.adapters.ParticleCache;
 import com.entity.adapters.ScrollCameraAdapter;
+import com.entity.anot.components.model.ParticleComponent;
 import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.network.NetSync;
 import com.entity.core.EntityManager;
@@ -42,7 +44,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 	protected Node arma;
         @SubModelComponent(name="gunEmitter")
 	protected Node armaEmitter;
-    
+
 
     @Override
 	public String getName() {
@@ -55,7 +57,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
                 if(player.isMe()){
                     getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
                     //getBody().setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
-                }
+                }             
 	}
 
 	public abstract T getBody();

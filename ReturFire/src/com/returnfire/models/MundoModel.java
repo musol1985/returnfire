@@ -1,6 +1,7 @@
 package com.returnfire.models;
 
 import com.entity.adapters.DirectionalLightShadow;
+import com.entity.adapters.ParticleCache;
 import com.entity.anot.Entity;
 import com.entity.anot.Service;
 import com.entity.anot.components.lights.AmbientLightComponent;
@@ -10,6 +11,7 @@ import com.entity.anot.effects.BloomEffect;
 import com.entity.anot.effects.WaterEffect;
 import com.entity.network.core.models.NetWorld;
 import com.jme3.light.AmbientLight;
+import com.jme3.math.Vector3f;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.water.WaterFilter;
 import com.returnfire.dao.MundoDAO;
@@ -86,5 +88,11 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
 		balas.nueva(bullet);	
     }
     
- 
+     
+    
+    public void addParticle(ParticleCache p, Vector3f pos){        
+        p.attach(this);
+        p.setLocalTranslation(pos);
+        //p.dettach(true);
+    }
 }

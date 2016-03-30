@@ -37,7 +37,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
     }
     
     public abstract CollisionShape getColisionShape();
-    
+    public abstract void onEliminar();
      
     
     public MundoModel getMundo(){
@@ -71,6 +71,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      
      
      public void eliminar(){
+         onEliminar();
     	 getParentModel().eliminar(this);
      }
      

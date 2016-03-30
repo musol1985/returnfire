@@ -1,0 +1,9 @@
+Material My Material : Common/MatDefs/Misc/Particle.j3md {
+     MaterialParameters {
+        Texture : Flip Textures/fx/rfCHc.png
+        PointSprite : false
+     }
+    AdditionalRenderState {
+      Blend Alpha
+    }
+}

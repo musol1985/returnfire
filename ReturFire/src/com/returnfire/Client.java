@@ -57,7 +57,7 @@ public class Client  extends EntityGame{
     
     
     public static boolean isTest1Player(){
-        return false;
+        return true;
     }
   
     

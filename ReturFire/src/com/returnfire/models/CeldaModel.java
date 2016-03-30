@@ -1,5 +1,6 @@
 package com.returnfire.models;
 
+import com.entity.adapters.ParticleCache;
 import com.entity.anot.Entity;
 import com.entity.anot.Service;
 import com.entity.anot.components.model.MaterialComponent;
@@ -11,7 +12,6 @@ import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorldCell;
-import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
@@ -122,5 +122,5 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         estaticos.dettachEntity(estaticoId);
         estaticos.batch();
     }
-    
+
 }
