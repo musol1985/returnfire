@@ -73,6 +73,9 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      public void eliminar(){
          onEliminar();
     	 getParentModel().eliminar(this);
+    	 
+    	 getCelda().dao.getEstaticos().remove(dao);
+    	 getCelda().save();
      }
      
      public CeldaModel getCelda(){
