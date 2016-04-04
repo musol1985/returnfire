@@ -58,7 +58,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
       * @param bala
       * @return
       */
-     public boolean onImpacto(BulletModel bala){
+     public boolean onImpacto(BulletModel bala)throws Exception{
 		 getCelda().dao.getId().update();
 		 if(dao.addDanyo(bala.getDanyo())){
 			 eliminar();

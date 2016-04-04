@@ -16,6 +16,7 @@ import com.jme3.post.filters.BloomFilter;
 import com.jme3.water.WaterFilter;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.models.batchs.BalasBatch;
+import com.returnfire.models.batchs.DinamicosBatch;
 import com.returnfire.models.batchs.VehiculosBatch;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.factory.BalasFactory;
@@ -48,6 +49,9 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         @Entity
         private BalasBatch balas;
         
+        @Entity
+        private DinamicosBatch dinamicos;
+        
         @Service
         private BalasFactory balasFactory;
 
@@ -78,6 +82,12 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
 
 	public BalasBatch getBalas() {
 		return balas;
+	}
+	
+	
+
+	public DinamicosBatch getDinamicos() {
+		return dinamicos;
 	}
 
 	public BalasFactory getBalasFactory() {
