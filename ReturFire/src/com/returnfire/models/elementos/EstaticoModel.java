@@ -61,7 +61,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      public boolean onImpacto(BulletModel bala)throws Exception{
 		 getCelda().dao.getId().update();
 		 if(dao.addDanyo(bala.getDanyo())){
-			 eliminar();
+                        eliminar();
 			 return true;
 		 }
     	 
@@ -74,11 +74,12 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      
      
      public void eliminar(){
+         CeldaModel celda=getParentModel().getCelda();
          onEliminar();
     	 getParentModel().eliminar(this);
     	 
-    	 getCelda().dao.getEstaticos().remove(dao);
-    	 getCelda().save();
+    	 celda.dao.getEstaticos().remove(dao);
+    	 celda.save();
      }
      
      public CeldaModel getCelda(){

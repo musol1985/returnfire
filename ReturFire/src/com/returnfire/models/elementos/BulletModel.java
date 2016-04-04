@@ -5,23 +5,23 @@
  */
 package com.returnfire.models.elementos;
 
+import com.entity.adapters.ParticleCache;
 import com.entity.anot.OnCollision;
 import com.entity.anot.OnUpdate;
+import com.entity.anot.components.model.ParticleComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
 import com.entity.core.items.Model;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.control.BillboardControl;
 import com.returnfire.GameContext;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.msg.MsgOnBalaEstatico;
-import com.returnfire.msg.MsgOnImpactoBala;
 
 /**
  *
@@ -33,6 +33,10 @@ public abstract class BulletModel extends Model{
     @PhysicsBodyComponent(type=PhysicsBodyType.RIGID_BODY,mass=1f)
     @CustomCollisionShape(methodName = "getCollisionShape")
     public RigidBodyControl body;
+    
+    
+    @ParticleComponent(asset = "Models/fx/spark.j3o")
+    public ParticleCache sparks;
     
     public VehiculoModel from;
     public String idBala;
@@ -63,18 +67,25 @@ public abstract class BulletModel extends Model{
         t=System.currentTimeMillis();
         
         body.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
+        body.setCcdMotionThreshold(0.1f);
         //addControl(new BillboardControl());
     }
     
     @OnCollision
     public void onImpactarArbol(ArbolModel arbol)throws Exception{
+        arbol.getCelda().getMundo().addParticle(sparks, getWorldTranslation().add(0, 5, 0)); 
+        //sparks.dettach(true);
+        
     	if(GameContext.isServer()){    
     		if(arbol.isDestructible()){
-    			long t=arbol.getCelda().dao.getId().timestamp;
+                        CeldaModel celda=arbol.getCelda();
+    			long t=celda.dao.getId().timestamp;
 	    		arbol.onImpacto(this);
-	    		new MsgOnBalaEstatico(idBala, arbol, t).send();
+	    		new MsgOnBalaEstatico(idBala, arbol, celda, t).send();
     		}
-    	}
+    	}else{
+            arbol.tirarCoco(this);
+        }
     	GameContext.getMundo().getBalas().eliminar(this);
     }
     

@@ -82,7 +82,7 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
 
 	@Override
 	public void onLoadPlayer()throws Exception {
-           EntityManager.getGame().getStateManager().attach(new DebugGUI());
+          // EntityManager.getGame().getStateManager().attach(new DebugGUI());
 		player.seleccionarVehiculo();
         camera.attachToParent(world);
         //camera.followTo(player.getVehiculo());

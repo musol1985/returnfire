@@ -37,6 +37,10 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     protected float accelerationValue = 0;     
     protected JugadorModel player;
     
+     
+    @ParticleComponent(asset = "Models/fx/debris.j3o")
+    public ParticleCache debris;
+    
     @NetSync(timeout=10)
     public Posicion posicion;
     
@@ -57,7 +61,11 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
                 if(player.isMe()){
                     getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
                     //getBody().setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
-                }             
+                }        
+                
+                debris.attach(this);
+                debris.setLocalTranslation(getWorldTranslation());
+                
 	}
 
 	public abstract T getBody();

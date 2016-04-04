@@ -3,6 +3,7 @@ package com.returnfire.msg;
 import com.entity.network.core.beans.CellId;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.EstaticoDAO.ELEMENTOS_ESTATICOS;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.EstaticoModel;
 
 @Serializable
@@ -17,12 +18,12 @@ public class MsgOnBalaEstatico extends MsgOnImpactoBala {
 		
 	}
 	
-	public MsgOnBalaEstatico(String idBala, EstaticoModel estatico, long t) {
+	public MsgOnBalaEstatico(String idBala, EstaticoModel estatico, CeldaModel celda, long t) {
 		super(idBala);
 		this.celdaTimestampOld=t;
 		this.tipo=estatico.getDAO().getTipo();
 		this.idEstatico=estatico.getDAO().getId();
                 this.vida=estatico.getDAO().getVida();
-                this.cellId=estatico.getCelda().dao.getId();
+                this.cellId=celda.dao.getId();
 	}
 }
