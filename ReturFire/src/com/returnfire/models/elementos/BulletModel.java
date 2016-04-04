@@ -68,9 +68,12 @@ public abstract class BulletModel extends Model{
     
     @OnCollision
     public void onImpactarArbol(ArbolModel arbol)throws Exception{
-    	if(GameContext.isServer()){    		
-    		new MsgOnBalaEstatico(idBala, arbol).send();
-                arbol.onImpacto(this);
+    	if(GameContext.isServer()){    
+    		if(arbol.isDestructible()){
+    			long t=arbol.getCelda().dao.getId().timestamp;
+	    		arbol.onImpacto(this);
+	    		new MsgOnBalaEstatico(idBala, arbol, t).send();
+    		}
     	}
     	GameContext.getMundo().getBalas().eliminar(this);
     }

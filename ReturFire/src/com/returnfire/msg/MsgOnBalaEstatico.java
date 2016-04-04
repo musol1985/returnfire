@@ -9,6 +9,7 @@ import com.returnfire.models.elementos.EstaticoModel;
 public class MsgOnBalaEstatico extends MsgOnImpactoBala {
 	public ELEMENTOS_ESTATICOS tipo;
 	public String idEstatico;
+	public long celdaTimestampOld;
         public int vida;
         public CellId cellId;
 	
@@ -16,8 +17,9 @@ public class MsgOnBalaEstatico extends MsgOnImpactoBala {
 		
 	}
 	
-	public MsgOnBalaEstatico(String idBala, EstaticoModel estatico) {
+	public MsgOnBalaEstatico(String idBala, EstaticoModel estatico, long t) {
 		super(idBala);
+		this.celdaTimestampOld=t;
 		this.tipo=estatico.getDAO().getTipo();
 		this.idEstatico=estatico.getDAO().getId();
                 this.vida=estatico.getDAO().getVida();

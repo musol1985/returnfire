@@ -59,14 +59,17 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
       * @return
       */
      public boolean onImpacto(BulletModel bala){
-    	 if(dao.isDestructible()){
-    		 if(dao.addDanyo(bala.getDanyo())){
-    			 eliminar();
-    			 return true;
-    		 }
-    	 }
+		 getCelda().dao.getId().update();
+		 if(dao.addDanyo(bala.getDanyo())){
+			 eliminar();
+			 return true;
+		 }
     	 
     	 return false;
+     }
+     
+     public boolean isDestructible(){
+    	 return dao.isDestructible();
      }
      
      

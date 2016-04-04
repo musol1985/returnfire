@@ -70,6 +70,12 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
         CeldaModel cell=getCellById(msg.cellId.id);
         if(cell!=null){
             cell.eliminarEstatico(msg.idEstatico);
+            //Si el timestamp actual es igual al de antes de eliminar el estatico en el server
+            //quiere decir que estamos sincronizados, eliminamos y actualizamos el timestamp.
+            if(cell.dao.getId().timestamp==msg.celdaTimestampOld){
+            	cell.dao.getId().timestamp=msg.cellId.timestamp;
+            	cell.save();
+            }
         }
     }
 }
