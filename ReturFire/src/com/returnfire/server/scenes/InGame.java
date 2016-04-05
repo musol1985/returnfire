@@ -8,10 +8,12 @@ package com.returnfire.server.scenes;
 import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.anot.Entity;
 import com.entity.anot.ScrollCameraNode;
+import com.entity.anot.Task;
 import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
 import com.entity.network.core.items.InGameServerScene;
+import com.entity.network.core.tasks.NetWorldPersistTask;
 import com.returnfire.Server;
 import com.returnfire.models.MundoModel;
 import com.returnfire.server.listeners.InGameServerListener;
@@ -32,8 +34,9 @@ public class InGame extends InGameServerScene<InGameServerListener, MundoModel, 
     
     @MessageListener
     private InGameServerListener listener;
-    
-    
+	
+	@Task(period=30)
+	public NetWorldPersistTask saveTask;
                 
     @ScrollCameraNode(debug = false, speed = 100)
     private ScrollCameraAdapter camera;
@@ -63,4 +66,9 @@ public class InGame extends InGameServerScene<InGameServerListener, MundoModel, 
     public void onLoadRemotePlayers() throws Exception{
             world.cargarJugadores();
     }
+
+	@Override
+	public NetWorldPersistTask getPersistTask() {
+		return saveTask;
+	}
 }

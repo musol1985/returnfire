@@ -10,6 +10,7 @@ import com.entity.adapters.listeners.IFollowCameraListener;
 import com.entity.anot.Entity;
 import com.entity.anot.FollowCameraNode;
 import com.entity.anot.Sky;
+import com.entity.anot.Task;
 import com.entity.anot.components.input.ComposedKeyInput;
 import com.entity.anot.components.input.Input;
 import com.entity.anot.components.input.KeyInputMapping;
@@ -18,6 +19,7 @@ import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
 import com.entity.core.EntityManager;
 import com.entity.network.core.items.InGameClientScene;
+import com.entity.network.core.tasks.NetWorldPersistTask;
 import com.jme3.input.KeyInput;
 import com.jme3.scene.Spatial;
 import com.returnfire.client.gui.DebugGUI;
@@ -58,6 +60,9 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
             
     @FollowCameraNode(debug = false)
     private FollowCameraAdapter camera;
+    
+	@Task(period=30)
+	public NetWorldPersistTask saveTask;
 
     
     @Override
@@ -149,6 +154,11 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
             player.getVehiculo().onRight(value);
         }
     }
+
+	@Override
+	public NetWorldPersistTask getPersistTask() {
+		return saveTask;
+	}
 
 
 }
