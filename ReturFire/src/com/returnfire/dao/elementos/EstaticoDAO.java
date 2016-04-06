@@ -14,7 +14,7 @@ import com.returnfire.dao.elementos.environment.ArbolDAO;
  * @author Edu
  */
 @Serializable
-public abstract class EstaticoDAO<T extends EstaticoDAO>{
+public abstract class EstaticoDAO<T extends EstaticoDAO> implements java.io.Serializable{
 	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA}
 	
 	public static final int INDESTRUCTIBLE=-9999;
@@ -22,6 +22,12 @@ public abstract class EstaticoDAO<T extends EstaticoDAO>{
     protected Vector3f pos;
     protected float ang;
     protected int vida;
+
+    public EstaticoDAO() {
+        vida=getVidaInicial();
+    }
+    
+    
 
     public Vector3f getPos() {
         return pos;
@@ -73,7 +79,9 @@ public abstract class EstaticoDAO<T extends EstaticoDAO>{
      * @return
      */
     public boolean addDanyo(int danyo){
+        System.out.println("----------------------------------->DANYO "+vida);
     	vida-=danyo;
+        System.out.println("----------------------------------->DANYO post"+vida);
     	return isDestruido();
     }
     

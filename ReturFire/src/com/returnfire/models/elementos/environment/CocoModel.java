@@ -1,6 +1,9 @@
 package com.returnfire.models.elementos.environment;
 
 import com.entity.adapters.ControlAdapter;
+import com.entity.adapters.Modifier;
+import com.entity.adapters.listeners.IModifierOnFinish;
+import com.entity.adapters.modifiers.ModifierPosition;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
 import com.entity.anot.entities.ModelEntity;
@@ -11,6 +14,7 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Spatial;
 import com.returnfire.models.CeldaModel;
 
 @ModelEntity(asset = "Models/environment/coco.j3o")
@@ -24,7 +28,7 @@ public class CocoModel extends Model<ArbolModel>{
     public void onInstance(IBuilder builder, Object[] params) {
         super.onInstance(builder, params); 
         
-        body.setSleepingThresholds(15, 15);
+        body.setSleepingThresholds(5, 5);
     }
     
     
@@ -36,7 +40,7 @@ public class CocoModel extends Model<ArbolModel>{
 
     public void caer()throws Exception{    	
     	Vector3f posWorld=getWorldTranslation();
-        CeldaModel celda=getParentModel().getCelda();
+        final CeldaModel celda=getParentModel().getCelda();
     	dettach();
     	celda.getMundo().getDinamicos().attachEntity(this);
     	setLocalTranslation(posWorld);
@@ -50,6 +54,13 @@ public class CocoModel extends Model<ArbolModel>{
 			public void update(float tpf) {
 				if(!body.isActive()){
 					EntityManager.getGame().getPhysics().remove(body);
+                                        removeControl(this);
+                                        addControl(new ModifierPosition(getLocalTranslation(), getLocalTranslation().add(0,-5,0), 2000, false, new IModifierOnFinish() {
+                                            @Override
+                                            public void onFinish(Modifier m, Spatial model) {
+                                                celda.getMundo().getDinamicos().dettachEntity(CocoModel.this);
+                                            }
+                                        }));
 				}
 			}
     	});

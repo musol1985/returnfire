@@ -38,7 +38,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     protected JugadorModel player;
     
      
-    @ParticleComponent(asset = "Models/fx/debris.j3o")
+    @ParticleComponent(asset = "Models/fx/hojas.j3o")
     public ParticleCache debris;
     
     @NetSync(timeout=10)
@@ -64,7 +64,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
                 }        
                 
                 debris.attach(this);
-                debris.setLocalTranslation(getWorldTranslation());
+                debris.setLocalTranslation(getWorldTranslation().add(0,5,0));
                 
 	}
 

@@ -103,6 +103,6 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
     public void addParticle(ParticleCache p, Vector3f pos){        
         p.attach(this);
         p.setLocalTranslation(pos);
-        //p.dettach(true);
+        p.dettach(true);
     }
 }

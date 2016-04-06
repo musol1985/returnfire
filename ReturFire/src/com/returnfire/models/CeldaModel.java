@@ -123,4 +123,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         estaticos.batch();
     }
 
+    public EstaticoModel getEstatico(String estaticoId){
+        return (EstaticoModel)estaticos.getEntity(estaticoId);
+    }
 }

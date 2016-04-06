@@ -16,8 +16,8 @@ import com.returnfire.models.elementos.EstaticoModel;
 @ModelEntity(asset = "Models/palm_03.j3o")
 public class ArbolModel extends EstaticoModel<ArbolDAO>{
  
-    @ParticleComponent(asset = "Models/fx/debris.j3o")
-    public ParticleCache debris;
+    @ParticleComponent(asset = "Models/fx/hojas.j3o")
+    public ParticleCache hojas;
    
     @Entity(name="coco")
     public CocoModel coco;
@@ -40,17 +40,11 @@ public class ArbolModel extends EstaticoModel<ArbolDAO>{
         coco.rotate(-0.9f, 0, -0.9f);
              //GameContext.getMundo().addParticle(hojas, getWorldTranslation().add(0, 5, 0));        
     }
-
-    @Override
-    public boolean onImpacto(BulletModel bala) throws Exception {
-        getCelda().getMundo().addParticle(debris, getWorldTranslation().add(0, 5, 0));    
-        //debris.emitAll();
-        return super.onImpacto(bala); //To change body of generated methods, choose Tools | Templates.
-    }
     
     
      
-    public void tirarCoco(BulletModel bala)throws Exception{
+    public void tirarCoco(BulletModel bala)throws Exception{        
+        getCelda().getMundo().addParticle(hojas, getWorldTranslation().add(0, 10, 0));  
         if(dao.getVida()-bala.getDanyo()<50 && coco!=null){
             coco.caer();
             coco=null;
