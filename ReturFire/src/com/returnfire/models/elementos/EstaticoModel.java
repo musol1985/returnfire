@@ -13,6 +13,8 @@ import com.entity.core.items.Model;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.math.Vector3f;
+import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
@@ -37,7 +39,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
     }
     
     public abstract CollisionShape getColisionShape();
-    public abstract void onEliminar();
+    public abstract boolean onEliminar(Vector3f vel);
      
     
     public MundoModel getMundo(){
@@ -61,7 +63,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      public boolean onImpacto(BulletModel bala)throws Exception{
 		 getCelda().dao.getId().update();
 		 if(dao.addDanyo(bala.getDanyo())){
-                        eliminar();
+                        eliminar(bala.getBody().getLinearVelocity());
 			 return true;
 		 }
     	 
@@ -73,10 +75,10 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      }
      
      
-     public void eliminar(){
+     public void eliminar(Vector3f vel){
          CeldaModel celda=getParentModel().getCelda();
-         onEliminar();
-    	 getParentModel().eliminar(this);
+         if(GameContext.isServer() || onEliminar(vel))
+            getParentModel().eliminar(this);
     	 
     	 celda.dao.getEstaticos().remove(dao);
     	 celda.save();

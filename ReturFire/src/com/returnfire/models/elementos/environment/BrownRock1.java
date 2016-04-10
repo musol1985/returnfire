@@ -14,9 +14,10 @@ public class BrownRock1 extends EstaticoModel<RockDAO>{
     public CollisionShape getColisionShape(){
         return new BoxCollisionShape(new Vector3f(1,1,1));
     }
-    
+
+
     @Override
-    public void onEliminar() {
-        
+    public boolean onEliminar(Vector3f vel) {
+        return true;
     }
 }

@@ -72,8 +72,7 @@ public abstract class BulletModel extends Model{
     }
     
     @OnCollision
-    public void onImpactarArbol(ArbolModel arbol)throws Exception{
-        arbol.getCelda().getMundo().addParticle(sparks, getWorldTranslation().add(0, 5, 0)); 
+    public void onImpactarArbol(ArbolModel arbol)throws Exception{        
         //sparks.dettach(true);
         
     	if(GameContext.isServer()){    
@@ -81,9 +80,10 @@ public abstract class BulletModel extends Model{
                         CeldaModel celda=arbol.getCelda();
     			long t=celda.dao.getId().timestamp;
 	    		arbol.onImpacto(this);
-	    		new MsgOnBalaEstatico(idBala, arbol, celda, t).send();
+	    		new MsgOnBalaEstatico(idBala, body.getLinearVelocity(), arbol, celda, t).send();
     		}
     	}else{
+            //arbol.getCelda().getMundo().addParticle(sparks, getWorldTranslation().add(0, 5, 0)); 
             arbol.tirarCoco(this);
         }
     	GameContext.getMundo().getBalas().eliminar(this);

@@ -24,10 +24,11 @@ public class BalasBatch extends BatchModel{
 		balas.put(bala.idBala, bala);
 	}
 	
-	public void eliminar(String balaId){
+	public BulletModel eliminar(String balaId){
 		BulletModel bala=balas.remove(balaId);
 		if(bala!=null)
 			dettachEntity(bala);
+                return bala;
 	}
 	
 	public void eliminar(BulletModel bala){
