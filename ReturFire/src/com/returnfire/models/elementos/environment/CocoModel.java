@@ -55,7 +55,7 @@ public class CocoModel extends Model<ArbolModel>{
 				if(!body.isActive()){
 					EntityManager.getGame().getPhysics().remove(body);
                                         removeControl(this);
-                                        addControl(new ModifierPosition(getLocalTranslation(), getLocalTranslation().add(0,-5,0), 2000, false, new IModifierOnFinish() {
+                                        addControl(new ModifierPosition(getLocalTranslation(), getLocalTranslation().add(0,-5,0), 5000, false, new IModifierOnFinish() {
                                             @Override
                                             public void onFinish(Modifier m, Spatial model) {
                                                 celda.getMundo().getDinamicos().dettachEntity(CocoModel.this);

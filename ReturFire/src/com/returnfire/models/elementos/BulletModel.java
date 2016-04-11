@@ -5,10 +5,8 @@
  */
 package com.returnfire.models.elementos;
 
-import com.entity.adapters.ParticleCache;
 import com.entity.anot.OnCollision;
 import com.entity.anot.OnUpdate;
-import com.entity.anot.components.model.ParticleComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
@@ -33,10 +31,6 @@ public abstract class BulletModel extends Model{
     @PhysicsBodyComponent(type=PhysicsBodyType.RIGID_BODY,mass=1f)
     @CustomCollisionShape(methodName = "getCollisionShape")
     public RigidBodyControl body;
-    
-    
-    @ParticleComponent(asset = "Models/fx/spark.j3o")
-    public ParticleCache sparks;
     
     public VehiculoModel from;
     public String idBala;
@@ -72,9 +66,7 @@ public abstract class BulletModel extends Model{
     }
     
     @OnCollision
-    public void onImpactarArbol(ArbolModel arbol)throws Exception{        
-        //sparks.dettach(true);
-        
+    public void onImpactarArbol(ArbolModel arbol)throws Exception{                
     	if(GameContext.isServer()){    
     		if(arbol.isDestructible()){
                         CeldaModel celda=arbol.getCelda();
@@ -83,8 +75,7 @@ public abstract class BulletModel extends Model{
 	    		new MsgOnBalaEstatico(idBala, body.getLinearVelocity(), arbol, celda, t).send();
     		}
     	}else{
-            //arbol.getCelda().getMundo().addParticle(sparks, getWorldTranslation().add(0, 5, 0)); 
-            arbol.tirarCoco(this);
+            arbol.onImpactoLocal(this);
         }
     	GameContext.getMundo().getBalas().eliminar(this);
     }

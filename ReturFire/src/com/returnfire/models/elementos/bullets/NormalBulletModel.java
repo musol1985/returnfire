@@ -1,7 +1,5 @@
 package com.returnfire.models.elementos.bullets;
 
-import com.entity.adapters.ParticleCache;
-import com.entity.anot.components.model.ParticleComponent;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.returnfire.models.elementos.BulletModel;

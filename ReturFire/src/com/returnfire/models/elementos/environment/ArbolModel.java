@@ -1,8 +1,8 @@
 package com.returnfire.models.elementos.environment;
 
-import com.entity.adapters.ParticleCache;
+import com.entity.adapters.EffectParticleAdapter;
 import com.entity.anot.Entity;
-import com.entity.anot.components.model.ParticleComponent;
+import com.entity.anot.effects.EffectParticle;
 import com.entity.anot.entities.ModelEntity;
 import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
@@ -12,6 +12,7 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
+import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.elementos.EstaticoModel;
@@ -19,8 +20,8 @@ import com.returnfire.models.elementos.EstaticoModel;
 @ModelEntity(asset = "Models/environment/palm_03.j3o")
 public class ArbolModel extends EstaticoModel<ArbolDAO>{
  
-    @ParticleComponent(asset = "Models/fx/hojas.j3o")
-    public ParticleCache hojas;
+    @EffectParticle(asset = "Models/fx/hojas.j3o")
+    public EffectParticleAdapter hojas;
    
     @Entity(name="coco")
     public CocoModel coco;
@@ -62,8 +63,9 @@ public class ArbolModel extends EstaticoModel<ArbolDAO>{
     
     
      
-    public void tirarCoco(BulletModel bala)throws Exception{        
-        getCelda().getMundo().addParticle(hojas, getWorldTranslation().add(0, 4, 0));  
+    public void onImpactoLocal(BulletModel bala)throws Exception{   
+    	hojas.attach(GameContext.getMundo(), getWorldTranslation().add(0, 5, 0));
+
         if(dao.getVida()-bala.getDanyo()<50 && coco!=null){
             coco.caer();
             coco=null;
