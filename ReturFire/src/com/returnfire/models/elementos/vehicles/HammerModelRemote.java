@@ -7,7 +7,7 @@ import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
-import com.returnfire.dao.JugadorDAO.VEHICULOS;
+import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.elementos.VehiculoModel;
 
 @ModelEntity(asset = "Models/vehicles/hammer.j3o", attach = false)

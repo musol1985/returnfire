@@ -2,17 +2,18 @@ package com.returnfire.dao;
 
 import com.entity.network.core.dao.NetPlayerDAO;
 import com.jme3.network.serializing.Serializable;
+import com.returnfire.dao.elementos.VehiculoDAO;
 @Serializable
 public class JugadorDAO extends NetPlayerDAO{
-	public enum VEHICULOS{NINGUNO, HAMMER}
 	
-	private VEHICULOS vehiculo;
+	
+	private VehiculoDAO vehiculo;
 
-	public VEHICULOS getVehiculo() {
+	public VehiculoDAO getVehiculo() {
 		return vehiculo;
 	}
 
-	public void setVehiculo(VEHICULOS vehiculo) {
+	public void setVehiculo(VehiculoDAO vehiculo) {
 		this.vehiculo = vehiculo;
 	}
 	

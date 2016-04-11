@@ -1,6 +1,5 @@
 package com.returnfire.models.elementos.vehicles;
 
-import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.components.model.VehicleComponent;
 import com.entity.anot.components.model.WheelComponent;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
@@ -9,9 +8,7 @@ import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
-import com.returnfire.dao.JugadorDAO.VEHICULOS;
+import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.elementos.VehiculoModel;
 
 @ModelEntity(asset = "Models/vehicles/hammer.j3o", attach = false)

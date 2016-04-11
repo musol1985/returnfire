@@ -1,20 +1,18 @@
 package com.returnfire.service;
 
-import com.entity.anot.OnExecutor;
-import com.entity.anot.RunOnGLThread;
 import java.util.Random;
 
+import com.entity.anot.RunOnGLThread;
 import com.entity.network.core.beans.CellId;
-import com.entity.network.core.beans.CreatingCell;
-import com.entity.network.core.msg.MsgShowCell;
 import com.entity.network.core.service.impl.ServerNetWorldService;
 import com.entity.utils.Utils;
 import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;
-import com.jme3.network.HostedConnection;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
+import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -43,7 +41,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 
 
 	@Override
-	public void preload() {
+	public void preload() throws Exception{
 		world.getDao().setSeed(System.currentTimeMillis());
 		
 		rnd=new Random(world.getDao().getSeed());
@@ -59,7 +57,20 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
-                        j.setVehiculo(JugadorDAO.VEHICULOS.HAMMER);
+			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial, 0);
+			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, vehiculoInicial);
+
+            
+            Vector2 pos=getCellPosByReal(posInicial);
+            CeldaModel celda=getCellById(pos);
+            if(celda==null){
+            	celda=createNewCell(pos, null, false);
+            }
+            Vector3f cellLocalPosition=celda.worldToLocal(posInicial, null);
+            base.setPos(cellLocalPosition);
+            
+            celda.addEdificio(base);
+			//j.setVehiculo(vehiculoInicial);
 			posInicial.addLocal(20,0,20);
 		}
 	}

@@ -15,7 +15,8 @@ import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-import com.returnfire.dao.JugadorDAO;
+import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.BulletModel.BALAS;
 import com.returnfire.msg.MsgDisparar;
@@ -29,28 +30,29 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 	protected float steeringValue = 0;
     protected float accelerationValue = 0;     
     protected JugadorModel player;
+    protected VehiculoDAO dao;
 
     @NetSync(timeout=10)
     public Posicion posicion;
     
 	@SubModelComponent(name="gun")
 	protected Node arma;
-        @SubModelComponent(name="gunEmitter")
+    @SubModelComponent(name="gunEmitter")
 	protected Node armaEmitter;
 
 
     @Override
 	public String getName() {
-		return player.dao.getId()+"#";
+		return dao.getId()+"#";
 	}
 
 	@Override
 	public void onInstance(IBuilder builder, Object[] params) {
 		player=(JugadorModel) params[0];
-                if(player.isMe()){
-                    getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
-                    //getBody().setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
-                }                    
+        if(player.isMe()){
+            getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+        }                    
+        dao=(VehiculoDAO)params[1];
 	}
 
 	public abstract T getBody();
@@ -140,7 +142,9 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     	return 100.0f;
     }
     
-    public abstract JugadorDAO.VEHICULOS getTipoVehiculo();    
+    public VEHICULOS getTipoVehiculo(){
+    	return dao.getTipo();
+    }
     
     public Vector3f getPhysicsLocation(){
     	return getBody().getPhysicsLocation();

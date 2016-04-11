@@ -7,6 +7,7 @@ package com.returnfire.models.factory;
 
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
+import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.HammerModel;
@@ -19,21 +20,21 @@ import com.returnfire.models.elementos.vehicles.HammerModelRemote;
 public class VehiculosFactory extends BaseService{
 
  
-    public VehiculoModel crearHammer(JugadorModel jugador){
+    public VehiculoModel crearHammer(JugadorModel jugador, VehiculoDAO dao){
         if(!jugador.isRemote()){
-        	return crearHammerLocal(null, jugador);
+        	return crearHammerLocal(null, jugador, dao);
         }else{
-        	return crearHammerRemoto(null, jugador);
+        	return crearHammerRemoto(null, jugador, dao);
         }
     } 
     
     @Instance(attachTo = "")
-    public HammerModel crearHammerLocal(HammerModel hammer,JugadorModel jugador ){
+    public HammerModel crearHammerLocal(HammerModel hammer,JugadorModel jugador, VehiculoDAO dao ){
         return hammer;
     } 
     
     @Instance(attachTo = "")
-    public HammerModelRemote crearHammerRemoto(HammerModelRemote hammer,JugadorModel jugador){
+    public HammerModelRemote crearHammerRemoto(HammerModelRemote hammer,JugadorModel jugador, VehiculoDAO dao){
         return hammer;
     } 
 }

@@ -5,10 +5,10 @@ import com.entity.network.core.models.NetPlayer;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.dao.JugadorDAO;
-import com.returnfire.dao.JugadorDAO.VEHICULOS;
+import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.factory.VehiculosFactory;
-import com.returnfire.service.HeightService;
 
 public class JugadorModel extends NetPlayer<JugadorDAO>{
     private VehiculoModel vehiculo;
@@ -32,16 +32,16 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     	seleccionarVehiculo(dao.getVehiculo());
     }
     
-    public void seleccionarVehiculo(VEHICULOS tipo)throws Exception{
-    	if(dao.getVehiculo()!=tipo){
-    		dao.setVehiculo(tipo);
+    public void seleccionarVehiculo(VehiculoDAO vDao)throws Exception{
+    	if(dao.getVehiculo().getTipo()!=vDao.getTipo()){
+    		dao.setVehiculo(vDao);
     		//TODO send net
     	}
     	
     	VehiculoModel newV=null;
 
-    	if(tipo==VEHICULOS.HAMMER){
-    		newV=factory.crearHammer(this);
+    	if(vDao.getTipo()==VEHICULOS.HAMMER){
+    		newV=factory.crearHammer(this, vDao);
     	}    
     	
     	
@@ -54,7 +54,7 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     	vehiculo=newV;
     	    	
     	vehiculo.attachToParent(GameContext.getMundo());    	
-        vehiculo.setPosicionInicial(dao.getPosition().add(0, HeightService.MAX_HEIGHT+30, 0));
+        vehiculo.setPosicionInicial(vDao.getPos());
         
         if(!isRemote()){
         	vehiculo.netControl();

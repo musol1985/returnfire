@@ -25,9 +25,11 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
+import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.batchs.EstaticosBatch;
+import com.returnfire.models.elementos.EdificioModel;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.factory.ModelFactory;
 import com.returnfire.service.HeightService;
@@ -43,6 +45,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     
     @Entity
     private EstaticosBatch estaticos;
+    
+    @Entity
+    private EstaticosBatch edificios;
     
     @Service
     private ModelFactory factory;
@@ -124,5 +129,14 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
 
     public EstaticoModel getEstatico(String estaticoId){
         return (EstaticoModel)estaticos.getEntity(estaticoId);
+    }
+    
+    /**
+     * Crea el edificioModel a partir del dao y lo añade al dao de la celda
+     * @param dao
+     * @return
+     */
+    public EdificioModel addEdificio(EdificioDAO dao){
+    	this.dao.getEdificios().add(dao);
     }
 }
