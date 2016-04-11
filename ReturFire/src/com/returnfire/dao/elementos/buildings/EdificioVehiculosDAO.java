@@ -6,10 +6,15 @@ import com.returnfire.dao.elementos.VehiculoDAO;
 
 @Serializable
 public class EdificioVehiculosDAO extends EdificioDAO{
+
 	private VehiculoDAO vDAO;
 	
-	public EdificioVehiculosDAO(JugadorDAO j, VehiculoDAO vDAO){
-		super(j);
+        public EdificioVehiculosDAO(){
+            
+        }
+        
+	public EdificioVehiculosDAO(JugadorDAO j, VehiculoDAO vDAO, EDIFICIOS tipo){
+		super(j, tipo);
 		this.vDAO=vDAO;
 	}
 

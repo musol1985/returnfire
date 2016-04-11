@@ -15,6 +15,7 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.returnfire.controllers.DynamicController;
 import com.returnfire.models.CeldaModel;
 
 @ModelEntity(asset = "Models/environment/coco.j3o")
@@ -49,20 +50,6 @@ public class CocoModel extends Model<ArbolModel>{
         
         body.setLinearVelocity(new Vector3f(0,-8,0));
     	
-    	addControl(new ControlAdapter(){
-			@Override
-			public void update(float tpf) {
-				if(!body.isActive()){
-					EntityManager.getGame().getPhysics().remove(body);
-                                        removeControl(this);
-                                        addControl(new ModifierPosition(getLocalTranslation(), getLocalTranslation().add(0,-5,0), 5000, false, new IModifierOnFinish() {
-                                            @Override
-                                            public void onFinish(Modifier m, Spatial model) {
-                                                celda.getMundo().getDinamicos().dettachEntity(CocoModel.this);
-                                            }
-                                        }));
-				}
-			}
-    	});
+    	addControl(new DynamicController(body, this));
     }
 }

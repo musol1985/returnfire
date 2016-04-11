@@ -26,6 +26,7 @@ import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
+import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.batchs.EstaticosBatch;
@@ -90,6 +91,16 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             estaticos.batch();
         }
         
+        if(dao.hasEdificios()){
+            for(EdificioDAO edificio:dao.getEdificios()){
+                edificio.getPos().y=HeightService.MAX_HEIGHT-10;
+                EdificioModel model=addEdificio(edificio, false, false);            
+            }
+
+            edificios.getNode().setShadowMode(shadowMode.Cast);
+            edificios.batch();
+        }
+        
         /*terrainBody.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
         terrainBody.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);*/
     }
@@ -132,11 +143,24 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
     /**
-     * Crea el edificioModel a partir del dao y lo añade al dao de la celda
+     * Crea el edificioModel a partir del dao y lo anyade al dao de la celda
      * @param dao
      * @return
      */
-    public EdificioModel addEdificio(EdificioDAO dao){
-    	this.dao.getEdificios().add(dao);
+    public EdificioModel addEdificio(EdificioDAO dao, boolean addDAO, boolean batch){
+        if(addDAO)
+            this.dao.getEdificios().add(dao);
+        
+        EdificioModel model=null;
+        if(dao.getTipoEdificio()==EdificioDAO.EDIFICIOS.BASE_PEQUE){
+            model=factory.crearBasePeque(null, (EdificioVehiculosDAO)dao, this.dao);   
+        }
+        
+        edificios.attachEntity(model);
+        
+        if(batch)
+            edificios.batch();
+        
+        return model;
     }
 }

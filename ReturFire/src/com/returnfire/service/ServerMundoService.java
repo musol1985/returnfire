@@ -12,6 +12,7 @@ import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
@@ -57,20 +58,19 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
-			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial, 0);
-			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, vehiculoInicial);
+			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial.add(0, 30, 0), 0);
+                                                
+			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, vehiculoInicial, EdificioDAO.EDIFICIOS.BASE_PEQUE);
+            
+                        Vector2 pos=getCellPosByReal(posInicial);
 
-            
-            Vector2 pos=getCellPosByReal(posInicial);
-            CeldaModel celda=getCellById(pos);
-            if(celda==null){
-            	celda=createNewCell(pos, null, false);
-            }
-            Vector3f cellLocalPosition=celda.worldToLocal(posInicial, null);
-            base.setPos(cellLocalPosition);
-            
-            celda.addEdificio(base);
-			//j.setVehiculo(vehiculoInicial);
+                        CeldaModel celda=createNewCell(pos, null, false);
+                        
+                        Vector3f cellLocalPosition=celda.worldToLocal(posInicial, null);
+                        base.setPos(cellLocalPosition);
+
+                        celda.addEdificio(base, true, false);
+			j.setVehiculo(vehiculoInicial);
 			posInicial.addLocal(20,0,20);
 		}
 	}

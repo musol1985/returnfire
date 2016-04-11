@@ -13,6 +13,7 @@ import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
+import com.returnfire.controllers.DynamicController;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.elementos.EstaticoModel;
@@ -47,6 +48,8 @@ public class ArbolModel extends EstaticoModel<ArbolDAO>{
         body.setLinearVelocity(vel.normalize().add(0, 0.5f, 0));
         addControl(body);
         EntityManager.getGame().getPhysics().add(body);
+        
+        addControl(new DynamicController(body, this));
         
         //body.setCollisionShape(new HullCollisionShape(((Geometry)getChild("geoArbol")).getMesh()));
         return false;

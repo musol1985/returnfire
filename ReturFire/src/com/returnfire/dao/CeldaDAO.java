@@ -62,6 +62,9 @@ public class CeldaDAO extends NetWorldCellDAO{
 	public List<EdificioDAO> getEdificios() {
 		return edificios;
 	}
-    
+        
+    public boolean hasEdificios(){
+        return edificios!=null;
+    }
     
 }

@@ -7,6 +7,7 @@ package com.returnfire.dao.elementos;
 
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
+import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 
 /**
@@ -15,7 +16,7 @@ import com.returnfire.dao.elementos.environment.ArbolDAO;
  */
 @Serializable
 public abstract class EstaticoDAO<T extends EstaticoDAO> implements java.io.Serializable{
-	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA}
+	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA, EDIFICIO}
 	
 	public static final int INDESTRUCTIBLE=-9999;
 	
@@ -64,6 +65,8 @@ public abstract class EstaticoDAO<T extends EstaticoDAO> implements java.io.Seri
     public ELEMENTOS_ESTATICOS getTipo(){
     	if(this instanceof ArbolDAO){
     		return ELEMENTOS_ESTATICOS.ARBOL;
+        }else if(this instanceof EdificioDAO){
+            return ELEMENTOS_ESTATICOS.EDIFICIO;
     	}else{
     		return ELEMENTOS_ESTATICOS.ROCA;
     	}
