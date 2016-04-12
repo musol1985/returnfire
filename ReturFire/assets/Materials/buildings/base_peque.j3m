@@ -1,6 +1,7 @@
 Material My Material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
-        DiffuseMap : Textures/buildings/Parking.png
+        DiffuseMap : Flip Repeat Textures/buildings/base.png
+        GlowMap : Flip Textures/buildings/base_glow.png
      }
     AdditionalRenderState {
     }

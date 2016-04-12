@@ -60,7 +60,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			j.setPosition(posInicial.clone());
 			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial.add(0, 30, 0), 0);
                                                 
-			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, vehiculoInicial, EdificioDAO.EDIFICIOS.BASE_TIERRA);
+			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, vehiculoInicial, EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE);
 			base.setExtensiones(100, 100, 100);
             
                         Vector2 pos=getCellPosByReal(posInicial);

@@ -12,7 +12,7 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.elementos.EstaticoModel;
-import com.returnfire.models.elementos.buildings.BaseTierraModel;
+import com.returnfire.models.elementos.buildings.BaseTierraPequeModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.elementos.environment.BrownRock1;
 import com.returnfire.models.elementos.environment.BrownRock2;
@@ -64,7 +64,7 @@ public class ModelFactory extends BaseService{
     } 
     
     @Instance(attachTo = "")
-    public BaseTierraModel crearBaseTierra(BaseTierraModel base, EdificioVehiculosDAO dao, CeldaDAO celda){
+    public BaseTierraPequeModel crearBaseTierra(BaseTierraPequeModel base, EdificioVehiculosDAO dao, CeldaDAO celda){
         //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
         base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
         base.rotate(0, dao.getAng(), 0);

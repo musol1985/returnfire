@@ -15,12 +15,12 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
  *
  * @author Edu
  */
-@ModelEntity(asset = "Models/buildings/base_tierra.j3o")
-public class BaseTierraModel extends BaseVehiculosModel<EdificioVehiculosDAO>{
+@ModelEntity(asset = "Models/buildings/base_tierra_peque.j3o")
+public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDAO>{
     @Override
     public CollisionShape getColisionShape() {
             // TODO Auto-generated method stub
-            return new BoxCollisionShape(new Vector3f(4,0.1f,4));
+            return new BoxCollisionShape(new Vector3f(4,0.3f,4));
     }
 
     @Override
