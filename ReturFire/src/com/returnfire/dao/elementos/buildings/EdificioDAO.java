@@ -6,7 +6,7 @@ import com.returnfire.dao.elementos.EstaticoDAO;
 
 @Serializable
 public class EdificioDAO extends EstaticoDAO{
-        public enum EDIFICIOS{BASE_PEQUE}
+        public enum EDIFICIOS{BASE_TIERRA}
     
 	public static final String CPU="cpu";
 	
