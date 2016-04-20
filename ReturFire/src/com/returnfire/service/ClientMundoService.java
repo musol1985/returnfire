@@ -49,7 +49,7 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
         @RunOnGLThread
 	public void onDisparar(MsgOnDisparar onDisparar)throws Exception{
 		//Crea la bala, pero a diferencia dle server, no la attacha
-		BulletModel bala=getWorld().getBalasFactory().crearBala(getWorld(), onDisparar.from, onDisparar.tipo, onDisparar);
+		BulletModel bala=getWorld().getFactory().balasFactory.crearBala(getWorld(), onDisparar.from, onDisparar.tipo, onDisparar);
 		//Solo attach si esta en rango de vision
 		if(bala!=null){
 			if(bala.getWorldTranslation().distance(player.getVehiculo().getWorldTranslation())<100f){

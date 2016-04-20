@@ -48,11 +48,15 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 
 	@Override
 	public void onInstance(IBuilder builder, Object[] params) {
-		player=(JugadorModel) params[0];
-        if(player.isMe()){
-            getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
-        }                    
-        dao=(VehiculoDAO)params[1];
+		if(params.length==2){//Vehiculos que tienen los jugadores
+			player=(JugadorModel) params[0];
+	        if(player.isMe()){
+	            getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+	        }                    
+	        dao=(VehiculoDAO)params[1];
+		}else{//Vehiculos aparcados(solo vien el dao
+			dao=(VehiculoDAO)params[0];
+		}
 	}
 
 	public abstract T getBody();

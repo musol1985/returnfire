@@ -38,7 +38,7 @@ public class BalasFactory extends BaseService{
 				BulletModel bala=null;
 				
 				if(tipo==BALAS.NORMAL){
-					bala=world.getBalasFactory().crearBalaNormal(null);
+					bala=crearBalaNormal(null);
 				}
 				
 				if(msg==null){

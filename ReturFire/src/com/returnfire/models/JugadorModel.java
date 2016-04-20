@@ -9,6 +9,7 @@ import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.factory.VehiculosFactory;
+import com.returnfire.msg.MsgCambiarVehiculo;
 
 public class JugadorModel extends NetPlayer<JugadorDAO>{
     private VehiculoModel vehiculo;
@@ -27,38 +28,39 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
     public void setVehiculo(VehiculoModel vehiculo){    	
         this.vehiculo=vehiculo;
     }
+
     
-    public void seleccionarVehiculo()throws Exception{
-    	seleccionarVehiculo(dao.getVehiculo());
-    }
-    
-    public void seleccionarVehiculo(VehiculoDAO vDao)throws Exception{
-    	if(dao.getVehiculo().getTipo()!=vDao.getTipo()){
-    		dao.setVehiculo(vDao);
-    		//TODO send net
+    public void seleccionarSinVehiculo()throws Exception{
+    	VehiculoDAO old=dao.getVehiculo();
+    	
+    	if(old.getTipo()!=VEHICULOS.NINGUNO)
+    		dao.setVehiculo(VehiculoDAO.getVacio());    	    	
+    	
+    	if(vehiculo!=null){
+    		if(!isRemote()){
+    			vehiculo.netUnControl();
+    		}
+    		vehiculo=null;
     	}
     	
-    	VehiculoModel newV=null;
-
-    	if(vDao.getTipo()==VEHICULOS.HAMMER){
-    		newV=factory.crearHammer(this, vDao);
-    	}    
-    	
-    	
-    	if(newV==vehiculo)
-    		throw new RuntimeException("Mismo vehiculo!!!!!");
-    	
-    	if(vehiculo!=null)
-    		throw new RuntimeException("TODO DETACH!!!");
-    	
-    	vehiculo=newV;
-    	    	
-    	vehiculo.attachToParent(GameContext.getMundo());    	
-        vehiculo.setPosicionInicial(vDao.getPos());
-        
-        if(!isRemote()){
-        	vehiculo.netControl();
-        }
+    	if(old!=null && old.getTipo()!=dao.getVehiculo().getTipo())
+    		new MsgCambiarVehiculo(dao.getVehiculo(), old).send();
+    }
+    
+    public void setVehiculoInicial()throws Exception{
+    	if(dao.getVehiculo().getTipo()==VEHICULOS.NINGUNO){
+    		seleccionarSinVehiculo();
+    	}else{
+	    	vehiculo=factory.crearVehiculo(this, dao.getVehiculo());
+	    	
+	    	
+	    	vehiculo.attachToParent(GameContext.getMundo());    	
+	        vehiculo.setPosicionInicial(dao.getVehiculo().getPos());
+	        
+	        if(!isRemote()){
+	        	vehiculo.netControl();
+	        }
+    	}    	    	    	
     }
 
     

@@ -18,6 +18,7 @@ import com.returnfire.models.batchs.DinamicosBatch;
 import com.returnfire.models.batchs.VehiculosBatch;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.factory.BalasFactory;
+import com.returnfire.models.factory.Factory;
 import com.returnfire.service.HeightService;
 
 
@@ -51,7 +52,7 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         private DinamicosBatch dinamicos;
         
         @Service
-        private BalasFactory balasFactory;
+        private Factory factory;
 
         
 	@Override
@@ -73,7 +74,7 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
 
     public void cargarJugadores()throws Exception{
         for(JugadorModel j:players.values()){
-            j.seleccionarVehiculo();
+            j.setVehiculoInicial();
             //j.getVehiculo().attachToParent(vehiculos);  
         }               
     }
@@ -88,8 +89,8 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
 		return dinamicos;
 	}
 
-	public BalasFactory getBalasFactory() {
-		return balasFactory;
+	public Factory getFactory() {
+		return factory;
 	}
 
     public void addBala(BulletModel bullet){

@@ -8,6 +8,7 @@ package com.returnfire.models.factory;
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
 import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.HammerModel;
@@ -19,13 +20,23 @@ import com.returnfire.models.elementos.vehicles.HammerModelRemote;
  */
 public class VehiculosFactory extends BaseService{
 
+	public VehiculoModel crearVehiculo(JugadorModel jugador, VehiculoDAO dao){
+		if(dao.getTipo()==VEHICULOS.HAMMER){
+			return crearHammer(jugador, dao);
+		}
+		return null;
+	}
  
     public VehiculoModel crearHammer(JugadorModel jugador, VehiculoDAO dao){
-        if(!jugador.isRemote()){
-        	return crearHammerLocal(null, jugador, dao);
-        }else{
-        	return crearHammerRemoto(null, jugador, dao);
-        }
+    	if(jugador!=null){
+	        if(!jugador.isRemote()){
+	        	return crearHammerLocal(null, jugador, dao);
+	        }else{
+	        	return crearHammerRemoto(null, jugador, dao);
+	        }
+    	}else{
+    		return crearHammerParking(null, dao);
+    	}
     } 
     
     @Instance(attachTo = "")
@@ -35,6 +46,11 @@ public class VehiculosFactory extends BaseService{
     
     @Instance(attachTo = "")
     public HammerModelRemote crearHammerRemoto(HammerModelRemote hammer,JugadorModel jugador, VehiculoDAO dao){
+        return hammer;
+    } 
+    
+    @Instance(attachTo = "")
+    public HammerModelRemote crearHammerParking(HammerModelRemote hammer, VehiculoDAO dao){
         return hammer;
     } 
 }

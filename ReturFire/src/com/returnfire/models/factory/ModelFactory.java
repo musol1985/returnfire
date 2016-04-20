@@ -70,7 +70,7 @@ public class ModelFactory extends BaseService{
     } 
     
     @Instance(attachTo = "")
-    public BaseTierraPequeModel crearBaseTierra(BaseTierraPequeModel base, EdificioVehiculosDAO dao, ModelFactory factory){
+    public BaseTierraPequeModel crearBaseTierra(BaseTierraPequeModel base, EdificioVehiculosDAO dao){
         //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
         base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
         base.rotate(0, dao.getAng(), 0);

@@ -22,5 +22,10 @@ public class EdificioVehiculosDAO extends EdificioExtensibleDAO{
 	public boolean tieneVehiculo(){
 		return vDAO!=null;
 	}
+
+	public VehiculoDAO getvDAO() {
+		return vDAO;
+	}
+	
 	
 }

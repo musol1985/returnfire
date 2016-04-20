@@ -60,20 +60,23 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			j.setPosition(posInicial.clone());
 			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial.add(0, 30, 0), 0);
                                                 
-			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, vehiculoInicial, EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE);
-			base.setExtensiones(100, 100, 100);
-            
-                        Vector2 pos=getCellPosByReal(posInicial);
-
-                        CeldaModel celda=createNewCell(pos, null, false);
+			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, VehiculoDAO.getVacio(), EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE);
+			addEdificio(base, posInicial);
                         
-                        Vector3f cellLocalPosition=celda.worldToLocal(posInicial, null);
-                        base.setPos(cellLocalPosition);
-
-                        celda.addEdificio(base, true, false);
 			j.setVehiculo(vehiculoInicial);
 			posInicial.addLocal(20,0,20);
 		}
+	}
+	
+	public void addEdificio(EdificioVehiculosDAO edificio, Vector3f worldPos)throws Exception{
+		Vector2 pos=getCellPosByReal(worldPos);
+
+        CeldaModel celda=createNewCell(pos, null, false);
+        
+        Vector3f cellLocalPosition=celda.worldToLocal(worldPos, null);
+        edificio.setPos(cellLocalPosition);
+
+        celda.addEdificio(edificio, true, false);
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 	@RunOnGLThread
 	public void disparar(String from, BALAS tipo)throws Exception{
 		//Crea la bala y la attach
-		BulletModel bala=getWorld().getBalasFactory().crearBala(getWorld(), from, tipo);
+		BulletModel bala=getWorld().getFactory().balasFactory.crearBala(getWorld(), from, tipo);
 		if(bala!=null){
 			MsgOnDisparar msg=new MsgOnDisparar();
 			msg.id=bala.idBala;

@@ -50,9 +50,6 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     @Entity
     private EstaticosBatch edificios;
     
-    @Service
-    private ModelFactory factory;
-    
     @Override
     public void onInstance(IBuilder builder, Object[] params) {
         super.onInstance(builder, params); //To change body of generated methods, choose Tools | Templates.
@@ -80,9 +77,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             	estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
             	
                 if(estaticoDAO instanceof RockDAO){                    
-                    model=factory.crearRoca((RockDAO)estaticoDAO, dao);                    
+                    model=getMundo().getFactory().modelFactory.crearRoca((RockDAO)estaticoDAO, dao);                    
                 }else if(estaticoDAO instanceof ArbolDAO){
-                    model=factory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);   
+                    model=getMundo().getFactory().modelFactory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);   
                 }
                 
                 estaticos.attachEntity(model);
@@ -153,7 +150,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         EdificioModel model=null;
         if(dao.getTipoEdificio()==EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE){
-            model=factory.crearBaseTierra(null, (EdificioVehiculosDAO)dao, factory);   
+            model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
         }
         
         edificios.attachEntity(model);

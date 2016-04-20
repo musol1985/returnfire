@@ -6,9 +6,11 @@
 package com.returnfire.client.scenes;
 
 import com.entity.adapters.FollowCameraAdapter;
+import com.entity.adapters.ScrollCameraAdapter;
 import com.entity.adapters.listeners.IFollowCameraListener;
 import com.entity.anot.Entity;
 import com.entity.anot.FollowCameraNode;
+import com.entity.anot.ScrollCameraNode;
 import com.entity.anot.Sky;
 import com.entity.anot.Task;
 import com.entity.anot.components.input.ComposedKeyInput;
@@ -38,7 +40,8 @@ import com.returnfire.service.ClientMundoService;
     @KeyInputMapping(action = "down", keys = {KeyInput.KEY_S}),
     @KeyInputMapping(action = "left", keys = {KeyInput.KEY_A}),
     @KeyInputMapping(action = "right", keys = {KeyInput.KEY_D}),
-    @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE})
+    @KeyInputMapping(action = "space", keys = {KeyInput.KEY_SPACE}),
+    @KeyInputMapping(action = "park", keys = {KeyInput.KEY_P})
 })
 @ActivateNetSync
 public class InGame extends InGameClientScene<InGameClientListener, MundoModel, JugadorModel,  ClientMundoService>{
@@ -55,11 +58,13 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
     private ClientMundoService service;
     
     @MessageListener
-    private InGameClientListener listener;
-    
+    private InGameClientListener listener;    
             
-    @FollowCameraNode(debug = false)
-    private FollowCameraAdapter camera;
+    @FollowCameraNode(debug = false, attach=false)
+    private FollowCameraAdapter followCam;
+    
+    @ScrollCameraNode(attach = false)
+    private ScrollCameraAdapter scrollCam;
     
 	@Task(period=30)
 	public NetWorldPersistTask saveTask;
@@ -88,16 +93,35 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
 	@Override
 	public void onLoadPlayer()throws Exception {
           // EntityManager.getGame().getStateManager().attach(new DebugGUI());
-		player.seleccionarVehiculo();
-        camera.attachToParent(world);
-        //camera.followTo(player.getVehiculo());
-        camera.setListener(new IFollowCameraListener() {
+		player.setVehiculoInicial();
+        
+		followCam.setListener(new IFollowCameraListener() {
             @Override
             public void onUpdate(FollowCameraAdapter adapter) {
                 getService().updatePlayerLocation(player.getPosicion());
-                camera.setLocalTranslation(player.getPosicion());
+                followCam.setLocalTranslation(player.getPosicion());
             }
         });
+		
+		if(player.hasVehicle()){
+			setFollowMode();
+		}else{
+			setScrollMode();
+		}
+	}
+	
+	public void setFollowMode()throws Exception{
+		if(scrollCam.isAttached())
+			scrollCam.dettach();
+		
+		followCam.attachToParent(world);
+	}
+	
+	public void setScrollMode()throws Exception{
+		if(followCam.isAttached())
+			followCam.dettach();
+		
+		scrollCam.attachToParent(world);
 	}
 
 	@Override
@@ -153,6 +177,12 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
         if(player.hasVehicle()){
             player.getVehiculo().onRight(value);
         }
+    }
+    
+    @Input(action = "park")
+    public void park( boolean value, float tpf)throws Exception{
+    	if(player.hasVehicle())
+    		player.seleccionarSinVehiculo();
     }
 
 	@Override
