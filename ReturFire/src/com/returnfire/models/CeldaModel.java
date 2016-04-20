@@ -153,7 +153,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         EdificioModel model=null;
         if(dao.getTipoEdificio()==EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE){
-            model=factory.crearBaseTierra(null, (EdificioVehiculosDAO)dao, this.dao);   
+            model=factory.crearBaseTierra(null, (EdificioVehiculosDAO)dao, factory);   
         }
         
         edificios.attachEntity(model);

@@ -5,11 +5,14 @@
  */
 package com.returnfire.models.elementos.buildings;
 
+import com.entity.anot.Entity;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
+import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
 
 /**
  *
@@ -17,6 +20,14 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
  */
 @ModelEntity(asset = "Models/buildings/base_tierra_peque.j3o")
 public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDAO>{
+	
+	@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaA")
+	public BuildingExtension zonaA;
+	
+	@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaB")
+	public BuildingExtension zonaB;
+	
+	
     @Override
     public CollisionShape getColisionShape() {
             // TODO Auto-generated method stub
@@ -32,6 +43,8 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
 	@Override
 	public CollisionShape getParkingZoneColisionShape() {
 		// TODO Auto-generated method stub
-		return null;
+		return new SphereCollisionShape(5f);
 	}
+
+
 }
