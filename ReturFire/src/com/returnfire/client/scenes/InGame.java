@@ -19,12 +19,11 @@ import com.entity.anot.components.input.KeyInputMapping;
 import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
-import com.entity.core.EntityManager;
 import com.entity.network.core.items.InGameClientScene;
 import com.entity.network.core.tasks.NetWorldPersistTask;
 import com.jme3.input.KeyInput;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
-import com.returnfire.client.gui.DebugGUI;
 import com.returnfire.client.listeners.InGameClientListener;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -102,26 +101,27 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
                 followCam.setLocalTranslation(player.getPosicion());
             }
         });
-		
-		if(player.hasVehicle()){
-			setFollowMode();
-		}else{
+                followCam.attachToParent(world);
+		if(!player.hasVehicle()){
 			setScrollMode();
 		}
 	}
 	
 	public void setFollowMode()throws Exception{
-		if(scrollCam.isAttached())
+		if(scrollCam.isAttached()){
 			scrollCam.dettach();
 		
-		followCam.attachToParent(world);
+                    followCam.attachToParent(world);
+                }
 	}
 	
-	public void setScrollMode()throws Exception{
-		if(followCam.isAttached())
-			followCam.dettach();
-		
-		scrollCam.attachToParent(world);
+	public void setScrollMode()throws Exception{            
+            if(followCam.isAttached()){
+                Vector3f pos=followCam.getWorldTranslation();
+                followCam.dettach();
+                scrollCam.attachToParent(world);
+                scrollCam.setLocalTranslation(pos);
+            }		            
 	}
 
 	@Override
@@ -183,6 +183,8 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
     public void park( boolean value, float tpf)throws Exception{
     	if(player.hasVehicle())
     		player.seleccionarSinVehiculo();
+        
+        setScrollMode();
     }
 
 	@Override

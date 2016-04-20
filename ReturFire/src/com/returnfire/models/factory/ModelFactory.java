@@ -78,11 +78,13 @@ public class ModelFactory extends BaseService{
     } 
     
     public BuildingExtension crearExtension(ExtensionDAO ext){
-    	if(ext.getTipo()==EXTENSIONES.PETROLEO){
-    		return crearExtensionPetroleo(null, ext);
-    	}else if(ext.getTipo()==EXTENSIONES.PIEZAS){
-    		return crearExtensionPiezas(null, ext);
-    	}
+        if(ext!=null){
+            if(ext.getTipo()==EXTENSIONES.PETROLEO){
+                    return crearExtensionPetroleo(null, ext);
+            }else if(ext.getTipo()==EXTENSIONES.PIEZAS){
+                    return crearExtensionPiezas(null, ext);
+            }
+        }
     	return crearExtensionVacia(null);
     }
     

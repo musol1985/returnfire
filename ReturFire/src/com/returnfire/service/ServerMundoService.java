@@ -14,6 +14,7 @@ import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
+import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -61,6 +62,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial.add(0, 30, 0), 0);
                                                 
 			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, VehiculoDAO.getVacio(), EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE);
+                        base.addExtension(new ExtensionDAO("zonaA", ExtensionDAO.EXTENSIONES.PIEZAS));
 			addEdificio(base, posInicial);
                         
 			j.setVehiculo(vehiculoInicial);

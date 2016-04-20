@@ -3,7 +3,7 @@ package com.returnfire.dao.elementos.buildings;
 import com.jme3.network.serializing.Serializable;
 
 @Serializable
-public abstract class ExtensionDAO implements java.io.Serializable{
+public class ExtensionDAO implements java.io.Serializable{
 	public enum EXTENSIONES{PETROLEO, PIEZAS};
 	
 	private String zona;
@@ -14,6 +14,10 @@ public abstract class ExtensionDAO implements java.io.Serializable{
 	public ExtensionDAO(){
 		
 	}
+        
+        public ExtensionDAO(String zona, EXTENSIONES tipo){
+         this(zona, tipo, 0,0);   
+        }
 	
     public ExtensionDAO(String zona, EXTENSIONES tipo, int valor, int level){
     	this.zona=zona;

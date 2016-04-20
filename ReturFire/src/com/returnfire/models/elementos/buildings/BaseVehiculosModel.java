@@ -26,8 +26,8 @@ import com.returnfire.models.factory.VehiculosFactory;
 
 public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO> extends EdificioModel<T>{
 
-	@PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
-    @CustomCollisionShape(methodName = "getParkingZoneColisionShape")
+//	@PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
+   // @CustomCollisionShape(methodName = "getParkingZoneColisionShape")
 	public GhostControl parkingZone;
 	
 
@@ -37,8 +37,11 @@ public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO> extends
 	public abstract CollisionShape getParkingZoneColisionShape();
 
 	
-	public BuildingExtension injectZona(EdificioVehiculosDAO dao, String zonaId){		
-		return GameContext.getMundo().getFactory().modelFactory.crearExtension(dao.getExtensionByZona(zonaId));
+	public BuildingExtension injectZona(EdificioVehiculosDAO dao, String zonaId)throws Exception{		
+		BuildingExtension zona=GameContext.getMundo().getFactory().modelFactory.crearExtension(dao.getExtensionByZona(zonaId));
+                
+                zona.attachToParent(this);
+                return zona;
 	}
 
 	public VehiculoModel injectVehiculo(EdificioVehiculosDAO dao){	

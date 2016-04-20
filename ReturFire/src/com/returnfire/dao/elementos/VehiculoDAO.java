@@ -60,6 +60,7 @@ public class VehiculoDAO implements java.io.Serializable{
 	public static VehiculoDAO getVacio(){
 		VehiculoDAO v=new VehiculoDAO();
 		v.tipo=VEHICULOS.NINGUNO;
+                v.pos=new Vector3f();
 		return v;
 	}
 }
