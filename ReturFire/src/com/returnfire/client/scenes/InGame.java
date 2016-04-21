@@ -19,11 +19,15 @@ import com.entity.anot.components.input.KeyInputMapping;
 import com.entity.anot.network.ActivateNetSync;
 import com.entity.anot.network.MessageListener;
 import com.entity.anot.network.WorldService;
+import com.entity.core.EntityManager;
+import com.entity.modules.gui.anot.ScreenGUI;
+import com.entity.modules.gui.items.Sprite;
 import com.entity.network.core.items.InGameClientScene;
 import com.entity.network.core.tasks.NetWorldPersistTask;
 import com.jme3.input.KeyInput;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.returnfire.client.gui.DriveGUI;
 import com.returnfire.client.listeners.InGameClientListener;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -65,9 +69,11 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
     @ScrollCameraNode(attach = false)
     private ScrollCameraAdapter scrollCam;
     
-	@Task(period=30)
-	public NetWorldPersistTask saveTask;
+    @Task(period=30)
+    public NetWorldPersistTask saveTask;
 
+    //@ScreenGUI(attach = true)
+    public DriveGUI driveGUI;
     
     @Override
     public MundoModel getWorld() {
@@ -105,6 +111,9 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
 		if(!player.hasVehicle()){
 			setScrollMode();
 		}
+                Sprite s=new Sprite();
+                s.instance("t", "Textures/grass.jpg");
+                EntityManager.getGame().getGuiNode().attachChild(s);
 	}
 	
 	public void setFollowMode()throws Exception{

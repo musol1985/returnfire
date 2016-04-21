@@ -11,6 +11,7 @@ import com.entity.anot.entities.SceneEntity;
 import com.entity.anot.network.Network;
 import com.entity.core.EntityGame;
 import com.entity.core.EntityManager;
+import com.entity.modules.gui.anot.GUI;
 import com.returnfire.client.scenes.CreateScene;
 import com.returnfire.client.scenes.InGame;
 import com.returnfire.client.scenes.LobbyScene;
@@ -28,6 +29,7 @@ import com.simsilica.lemur.GuiGlobals;
     "com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync","com.returnfire.msg"},
         gameName="ReturnFire", version=1, worldService = ClientMundoService.class)
 @Physics(debug = false, active = false)
+@GUI
 @Executor
 public class Client  extends EntityGame{
     
