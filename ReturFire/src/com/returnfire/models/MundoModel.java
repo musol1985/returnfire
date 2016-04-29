@@ -17,9 +17,9 @@ import com.returnfire.models.batchs.BalasBatch;
 import com.returnfire.models.batchs.DinamicosBatch;
 import com.returnfire.models.batchs.VehiculosBatch;
 import com.returnfire.models.elementos.BulletModel;
-import com.returnfire.models.factory.BalasFactory;
 import com.returnfire.models.factory.Factory;
 import com.returnfire.service.HeightService;
+import com.returnfire.service.PickService;
 
 
 public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
@@ -53,6 +53,9 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         
         @Service
         private Factory factory;
+        
+        @Service
+        private PickService pick;
 
         
 	@Override
@@ -96,4 +99,10 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
     public void addBala(BulletModel bullet){
 		balas.nueva(bullet);	
     }
+
+	public PickService getPick() {
+		return pick;
+	}
+    
+    
 }
