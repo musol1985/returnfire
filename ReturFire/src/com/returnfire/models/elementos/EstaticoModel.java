@@ -16,6 +16,7 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.EstaticoDAO;
+import com.returnfire.map.ILugar;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.batchs.EstaticosBatch;
@@ -24,7 +25,7 @@ import com.returnfire.models.batchs.EstaticosBatch;
  *
  * @author Edu
  */
-public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<EstaticosBatch> {
+public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<EstaticosBatch> implements ILugar{
     protected T dao;
     @PhysicsBodyComponent
     @CustomCollisionShape(methodName = "getColisionShape")
@@ -47,7 +48,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
     }
     
      @Override
-    public void onInstance(IBuilder builder, Object[] params) {
+    public void onInstance(IBuilder builder, Object[] params) throws Exception{
         super.onInstance(builder, params); 
         
         setDao((T)params[0]);

@@ -2,6 +2,7 @@ package com.returnfire.models.elementos.environment;
 
 import com.returnfire.models.elementos.*;
 import com.entity.anot.entities.ModelEntity;
+import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.math.Vector3f;
@@ -19,4 +20,10 @@ public class BrownRock2 extends EstaticoModel<RockDAO>{
     public boolean onEliminar(Vector3f vel) {
         return true;
     }
+    
+
+	@Override
+	public Vector2 getSize() {
+		return new Vector2(1,1);
+	}
 }

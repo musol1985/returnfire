@@ -13,6 +13,7 @@ import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
 
 @Serializable
@@ -27,8 +28,8 @@ public class CeldaDAO extends NetWorldCellDAO{
                 estaticos=new ArrayList<EstaticoDAO>();
                 
                 int elementos=EstaticoDAO.ELEMENTOS_ESTATICOS.values().length;
-                for(int x=0;x<MundoModel.CELL_SIZE;x+=10){
-                    for(int z=0;z<MundoModel.CELL_SIZE;z+=10){
+                for(int x=0;x<CeldaModel.CELL_SIZE;x+=10){
+                    for(int z=0;z<CeldaModel.CELL_SIZE;z+=10){
                         int i=rnd.nextInt(elementos+OFFSET_RANDOM_ELEMENT);
                         if(i<elementos){
                             float ang=Utils.getRandomBetween(rnd, 0, FastMath.TWO_PI);

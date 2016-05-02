@@ -15,6 +15,7 @@ import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
+import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -50,8 +51,8 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		
 		int offset=10;
 		
-		float x=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()*MundoModel.CELL_SIZE-offset);
-		float z=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()*MundoModel.CELL_SIZE-offset);
+		float x=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()*CeldaModel.CELL_SIZE-offset);
+		float z=Utils.getRandomBetween(rnd, offset , world.getDao().getMaxRealSize()*CeldaModel.CELL_SIZE-offset);
                 
                 x=600;
                 z=600;
@@ -61,8 +62,8 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			j.setPosition(posInicial.clone());
 			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial.add(0, 30, 0), 0);
                                                 
-			EdificioVehiculosDAO base=new EdificioVehiculosDAO(j, VehiculoDAO.getVacio(), EdificioDAO.EDIFICIOS.BASE_TIERRA_PEQUE);
-                        base.addExtension(new ExtensionDAO("zonaA", ExtensionDAO.EXTENSIONES.PIEZAS));
+			BaseTierraDAO base=new BaseTierraDAO(j, VehiculoDAO.getVacio());
+            base.addExtension(new ExtensionDAO("zonaA", ExtensionDAO.EXTENSIONES.PIEZAS));
 			addEdificio(base, posInicial);
                         
 			j.setVehiculo(vehiculoInicial);

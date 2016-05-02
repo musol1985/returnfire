@@ -5,7 +5,7 @@ import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
 
 @Serializable
-public class EdificioVehiculosDAO extends EdificioExtensibleDAO{
+public abstract class EdificioVehiculosDAO extends EdificioExtensibleDAO{
 
 	private VehiculoDAO vDAO;
 	
@@ -14,8 +14,8 @@ public class EdificioVehiculosDAO extends EdificioExtensibleDAO{
         
     }
         
-	public EdificioVehiculosDAO(JugadorDAO j, VehiculoDAO vDAO, EDIFICIOS tipo){
-		super(j, tipo);
+	public EdificioVehiculosDAO(JugadorDAO j, VehiculoDAO vDAO){
+		super(j);
 		this.vDAO=vDAO;
 	}
 

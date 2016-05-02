@@ -5,6 +5,8 @@
  */
 package com.returnfire.models.batchs;
 
+import java.util.List;
+
 import com.entity.anot.entities.BatchModelEntity;
 import com.entity.core.items.BatchModel;
 import com.returnfire.models.CeldaModel;
@@ -24,4 +26,5 @@ public class EstaticosBatch extends BatchModel{
             dettachEntity(model);
             batch();
         }
+        
 }

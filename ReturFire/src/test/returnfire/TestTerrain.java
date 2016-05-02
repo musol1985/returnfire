@@ -15,6 +15,7 @@ import com.jme3.math.Vector2f;
 import com.jme3.terrain.Terrain;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
 
 /**
@@ -23,10 +24,10 @@ import com.returnfire.models.MundoModel;
  */
 @ModelEntity
 public class TestTerrain extends Model {
-      @TerrainComponent(LOD = false, realSize = MundoModel.CELL_SIZE, chunkSize = MundoModel.CELL_SIZE/4)
+      @TerrainComponent(LOD = false, realSize = CeldaModel.CELL_SIZE, chunkSize = CeldaModel.CELL_SIZE/4)
     @MaterialComponent(asset="Materials/Terrain.j3m")
     private TerrainQuad terrain;
-      private int OFFSET=MundoModel.CELL_SIZE-50;
+      private int OFFSET=CeldaModel.CELL_SIZE-50;
       
       public TerrainQuad getT(){
           return terrain;
@@ -41,13 +42,13 @@ public class TestTerrain extends Model {
 			@Override
 			public boolean load() {
                  
-                                heightData=new float[(MundoModel.CELL_SIZE+1)*(MundoModel.CELL_SIZE+1)];
-                                size=MundoModel.CELL_SIZE+1;
+                                heightData=new float[(CeldaModel.CELL_SIZE+1)*(CeldaModel.CELL_SIZE+1)];
+                                size=CeldaModel.CELL_SIZE+1;
                                 int offset=50;
                                 
                             
-                            for(int z=0;z<MundoModel.CELL_SIZE/2;z++){
-                                for(int x=0;x<MundoModel.CELL_SIZE/2;x++){
+                            for(int z=0;z<CeldaModel.CELL_SIZE/2;z++){
+                                for(int x=0;x<CeldaModel.CELL_SIZE/2;x++){
                                     Vector2f v=new Vector2f(x,z);
                                     if(v.length()<offset){
                                         setHeightAtPoint(39f, x, z);

@@ -5,11 +5,12 @@
  */
 package com.returnfire.dao.elementos.environment;
 
-import com.jme3.math.FastMath;
+import java.util.Random;
+
+import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.EstaticoDAO;
-import java.util.Random;
 /**
  *
  * @author Edu

@@ -22,9 +22,7 @@ import com.returnfire.service.HeightService;
 import com.returnfire.service.PickService;
 
 
-public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
-        public static final int CELL_SIZE=256;   
-        
+public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{                
         @BloomEffect(mode=BloomFilter.GlowMode.Objects, bloomIntensity = 2f, downSamplingFactor = 1, blurScale = 1.5f, exposureCutOff = 0f, exposurePower = 1.3f)
         public BloomFilter bloom;
 
@@ -60,7 +58,7 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         
 	@Override
 	public int getCellSize() {
-		return CELL_SIZE;
+		return CeldaModel.CELL_SIZE;
 	}
 
     public HeightService getHeightService() {

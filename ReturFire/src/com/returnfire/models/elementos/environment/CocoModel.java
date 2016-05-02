@@ -26,7 +26,7 @@ public class CocoModel extends Model<ArbolModel>{
     public RigidBodyControl body;
 
     @Override
-    public void onInstance(IBuilder builder, Object[] params) {
+    public void onInstance(IBuilder builder, Object[] params)  throws Exception{
         super.onInstance(builder, params); 
         
         body.setSleepingThresholds(5, 5);

@@ -5,6 +5,7 @@
  */
 package com.returnfire.dao.elementos.environment;
 
+import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.EstaticoDAO;

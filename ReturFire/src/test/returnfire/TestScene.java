@@ -14,9 +14,7 @@ import com.entity.anot.components.lights.DirectionalLightComponent;
 import com.entity.anot.components.shadows.DirectionalShadowComponent;
 import com.entity.core.items.Scene;
 import com.jme3.light.AmbientLight;
-import com.jme3.math.FastMath;
-import com.jme3.math.Vector2f;
-import com.returnfire.models.MundoModel;
+import com.returnfire.models.CeldaModel;
 
 /**
  *
@@ -24,7 +22,7 @@ import com.returnfire.models.MundoModel;
  */
 public class TestScene extends Scene<Test>{
 
-    private int OFFSET=MundoModel.CELL_SIZE/2-50;
+    private int OFFSET=CeldaModel.CELL_SIZE/2-50;
     
     @Entity
     private TestTerrain lowerSide;

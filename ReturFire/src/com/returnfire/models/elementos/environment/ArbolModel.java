@@ -6,6 +6,7 @@ import com.entity.anot.effects.EffectParticle;
 import com.entity.anot.entities.ModelEntity;
 import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
+import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -56,7 +57,7 @@ public class ArbolModel extends EstaticoModel<ArbolDAO>{
     }
     
          @Override
-    public void onInstance(IBuilder builder, Object[] params) {
+    public void onInstance(IBuilder builder, Object[] params)  throws Exception{
         super.onInstance(builder, params);
         
         coco.move(0.5f, 4, 0.5f);
@@ -74,4 +75,10 @@ public class ArbolModel extends EstaticoModel<ArbolDAO>{
             coco=null;
         }
     }
+
+
+	@Override
+	public Vector2 getSize() {
+		return new Vector2(1,1);
+	}
 }

@@ -7,15 +7,15 @@ import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.JugadorDAO;
 
 @Serializable
-public class EdificioExtensibleDAO extends EdificioDAO{
+public abstract class EdificioExtensibleDAO extends EdificioDAO{
     private List<ExtensionDAO> extensiones;
     
     public EdificioExtensibleDAO(){
         
     }
 	
-	public EdificioExtensibleDAO(JugadorDAO j, EDIFICIOS tipo){
-		super(j, tipo);
+	public EdificioExtensibleDAO(JugadorDAO j){
+		super(j);
         extensiones=new ArrayList<ExtensionDAO>();
 	}
 

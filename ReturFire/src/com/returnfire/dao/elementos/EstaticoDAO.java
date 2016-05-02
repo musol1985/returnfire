@@ -9,6 +9,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
+import com.returnfire.map.ILugar;
 
 /**
  *

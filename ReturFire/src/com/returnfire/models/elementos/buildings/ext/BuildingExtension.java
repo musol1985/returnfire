@@ -13,7 +13,7 @@ public abstract class BuildingExtension extends Model{
 	public ExtensionDAO dao;
 
 	@Override
-	public void onInstance(IBuilder builder, Object[] params) {
+	public void onInstance(IBuilder builder, Object[] params)  throws Exception{
 		if(params!=null && params.length>0)
 			dao=(ExtensionDAO)params[0];
 		
