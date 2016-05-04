@@ -11,12 +11,12 @@ import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
 import com.entity.core.items.Model;
 import com.entity.network.core.items.IWorldInGameScene;
+import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.EstaticoDAO;
-import com.returnfire.map.ILugar;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.batchs.EstaticosBatch;
@@ -25,7 +25,7 @@ import com.returnfire.models.batchs.EstaticosBatch;
  *
  * @author Edu
  */
-public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<EstaticosBatch> implements ILugar{
+public abstract class EstaticoModel<T extends EstaticoDAO, N extends IEstaticoNode> extends Model<EstaticosBatch>{
     protected T dao;
     @PhysicsBodyComponent
     @CustomCollisionShape(methodName = "getColisionShape")
@@ -41,6 +41,7 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
     
     public abstract CollisionShape getColisionShape();
     public abstract boolean onEliminar(Vector3f vel);
+    public abstract N getNodo();
      
     
     public MundoModel getMundo(){

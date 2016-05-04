@@ -6,7 +6,6 @@
 package com.returnfire.models.elementos.buildings;
 
 import com.entity.anot.Entity;
-import com.entity.anot.entities.ModelEntity;
 import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -14,13 +13,17 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
+import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 
 /**
  *
  * @author Edu
  */
-@ModelEntity(asset = "Models/buildings/base_tierra_peque.j3o")
-public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDAO>{
+
+public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDAO, BaseTierraPequeNode>{
+	
+	@Entity
+	public BaseTierraPequeNode building;
 	
 	@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaA")
 	public BuildingExtension zonaA;
@@ -47,10 +50,11 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
 		return new SphereCollisionShape(5f);
 	}
 
-
-
 	@Override
-	public Vector2 getSize() {
-		return new Vector2(2,2);
+	public BaseTierraPequeNode getNodo() {
+		return building;
 	}
+
+
+
 }

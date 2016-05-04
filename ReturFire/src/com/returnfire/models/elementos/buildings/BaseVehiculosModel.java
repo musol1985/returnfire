@@ -6,25 +6,21 @@
 package com.returnfire.models.elementos.buildings;
 
 import com.entity.anot.Entity;
-import com.entity.anot.components.model.PhysicsBodyComponent;
-import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
-import com.entity.anot.components.model.collision.CustomCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.models.elementos.EdificioModel;
+import com.returnfire.models.elementos.IEstaticoNode;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
-import com.returnfire.models.factory.ModelFactory;
-import com.returnfire.models.factory.VehiculosFactory;
 
 /**
  *
  * @author Edu
  */
 
-public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO> extends EdificioModel<T>{
+public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO, N extends IEstaticoNode> extends EdificioModel<T, N>{
 
 //	@PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
    // @CustomCollisionShape(methodName = "getParkingZoneColisionShape")

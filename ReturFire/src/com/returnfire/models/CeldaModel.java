@@ -27,6 +27,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.terrain.Terrain;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
+import com.returnfire.GameContext;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
@@ -104,22 +105,61 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
          for(int x=0;x<CELL_SIZE;x++){
          	List<MapEntry> mY=new ArrayList<MapEntry>(CELL_SIZE);
          	for(int y=0;y<CELL_SIZE;y++){
-         		mY.add(new MapEntry());
+         		MapEntry me=new MapEntry();
+         		
+         		if(y>0)
+         			me.setSur(getMapEntry(x,y-1));
+         		
+         		if(x>0)
+         			me.setOeste(getMapEntry(x-1,y));
+         		
+         		mY.add(me);
          	}
          	map.add(mY);
+         }
+         
+         //Obtenemos las celdas de alrededor
+         CeldaModel cNorte=GameContext.getService().getCellFromCache(dao.getId().id.add(0, +1));
+         CeldaModel cSur=GameContext.getService().getCellFromCache(dao.getId().id.add(0, -1));
+         CeldaModel cEste=GameContext.getService().getCellFromCache(dao.getId().id.add(-1, 0));
+         CeldaModel cOeste=GameContext.getService().getCellFromCache(dao.getId().id.add(+1, 0));
+         
+         for(int i=0;i<CELL_SIZE;i++){
+        	 if(cNorte!=null)
+        		 cNorte.getMapEntry(i, 0).setSur(getMapEntry(i, CELL_SIZE-1));
+        	 if(cSur!=null)
+        		 getMapEntry(i, 0).setSur(cSur.getMapEntry(i, CELL_SIZE-1));
+        	 if(cEste!=null)
+        		 cEste.getMapEntry(CELL_SIZE-1, i).setOeste(getMapEntry(0 ,i));
+        	 if(cOeste!=null)
+        		 getMapEntry(CELL_SIZE-1, i).setOeste(cOeste.getMapEntry(0 ,i));
          }
     }
     
     private void addToMap(EstaticoModel e) throws Exception{
     	Vector2 pos=real2Map(e.getLocalTranslation());
-    	for(int x=0;x<e.getSize().x;x++){
-    		for(int z=0;z<e.getSize().z;z++){
-    			MapEntry me=map.get(x).get(z);
-    			if(me.isOcupado())
-    				throw new Exception("Error, imposible ocupar con "+e+" la posicion ("+x+","+z+") de la celda "+dao.getId()+". Está ocupado por "+me.getElemento());
-    			me.setOcupadoPor(e);
+    	
+    	MapEntry meY=getMapEntry(pos.x, pos.z);
+		MapEntry meX=meY;
+		
+    	for(int x=0;x<e.getNodo().getSize().x;x++){
+    		
+    		for(int z=0;z<e.getNodo().getSize().z;z++){
+    			if(meY.isOcupado())
+    				throw new Exception("Error, imposible ocupar con "+e+" la posicion ("+pos.x+"+"+x+","+pos.z+"+"+z+") de la celda "+dao.getId()+". Está ocupado por "+meY.getElemento());
+    			meY.setOcupadoPor(e);
+    			
+    			meY=meY.getNorte();
+    			
     		}
+    		
+    		meX=meX.getOeste();
+    		meY=meX;
     	}
+    }
+    
+    public MapEntry getMapEntry(int x, int z){
+    	return map.get(x).get(z);
     }
     
     private Vector2 real2Map(Vector3f pos){

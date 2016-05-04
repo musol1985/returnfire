@@ -2,7 +2,12 @@ package com.returnfire;
 
 import com.entity.core.EntityManager;
 import com.entity.network.core.items.IWorldInGameScene;
+import com.entity.network.core.service.NetWorldService;
 import com.returnfire.client.scenes.InGame;
+import com.returnfire.dao.CeldaDAO;
+import com.returnfire.dao.JugadorDAO;
+import com.returnfire.dao.MundoDAO;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.service.ClientMundoService;
@@ -39,5 +44,9 @@ public class GameContext {
     
     public static boolean isMe(String playerId){
         return (!isServer() && getJugador().dao.getId().equals(playerId));            
+    }
+    
+    public static NetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO> getService(){
+    	return ((IWorldInGameScene)EntityManager.getCurrentScene()).getService();
     }
 }

@@ -18,9 +18,10 @@ import com.returnfire.controllers.DynamicController;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.elementos.EstaticoModel;
+import com.returnfire.models.elementos.IEstaticoNode;
 
 @ModelEntity(asset = "Models/environment/palm_03.j3o")
-public class ArbolModel extends EstaticoModel<ArbolDAO>{
+public class ArbolModel extends EstaticoModel<ArbolDAO, ArbolModel> implements IEstaticoNode{
  
     @EffectParticle(asset = "Models/fx/hojas.j3o")
     public EffectParticleAdapter hojas;
@@ -80,5 +81,11 @@ public class ArbolModel extends EstaticoModel<ArbolDAO>{
 	@Override
 	public Vector2 getSize() {
 		return new Vector2(1,1);
+	}
+
+
+	@Override
+	public ArbolModel getNodo() {
+		return this;
 	}
 }
