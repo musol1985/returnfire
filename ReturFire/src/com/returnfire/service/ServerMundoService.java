@@ -3,6 +3,7 @@ package com.returnfire.service;
 import java.util.Random;
 
 import com.entity.anot.RunOnGLThread;
+import com.entity.core.EntityManager;
 import com.entity.network.core.beans.CellId;
 import com.entity.network.core.service.impl.ServerNetWorldService;
 import com.entity.utils.Utils;
@@ -21,6 +22,10 @@ import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.elementos.BulletModel.BALAS;
+import com.returnfire.models.elementos.EdificioModel;
+import com.returnfire.models.elementos.buildings.nodos.BuildNode;
+import com.returnfire.msg.MsgBuild;
+import com.returnfire.msg.MsgOnBuilt;
 import com.returnfire.msg.MsgOnDisparar;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -128,4 +133,18 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			msg.send();
 		}
 	}        
+	
+	public void build(MsgBuild msg)throws Exception{
+		CeldaModel celda=getCellById(getCellPosByReal(msg.pos));
+		BuildNode node=(BuildNode)EntityManager.instanceGeneric(msg.edificio);
+		
+		if(!celda.isZonaOcupada(msg.pos, node.getSize())){
+			EdificioDAO dao=node.getNewDAO(world.getPlayers().get(msg.from).dao);
+			
+			EdificioModel edificio=celda.addEdificio(dao, true, false);			
+			new MsgOnBuilt((EdificioDAO) edificio.getDAO()).send();
+		}else{
+			throw new Exception("Atención, la zona "+msg.pos+" está ocupada!!!");
+		}
+	}
 }

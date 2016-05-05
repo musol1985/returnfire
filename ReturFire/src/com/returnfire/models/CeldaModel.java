@@ -136,6 +136,28 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
          }
     }
     
+    public boolean isZonaOcupada(Vector3f pReal, Vector2 size)throws Exception{
+    	Vector2 pos=real2Map(pReal);
+    	
+    	MapEntry meY=getMapEntry(pos.x, pos.z);
+		MapEntry meX=meY;
+		
+    	for(int x=0;x<size.x;x++){
+    		
+    		for(int z=0;z<size.z;z++){
+    			if(meY.isOcupado())
+    				return true;    				
+    			
+    			meY=meY.getNorte();
+    		}
+    		
+    		meX=meX.getOeste();
+    		meY=meX;
+    	}
+    	return false;
+    }
+    
+
     private void addToMap(EstaticoModel e) throws Exception{
     	Vector2 pos=real2Map(e.getLocalTranslation());
     	

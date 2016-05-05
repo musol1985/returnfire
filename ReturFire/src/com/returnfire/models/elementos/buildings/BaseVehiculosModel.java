@@ -14,6 +14,7 @@ import com.returnfire.models.elementos.EdificioModel;
 import com.returnfire.models.elementos.IEstaticoNode;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
+import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 
 /**
  *

@@ -11,7 +11,6 @@ import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
 import com.entity.core.items.Model;
 import com.entity.network.core.items.IWorldInGameScene;
-import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;

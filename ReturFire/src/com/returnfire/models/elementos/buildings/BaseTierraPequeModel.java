@@ -6,7 +6,6 @@
 package com.returnfire.models.elementos.buildings;
 
 import com.entity.anot.Entity;
-import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
