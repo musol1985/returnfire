@@ -136,7 +136,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 	
 	public void build(MsgBuild msg)throws Exception{
 		CeldaModel celda=getCellById(getCellPosByReal(msg.pos));
-		BuildNode node=(BuildNode)EntityManager.instanceGeneric(msg.edificio);
+		BuildNode node=(BuildNode)EntityManager.instanceGeneric(Class.forName(msg.edificio));
 		
 		if(!celda.isZonaOcupada(msg.pos, node.getSize())){
 			EdificioDAO dao=node.getNewDAO(world.getPlayers().get(msg.from).dao);
@@ -144,7 +144,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			EdificioModel edificio=celda.addEdificio(dao, true, false);			
 			new MsgOnBuilt((EdificioDAO) edificio.getDAO()).send();
 		}else{
-			throw new Exception("Atención, la zona "+msg.pos+" está ocupada!!!");
+			throw new Exception("Atenciï¿½n, la zona "+msg.pos+" estï¿½ ocupada!!!");
 		}
 	}
 }

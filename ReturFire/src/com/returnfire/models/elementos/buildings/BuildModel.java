@@ -19,10 +19,10 @@ import com.returnfire.msg.MsgBuild;
 
 @ModelEntity()
 public class BuildModel extends Model implements IDraggable{
-	@MapEntity(entries={}, packageItems="com.returnfire.models.elementos.buildings.nodos")
+	@MapEntity(entries={}, packageItems="com.returnfire.models.elementos.buildings.nodos", packageFilter = ModelEntity.class)
 	public Map<String, BuildNode> edificios;
 	
-	@PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
+	@PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY, attachWorld = false)
 	public GhostControl ghost;
 	
 	private BuildNode edificio;
@@ -32,9 +32,11 @@ public class BuildModel extends Model implements IDraggable{
 			edificio.dettach();			
 		}
 		
-		edificio=edificios.get(nuevoEdificio);		
+		edificio=edificios.get(nuevoEdificio.getName());		
 
-		ghost.setCollisionShape(edificio.getCollisionShape());
+
+                ghost.setCollisionShape(edificio.getCollisionShape());
+                edificio.addControl(ghost);
 		
 		edificio.attachToParent(this);
 	}
@@ -64,7 +66,7 @@ public class BuildModel extends Model implements IDraggable{
 		if(isColision()){
 			System.out.println("No puedes poner ahi el edificio!!!!");
 		}else{
-			
+			System.out.println("->Dragging");
 		}
 	}
 	

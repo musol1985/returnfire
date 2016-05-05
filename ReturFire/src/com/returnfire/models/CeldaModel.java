@@ -65,7 +65,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     public void onInstance(IBuilder builder, Object[] params)throws Exception {
         super.onInstance(builder, params); //To change body of generated methods, choose Tools | Templates.
         
-       initMap();
+       //initMap();
         
        terrain.move(CELL_SIZE/2, -10, CELL_SIZE/2);
 
@@ -107,11 +107,11 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
          	for(int y=0;y<CELL_SIZE;y++){
          		MapEntry me=new MapEntry();
          		
-         		if(y>0)
+         		if(y>0 && x>0){
          			me.setSur(getMapEntry(x,y-1));
-         		
-         		if(x>0)
-         			me.setOeste(getMapEntry(x-1,y));
+                                me.setOeste(getMapEntry(x-1,y));
+                        }
+
          		
          		mY.add(me);
          	}
@@ -168,7 +168,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     		
     		for(int z=0;z<e.getNodo().getSize().z;z++){
     			if(meY.isOcupado())
-    				throw new Exception("Error, imposible ocupar con "+e+" la posicion ("+pos.x+"+"+x+","+pos.z+"+"+z+") de la celda "+dao.getId()+". Está ocupado por "+meY.getElemento());
+    				throw new Exception("Error, imposible ocupar con "+e+" la posicion ("+pos.x+"+"+x+","+pos.z+"+"+z+") de la celda "+dao.getId()+". Estï¿½ ocupado por "+meY.getElemento());
     			meY.setOcupadoPor(e);
     			
     			meY=meY.getNorte();
@@ -244,7 +244,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         if(batch)
             edificios.batch();
         
-        addToMap(model);
+        //addToMap(model);
         
         return model;
     }
@@ -271,7 +271,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         if(batch)
         	estaticos.batch();
         
-        addToMap(model);
+        //addToMap(model);
         
         return  model;
     }

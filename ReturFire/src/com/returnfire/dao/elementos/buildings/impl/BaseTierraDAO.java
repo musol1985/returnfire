@@ -1,10 +1,12 @@
 package com.returnfire.dao.elementos.buildings.impl;
 
 import com.entity.utils.Vector2;
+import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 
+@Serializable
 public class BaseTierraDAO extends EdificioVehiculosDAO{
 
 	

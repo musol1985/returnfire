@@ -6,6 +6,7 @@
 package com.returnfire.models.elementos.buildings;
 
 import com.entity.anot.Entity;
+import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
@@ -19,15 +20,16 @@ import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
  * @author Edu
  */
 
+@ModelEntity
 public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDAO, BaseTierraPequeNode>{
 	
 	@Entity
 	public BaseTierraPequeNode building;
 	
-	@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaA")
+	//@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaA")
 	public BuildingExtension zonaA;
 	
-	@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaB")
+	//@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaB")
 	public BuildingExtension zonaB;
 	
 	

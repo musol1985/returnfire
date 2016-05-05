@@ -27,6 +27,7 @@ import com.entity.network.core.tasks.NetWorldPersistTask;
 import com.jme3.input.KeyInput;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.returnfire.client.gui.BuildGUI;
 import com.returnfire.client.gui.DriveGUI;
 import com.returnfire.client.listeners.InGameClientListener;
 import com.returnfire.models.JugadorModel;
@@ -72,8 +73,8 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
     @Task(period=30)
     public NetWorldPersistTask saveTask;
 
-    //@ScreenGUI(attach = true)
-    public DriveGUI driveGUI;
+    @ScreenGUI(attach = true)
+    public BuildGUI driveGUI;
     
     @Override
     public MundoModel getWorld() {
@@ -111,9 +112,6 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
 		if(!player.hasVehicle()){
 			setScrollMode();
 		}
-                Sprite s=new Sprite();
-                s.instance("t", "Textures/grass.jpg");
-                EntityManager.getGame().getGuiNode().attachChild(s);
 	}
 	
 	public void setFollowMode()throws Exception{

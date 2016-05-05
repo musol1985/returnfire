@@ -28,7 +28,7 @@ public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO, N exten
 	public GhostControl parkingZone;
 	
 
-	@Entity(conditional="injectVehiculo",  substituteNode="vehiculo")
+	//@Entity(conditional="injectVehiculo",  substituteNode="vehiculo")
 	public VehiculoModel vehiculo;
 
 	public abstract CollisionShape getParkingZoneColisionShape();
@@ -41,7 +41,7 @@ public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO, N exten
                 return zona;
 	}
 
-	public VehiculoModel injectVehiculo(EdificioVehiculosDAO dao){	
+	public VehiculoModel injectVehiculo(T dao){	
 		if(dao.tieneVehiculo()){
 			return GameContext.getMundo().getFactory().vehiculosFactory.crearVehiculo(null, dao.getvDAO());
 		}

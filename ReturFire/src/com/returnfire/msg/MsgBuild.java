@@ -7,13 +7,14 @@ import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 
 @Serializable
 public class MsgBuild extends BaseNetMessage {
-	public Class<? extends BuildNode> edificio;
+	public String edificio;
 	public String from;
 	public Vector3f pos;
 	public float ang;
 
 	public MsgBuild(Class<? extends BuildNode> edificio, Vector3f pos, float ang, String from) {
-		this.edificio=edificio;
+		this.edificio=edificio.getName();
+                this.pos=pos;
 		this.ang=ang;
 		this.from=from;
 	}
