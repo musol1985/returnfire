@@ -25,6 +25,7 @@ import com.returnfire.models.elementos.BulletModel.BALAS;
 import com.returnfire.models.elementos.EdificioModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.msg.MsgBuild;
+import com.returnfire.msg.MsgErrOnBuilt;
 import com.returnfire.msg.MsgOnBuilt;
 import com.returnfire.msg.MsgOnDisparar;
 
@@ -142,7 +143,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			EdificioDAO dao=node.getNewDAO(world.getPlayers().get(msg.from).dao);
 			
 			EdificioModel edificio=celda.addEdificio(dao, true, false);			
-			new MsgOnBuilt((EdificioDAO) edificio.getDAO()).send();
+			new MsgOnBuilt((EdificioDAO) edificio.getDAO(), celda.getDao().getId()).send();
 		}else{
 			throw new Exception("Atenci�n, la zona "+msg.pos+" est� ocupada!!!");
 		}

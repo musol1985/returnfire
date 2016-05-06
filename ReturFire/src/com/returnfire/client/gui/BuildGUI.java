@@ -6,6 +6,7 @@
 package com.returnfire.client.gui;
 
 import com.entity.anot.Entity;
+import com.entity.modules.gui.anot.ScreenEntity;
 import com.entity.modules.gui.anot.ScreenGUI;
 import com.entity.modules.gui.anot.SpriteGUI;
 import com.entity.modules.gui.events.ClickEvent;
@@ -22,7 +23,7 @@ import com.returnfire.models.elementos.buildings.nodos.BuildNode;
  *
  * @author Edu
  */
-@ScreenGUI
+@ScreenEntity
 public class BuildGUI extends Screen{
 	@SpriteGUI(name="btnBTP", onLeftClick="clickBaseTierra", texture = "Interface/toolRelleno.png", position = {100,100})
 	public Button btnBaseTierra;

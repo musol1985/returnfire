@@ -68,4 +68,9 @@ public class CeldaDAO extends NetWorldCellDAO{
         return edificios!=null;
     }
     
+    
+    public void addEdificio(EdificioDAO edificio){
+    	edificios.add(edificio);
+    	getId().timestamp=System.currentTimeMillis();    	
+    }
 }

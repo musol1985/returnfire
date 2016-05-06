@@ -230,7 +230,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
      * @param dao
      * @return
      */
-    public EdificioModel addEdificio(EdificioDAO dao, boolean addDAO, boolean batch)throws Exception{
+    public EdificioModel addEdificio(EdificioDAO dao, boolean addDAO, boolean isNew)throws Exception{
         if(addDAO)
             this.dao.getEdificios().add(dao);
         
@@ -241,8 +241,10 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         edificios.attachEntity(model);
         
-        if(batch)
+        if(isNew){
+        	
             edificios.batch();
+        }
         
         //addToMap(model);
         

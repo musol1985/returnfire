@@ -6,16 +6,10 @@ import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 
 @Serializable
-public class MsgOnBuilt extends BaseNetMessage {
-	public EdificioDAO edificio;
-	public CellId cellId;
+public class MsgErrOnBuilt extends BaseNetMessage {	
 
-	public MsgOnBuilt(EdificioDAO edificio, CellId id) {
-		this.edificio=edificio;
-		this.cellId=id;
-	}
 	
-	public MsgOnBuilt() {
+	public MsgErrOnBuilt() {
 		
 	}
 }

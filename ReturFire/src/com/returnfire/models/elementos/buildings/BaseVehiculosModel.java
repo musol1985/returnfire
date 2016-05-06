@@ -5,6 +5,7 @@
  */
 package com.returnfire.models.elementos.buildings;
 
+import com.entity.anot.Conditional;
 import com.entity.anot.Entity;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.GhostControl;
@@ -29,6 +30,7 @@ public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO, N exten
 	
 
 	//@Entity(conditional="injectVehiculo",  substituteNode="vehiculo")
+	@Conditional(method="injectVehiculo", includeFieldName=false)
 	public VehiculoModel vehiculo;
 
 	public abstract CollisionShape getParkingZoneColisionShape();

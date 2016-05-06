@@ -5,6 +5,7 @@
  */
 package com.returnfire.models.elementos.buildings;
 
+import com.entity.anot.Conditional;
 import com.entity.anot.Entity;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
@@ -26,10 +27,12 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
 	@Entity
 	public BaseTierraPequeNode building;
 	
-	//@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaA")
+	//@Entity(substituteNode="zonaA")
+	@Conditional(method="injectZona", includeFieldName=true)
 	public BuildingExtension zonaA;
 	
 	//@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaB")
+	@Conditional(method="injectZona", includeFieldName=true)
 	public BuildingExtension zonaB;
 	
 	
