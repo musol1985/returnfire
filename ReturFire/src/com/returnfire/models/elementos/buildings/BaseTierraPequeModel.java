@@ -39,7 +39,7 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
     @Override
     public CollisionShape getColisionShape() {
             // TODO Auto-generated method stub
-            return new BoxCollisionShape(new Vector3f(4,0.3f,4));
+            return new BoxCollisionShape(new Vector3f(11,0.3f,11));
     }
 
     @Override

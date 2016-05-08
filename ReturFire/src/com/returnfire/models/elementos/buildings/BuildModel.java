@@ -3,19 +3,26 @@ package com.returnfire.models.elementos.buildings;
 import java.util.Map;
 
 import com.entity.anot.collections.MapEntity;
+import com.entity.anot.components.model.MaterialComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.entities.ModelEntity;
+import com.entity.core.EntityManager;
 import com.entity.core.items.Model;
 import com.entity.core.items.ModelBase;
 import com.entity.modules.gui.events.IDraggable;
 import com.entity.modules.gui.items.SpriteBase.BUTTON;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.GhostControl;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Geometry;
 import com.returnfire.GameContext;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.msg.MsgBuild;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 @ModelEntity()
 public class BuildModel extends Model implements IDraggable{
@@ -26,17 +33,30 @@ public class BuildModel extends Model implements IDraggable{
 	public GhostControl ghost;
 	
 	private BuildNode edificio;
+        
+        @MaterialComponent(asset = "Materials/buildings/drag.j3m")
+        private Material dragMat;
+        
+        private HashMap<Geometry, Material> edificioMat;
+        
+        private boolean puede;
 	
 	public void setEdificio(Class<? extends BuildNode> nuevoEdificio)throws Exception{
 		if(edificio!=null){
 			edificio.dettach();			
 		}
 		
-		edificio=edificios.get(nuevoEdificio.getName());		
-
+		edificio=edificios.get(nuevoEdificio.getName());	
+                edificioMat=edificio.getMaterials();
+                
+                puede=true;
+                for(Entry<Geometry, Material> g:edificioMat.entrySet()){
+                    g.getKey().setMaterial(dragMat);
+                }
 
                 ghost.setCollisionShape(edificio.getCollisionShape());
                 edificio.addControl(ghost);
+                EntityManager.getGame().getPhysics().add(ghost);
 		
 		edificio.attachToParent(this);
 	}
@@ -56,7 +76,10 @@ public class BuildModel extends Model implements IDraggable{
 				new MsgBuild(edificio.getClass(), getWorldTranslation(), 0, GameContext.getJugador().dao.getId()).send();
 			}
 		}
-		
+                for(Entry<Geometry, Material> g:edificioMat.entrySet()){
+                    g.getKey().setMaterial(g.getValue());
+                }
+		EntityManager.getGame().getPhysics().remove(ghost);
 		return false;
 	}
 
@@ -64,9 +87,9 @@ public class BuildModel extends Model implements IDraggable{
 	public void onDragging(ModelBase over) throws Exception {
 		//TODO comprobar colisiones
 		if(isColision()){
-			System.out.println("No puedes poner ahi el edificio!!!!");
+                        dragMat.setColor("Color", ColorRGBA.Red);
 		}else{
-			System.out.println("->Dragging");
+                        dragMat.setColor("Color", ColorRGBA.Green);
 		}
 	}
 	

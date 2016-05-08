@@ -19,7 +19,7 @@ public class BaseTierraPequeNode extends BuildNode {
 
 	@Override
 	public CollisionShape getCollisionShape() {
-		return new BoxCollisionShape(new Vector3f(4,4,4));
+		return new BoxCollisionShape(new Vector3f(11,1,11));
 	}
 
 	@Override
