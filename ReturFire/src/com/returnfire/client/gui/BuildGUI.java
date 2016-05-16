@@ -18,6 +18,7 @@ import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.BuildModel;
 import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
+import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
 
 /**
  *
@@ -31,13 +32,13 @@ public class BuildGUI extends Screen{
 
 
 	public void build(Class<? extends BuildNode> node)throws Exception{
-		GameContext.getMundo().buildDrag.setEdificio(BaseTierraPequeNode.class);
+		GameContext.getMundo().buildDrag.setEdificio(node);
 		drag(GameContext.getMundo().buildDrag, CeldaModel.class, GameContext.getMundo());
 	}		
 	
 	public boolean clickBaseTierra(Sprite btn, ClickEvent event)throws Exception{		
 		if(event.value)
-			build(BaseTierraPequeNode.class);
+			build(MolinoEolicoNode.class);
 
 		return true;
 	}

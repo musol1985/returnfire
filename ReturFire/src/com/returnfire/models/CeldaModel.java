@@ -22,7 +22,6 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.terrain.Terrain;
 import com.jme3.terrain.geomipmap.TerrainQuad;
@@ -33,6 +32,7 @@ import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
+import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.map.MapEntry;
@@ -237,6 +237,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         EdificioModel model=null;
         if(dao instanceof BaseTierraDAO){
             model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
+        }else if(dao instanceof MolinoEolicoDAO){
+            model=getMundo().getFactory().modelFactory.crearMolinoEolico(null, (MolinoEolicoDAO)dao);  
         }
         
         edificios.attachEntity(model);
