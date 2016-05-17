@@ -9,6 +9,7 @@ import com.jme3.scene.Spatial;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.models.elementos.IEstaticoNode;
+
 import java.util.HashMap;
 
 
@@ -16,7 +17,7 @@ import java.util.HashMap;
 
 public abstract class BuildNode extends Model implements IEstaticoNode{
 	public abstract CollisionShape getCollisionShape(); 
-	public abstract EdificioDAO getNewDAO(JugadorDAO jugador);
+	public abstract Class<? extends EdificioDAO> getDAO();
        
         
     public HashMap<Geometry, Material> getMaterials(){

@@ -254,6 +254,34 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
     /**
+     * Crea el construyendo edificio
+     * @param dao
+     * @return
+     */
+    public EdificioModel addConstruyendoEdificio(EdificioDAO dao, boolean addDAO, boolean isNew)throws Exception{
+        if(addDAO)
+            this.dao.getEdificios().add(dao);
+        
+        EdificioModel model=null;
+        if(dao instanceof BaseTierraDAO){
+            model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
+        }else if(dao instanceof MolinoEolicoDAO){
+            model=getMundo().getFactory().modelFactory.crearMolinoEolico(null, (MolinoEolicoDAO)dao);  
+        }
+        
+        edificios.attachEntity(model);
+        
+        if(isNew){
+        	
+            edificios.batch();
+        }
+        
+        //addToMap(model);
+        
+        return model;
+    }
+    
+    /**
      * Crea el edificioModel a partir del dao y lo anyade al dao de la celda
      * @param dao
      * @return

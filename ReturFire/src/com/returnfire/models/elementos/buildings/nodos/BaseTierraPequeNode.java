@@ -23,8 +23,8 @@ public class BaseTierraPequeNode extends BuildNode {
 	}
 
 	@Override
-	public EdificioDAO getNewDAO(JugadorDAO jugador) {
-		return new BaseTierraDAO(jugador, null);
+	public Class<? extends EdificioDAO> getDAO() {
+		return BaseTierraDAO.class;
 	}
 
 	

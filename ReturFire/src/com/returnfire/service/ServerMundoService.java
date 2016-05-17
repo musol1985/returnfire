@@ -13,6 +13,7 @@ import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
@@ -140,10 +141,12 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		BuildNode node=(BuildNode)EntityManager.instanceGeneric(Class.forName(msg.edificio));
 		
 		if(!celda.isZonaOcupada(msg.pos, node.getSize())){
-			EdificioDAO dao=node.getNewDAO(world.getPlayers().get(msg.from).dao);
+			JugadorDAO jugador=world.getPlayers().get(msg.from).dao;
+			ConstruyendoDAO dao=new ConstruyendoDAO(jugador, node.getDAO().getName());
+			/*EdificioDAO dao=node.getNewDAO(jugador);
 			
 			EdificioModel edificio=celda.addEdificio(dao, true, false);			
-			new MsgOnBuilt((EdificioDAO) edificio.getDAO(), celda.getDao().getId()).send();
+			new MsgOnBuilt((EdificioDAO) edificio.getDAO(), celda.getDao().getId()).send();*/
 		}else{
 			throw new Exception("Atenci�n, la zona "+msg.pos+" est� ocupada!!!");
 		}

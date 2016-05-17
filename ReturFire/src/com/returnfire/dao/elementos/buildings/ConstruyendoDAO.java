@@ -5,18 +5,20 @@ import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
 
 @Serializable
-public abstract class EdificioDAO extends EstaticoDAO{
+public class ConstruyendoDAO extends EstaticoDAO{
 	public static final String CPU="cpu";
 	
 	public String jugador;
+	public String tipo;
     
-    public EdificioDAO(){
+    public ConstruyendoDAO(){
         
     }
 	
-	public EdificioDAO(JugadorDAO j){
+	public ConstruyendoDAO(JugadorDAO j, String tipo){
 		super();
 		jugador=j.getId();
+		this.tipo=tipo;
 	}
 	@Override
 	public int getVidaInicial() {
@@ -27,10 +29,5 @@ public abstract class EdificioDAO extends EstaticoDAO{
 		return CPU.equals(jugador);
 	}
 	
-	public boolean isEnergia(){
-		return false;
-	}
-	
-	public abstract int getPetroleoNecesario();
-	public abstract int getPiezasNecesarias();
+
 }

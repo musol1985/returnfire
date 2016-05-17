@@ -1,8 +1,5 @@
 package com.returnfire.models.elementos.buildings.nodos;
 
-import com.entity.adapters.Modifier;
-import com.entity.adapters.listeners.IModifierOnFinish;
-import com.entity.adapters.modifiers.ModifierPosition;
 import com.entity.adapters.modifiers.ModifierRotation;
 import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.entities.ModelEntity;
@@ -13,9 +10,6 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
-import com.returnfire.GameContext;
-import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 
@@ -35,8 +29,8 @@ public class MolinoEolicoNode extends BuildNode {
 	}
 
 	@Override
-	public EdificioDAO getNewDAO(JugadorDAO jugador) {
-		return new MolinoEolicoDAO(jugador);
+	public Class<? extends EdificioDAO> getDAO() {
+		return MolinoEolicoDAO.class;
 	}
 
     @Override

@@ -20,4 +20,19 @@ public class MolinoEolicoDAO extends EdificioDAO{
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean isEnergia(){
+		return true;
+	}
+
+	@Override
+	public int getPetroleoNecesario() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPiezasNecesarias() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
