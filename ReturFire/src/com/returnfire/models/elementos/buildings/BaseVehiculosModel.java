@@ -6,13 +6,10 @@
 package com.returnfire.models.elementos.buildings;
 
 import com.entity.anot.Conditional;
-import com.entity.anot.Entity;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
-import com.returnfire.models.elementos.EdificioModel;
-import com.returnfire.models.elementos.IEstaticoNode;
 import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
@@ -22,7 +19,7 @@ import com.returnfire.models.elementos.buildings.nodos.BuildNode;
  * @author Edu
  */
 
-public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO, N extends IEstaticoNode> extends EdificioModel<T, N>{
+public abstract class BaseVehiculosModel<T extends EdificioVehiculosDAO, N extends BuildNode> extends EdificioConstruibleModel<T, N>{
 
 //	@PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
    // @CustomCollisionShape(methodName = "getParkingZoneColisionShape")

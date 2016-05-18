@@ -29,6 +29,7 @@ import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.returnfire.GameContext;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
+import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
@@ -39,6 +40,7 @@ import com.returnfire.map.MapEntry;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EdificioModel;
 import com.returnfire.models.elementos.EstaticoModel;
+import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.service.HeightService;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
@@ -164,9 +166,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     	MapEntry meY=getMapEntry(pos.x, pos.z);
 		MapEntry meX=meY;
 		
-    	for(int x=0;x<e.getNodo().getSize().x;x++){
+    	for(int x=0;x<e.getDAO().getSize().x;x++){
     		
-    		for(int z=0;z<e.getNodo().getSize().z;z++){
+    		for(int z=0;z<e.getDAO().getSize().z;z++){
     			if(meY.isOcupado())
     				throw new Exception("Error, imposible ocupar con "+e+" la posicion ("+pos.x+"+"+x+","+pos.z+"+"+z+") de la celda "+dao.getId()+". Est� ocupado por "+meY.getElemento());
     			meY.setOcupadoPor(e);
@@ -258,21 +260,15 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
      * @param dao
      * @return
      */
-    public EdificioModel addConstruyendoEdificio(EdificioDAO dao, boolean addDAO, boolean isNew)throws Exception{
+    public EdificioModel addConstruyendoEdificio(ConstruyendoDAO dao, boolean addDAO, boolean isNew)throws Exception{
         if(addDAO)
             this.dao.getEdificios().add(dao);
         
-        EdificioModel model=null;
-        if(dao instanceof BaseTierraDAO){
-            model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
-        }else if(dao instanceof MolinoEolicoDAO){
-            model=getMundo().getFactory().modelFactory.crearMolinoEolico(null, (MolinoEolicoDAO)dao);  
-        }
+        ConstruyendoModel model=getMundo().getFactory().modelFactory.crearConstruyendo(null, dao);
         
         edificios.attachEntity(model);
         
-        if(isNew){
-        	
+        if(isNew){        	
             edificios.batch();
         }
         

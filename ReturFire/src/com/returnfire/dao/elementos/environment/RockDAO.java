@@ -45,5 +45,8 @@ public class RockDAO extends EstaticoDAO {
 		return INDESTRUCTIBLE;
 	}
 
-
+	@Override
+	public Vector2 getSize() {
+		return new Vector2(1,1);
+	}
 }

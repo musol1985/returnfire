@@ -5,6 +5,7 @@
  */
 package com.returnfire.dao.elementos;
 
+import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
@@ -94,4 +95,6 @@ public abstract class EstaticoDAO<T extends EstaticoDAO> implements java.io.Seri
     public boolean isDestruido(){
     	return vida<=0;
     }
+    
+    public abstract Vector2 getSize();
 }

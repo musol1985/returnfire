@@ -18,10 +18,6 @@ public class MolinoEolicoNode extends BuildNode {
     @SubModelComponent(name = "helix")
     public Node helix;
 
-	@Override
-	public Vector2 getSize() {
-		return new Vector2(2,2);
-	}
 
 	@Override
 	public CollisionShape getCollisionShape() {

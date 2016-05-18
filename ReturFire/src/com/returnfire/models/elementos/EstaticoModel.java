@@ -24,7 +24,7 @@ import com.returnfire.models.batchs.EstaticosBatch;
  *
  * @author Edu
  */
-public abstract class EstaticoModel<T extends EstaticoDAO, N extends IEstaticoNode> extends Model<EstaticosBatch>{
+public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<EstaticosBatch>{
     protected T dao;
     @PhysicsBodyComponent
     @CustomCollisionShape(methodName = "getColisionShape")
@@ -40,19 +40,23 @@ public abstract class EstaticoModel<T extends EstaticoDAO, N extends IEstaticoNo
     
     public abstract CollisionShape getColisionShape();
     public abstract boolean onEliminar(Vector3f vel);
-    public abstract N getNodo();
      
     
     public MundoModel getMundo(){
         return (MundoModel)((IWorldInGameScene)EntityManager.getCurrentScene()).getWorld();
     }
     
+    
+    
      @Override
+	public void onPreInject(IBuilder builder, Object[] params) throws Exception {
+         setDao((T)params[0]);
+	}
+
+	@Override
     public void onInstance(IBuilder builder, Object[] params) throws Exception{
         super.onInstance(builder, params); 
-        
-        setDao((T)params[0]);
-        
+
          setName(dao.getId());
     }
      

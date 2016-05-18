@@ -1,24 +1,24 @@
 package com.returnfire.models.elementos.buildings.nodos;
 
+import java.util.HashMap;
+
 import com.entity.core.items.Model;
+import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
-import com.returnfire.models.elementos.IEstaticoNode;
-
-import java.util.HashMap;
 
 
 
 
-public abstract class BuildNode extends Model implements IEstaticoNode{
+public abstract class BuildNode extends Model{
 	public abstract CollisionShape getCollisionShape(); 
 	public abstract Class<? extends EdificioDAO> getDAO();
        
+	private Vector2 size;
         
     public HashMap<Geometry, Material> getMaterials(){
         return rellenarMaterials(new HashMap<Geometry, Material>(), getNode()); 
@@ -34,5 +34,18 @@ public abstract class BuildNode extends Model implements IEstaticoNode{
             }            
         }
         return res;
+    }
+    
+    
+    public Vector2 getSize(){
+    	if(size==null){
+	    	try{
+	    		size=getDAO().newInstance().getSize();
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    		return null;
+	    	}	    	
+    	}
+    	return size;
     }
 }

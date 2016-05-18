@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.models.elementos.buildings;
+package com.returnfire.models.elementos.buildings.impl;
 
 import com.entity.anot.Entity;
 import com.entity.anot.entities.ModelEntity;
@@ -13,6 +13,7 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.models.elementos.EdificioModel;
+import com.returnfire.models.elementos.buildings.EdificioConstruibleModel;
 import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
 
 /**
@@ -21,7 +22,7 @@ import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
  */
 
 @ModelEntity
-public class MolinoEolicoModel extends EdificioModel<MolinoEolicoDAO, MolinoEolicoNode>{
+public class MolinoEolicoModel extends EdificioConstruibleModel<MolinoEolicoDAO, MolinoEolicoNode>{
 	
     @Entity
     public MolinoEolicoNode building;

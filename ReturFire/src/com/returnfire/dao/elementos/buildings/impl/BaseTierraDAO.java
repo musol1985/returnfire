@@ -33,4 +33,8 @@ public class BaseTierraDAO extends EdificioVehiculosDAO{
 		return 0;
 	}
 
+	@Override
+	public Vector2 getSize() {
+		return new Vector2(2,2);
+	}
 }

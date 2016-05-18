@@ -30,4 +30,9 @@ public class ArbolDAO extends EstaticoDAO {
 		return 100;
 	}
 
+	@Override
+	public Vector2 getSize() {
+		return new Vector2(1,1);
+	}
+
 }

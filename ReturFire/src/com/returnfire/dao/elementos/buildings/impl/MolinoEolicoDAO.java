@@ -1,5 +1,6 @@
 package com.returnfire.dao.elementos.buildings.impl;
 
+import com.entity.utils.Vector2;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
@@ -34,5 +35,10 @@ public class MolinoEolicoDAO extends EdificioDAO{
 	public int getPiezasNecesarias() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public Vector2 getSize() {
+		return new Vector2(2,2);
 	}
 }

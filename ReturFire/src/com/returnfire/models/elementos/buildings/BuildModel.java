@@ -36,29 +36,38 @@ public class BuildModel extends Model implements IDraggable{
         
         @MaterialComponent(asset = "Materials/buildings/drag.j3m")
         private Material dragMat;
-        
+
         private HashMap<Geometry, Material> edificioMat;
-        
-        private boolean puede;
+
 	
 	public void setEdificio(Class<? extends BuildNode> nuevoEdificio)throws Exception{
 		if(edificio!=null){
 			edificio.dettach();			
 		}
 		
-		edificio=edificios.get(nuevoEdificio.getName());	
-                edificioMat=edificio.getMaterials();
-                
-                puede=true;
-                for(Entry<Geometry, Material> g:edificioMat.entrySet()){
-                    g.getKey().setMaterial(dragMat);
-                }
+		if(nuevoEdificio!=null){
+			edificio=edificios.get(nuevoEdificio.getName());	
+            edificioMat=edificio.getMaterials();
+            
+            setEdificioMaterial(dragMat);
 
-                ghost.setCollisionShape(edificio.getCollisionShape());
-                edificio.addControl(ghost);
-                EntityManager.getGame().getPhysics().add(ghost);
-		
-		edificio.attachToParent(this);
+            ghost.setCollisionShape(edificio.getCollisionShape());
+            edificio.addControl(ghost);
+            EntityManager.getGame().getPhysics().add(ghost);
+			
+			edificio.attachToParent(this);
+		}
+	}
+
+	
+	private void setEdificioMaterial(Material m){
+		 for(Entry<Geometry, Material> g:edificioMat.entrySet()){
+			 if(m!=null){
+				 g.getKey().setMaterial(dragMat);
+			 }else{
+				 g.getKey().setMaterial(g.getValue());
+			 }
+         }
 	}
 
 	@Override
@@ -68,28 +77,26 @@ public class BuildModel extends Model implements IDraggable{
 
 	@Override
 	public boolean onDrop(BUTTON button) throws Exception {
-		System.out.println("On drop!!!!!!!!!!!!!!!!!!!!");
 		if(button==BUTTON.LEFT){
 			if(isColision()){
 				return true;
 			}else{
-				new MsgBuild(edificio.getClass(), getWorldTranslation(), 0, GameContext.getJugador().dao.getId()).send();
+				GameContext.getClientService().construirEdificio(this);
+				setEdificioMaterial(null);
+				edificio.dettach();	
+				EntityManager.getGame().getPhysics().remove(ghost);				
 			}
 		}
-                for(Entry<Geometry, Material> g:edificioMat.entrySet()){
-                    g.getKey().setMaterial(g.getValue());
-                }
-		EntityManager.getGame().getPhysics().remove(ghost);
+		
 		return false;
 	}
 
 	@Override
 	public void onDragging(ModelBase over) throws Exception {
-		//TODO comprobar colisiones
 		if(isColision()){
-                        dragMat.setColor("Color", ColorRGBA.Red);
+			dragMat.setColor("Color", ColorRGBA.Red);
 		}else{
-                        dragMat.setColor("Color", ColorRGBA.Green);
+			dragMat.setColor("Color", ColorRGBA.Green);
 		}
 	}
 	
@@ -103,4 +110,9 @@ public class BuildModel extends Model implements IDraggable{
 		return false;
 	}
 
+	public BuildNode getEdificio() {
+		return edificio;
+	}
+
+	
 }

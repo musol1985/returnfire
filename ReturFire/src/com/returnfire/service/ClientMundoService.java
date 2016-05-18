@@ -10,7 +10,11 @@ import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.BulletModel;
+import com.returnfire.models.elementos.buildings.BuildModel;
+import com.returnfire.models.elementos.buildings.nodos.BuildNode;
+import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgOnBalaEstatico;
+import com.returnfire.msg.MsgOnBuilding;
 import com.returnfire.msg.MsgOnDisparar;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -82,5 +86,20 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
             	cell.save();
             }
         }
+    }
+    
+    public void construirEdificio(BuildModel model)throws Exception{    	
+    	new MsgBuild(model.getEdificio().getClass(), model.getWorldTranslation(), 0, getPlayer().dao.getId()).send();
+    }
+    
+    public void errorConstruir(String edificio)throws Exception{
+    	log.warning("Error al constuir un edificio: "+edificio);
+    	//Volvemos a hacer drag de ese tipo de edificio ya que seguramente en el server se haya puesto otro edificio en esa misma pos
+    	getWorld().buildDrag.setEdificio((Class<? extends BuildNode>) Class.forName(edificio));
+    }
+    
+    public void onConstruyendoEdificio(MsgOnBuilding msg)throws Exception{
+    	CeldaModel celda=getCellById(msg.cellId.id);
+    	celda.addConstruyendoEdificio(msg.edificio, true, true);
     }
 }

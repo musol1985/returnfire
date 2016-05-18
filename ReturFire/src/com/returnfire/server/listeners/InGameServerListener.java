@@ -26,7 +26,7 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
 			getEntity().getService().build(msg);			
 		}catch(Exception e){
 			log.warning(e.getMessage());
-			cnn.send(new MsgErrOnBuilt());
+			cnn.send(new MsgErrOnBuilt(msg.edificio));
 		}
 	}
 

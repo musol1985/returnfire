@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.models.elementos.buildings;
+package com.returnfire.models.elementos.buildings.impl;
 
 import com.entity.anot.Conditional;
 import com.entity.anot.Entity;
@@ -13,6 +13,7 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
+import com.returnfire.models.elementos.buildings.BaseVehiculosModel;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
 import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 

@@ -6,7 +6,6 @@ import com.entity.anot.effects.EffectParticle;
 import com.entity.anot.entities.ModelEntity;
 import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
-import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -18,10 +17,9 @@ import com.returnfire.controllers.DynamicController;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.models.elementos.BulletModel;
 import com.returnfire.models.elementos.EstaticoModel;
-import com.returnfire.models.elementos.IEstaticoNode;
 
 @ModelEntity(asset = "Models/environment/palm_03.j3o")
-public class ArbolModel extends EstaticoModel<ArbolDAO, ArbolModel> implements IEstaticoNode{
+public class ArbolModel extends EstaticoModel<ArbolDAO>{
  
     @EffectParticle(asset = "Models/fx/hojas.j3o")
     public EffectParticleAdapter hojas;
@@ -76,16 +74,4 @@ public class ArbolModel extends EstaticoModel<ArbolDAO, ArbolModel> implements I
             coco=null;
         }
     }
-
-
-	@Override
-	public Vector2 getSize() {
-		return new Vector2(1,1);
-	}
-
-
-	@Override
-	public ArbolModel getNodo() {
-		return this;
-	}
 }

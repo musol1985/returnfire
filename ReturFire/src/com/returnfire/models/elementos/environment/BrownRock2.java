@@ -7,10 +7,9 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.elementos.EstaticoModel;
-import com.returnfire.models.elementos.IEstaticoNode;
 
 @ModelEntity(asset = "Models/environment/rock_brown_02.j3o")
-public class BrownRock2 extends EstaticoModel<RockDAO, BrownRock2> implements IEstaticoNode{
+public class BrownRock2 extends EstaticoModel<RockDAO>{
     
     
     public CollisionShape getColisionShape(){
@@ -22,14 +21,4 @@ public class BrownRock2 extends EstaticoModel<RockDAO, BrownRock2> implements IE
         return true;
     }
     
-
-	@Override
-	public Vector2 getSize() {
-		return new Vector2(1,1);
-	}
-
-	@Override
-	public BrownRock2 getNodo() {
-		return this;
-	}
 }

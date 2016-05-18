@@ -8,6 +8,7 @@ package com.returnfire.models.factory;
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
 import com.returnfire.dao.CeldaDAO;
+import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO.EXTENSIONES;
@@ -15,12 +16,13 @@ import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.elementos.EstaticoModel;
-import com.returnfire.models.elementos.buildings.BaseTierraPequeModel;
-import com.returnfire.models.elementos.buildings.MolinoEolicoModel;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
 import com.returnfire.models.elementos.buildings.ext.PetroleoExt;
 import com.returnfire.models.elementos.buildings.ext.PiezasExt;
 import com.returnfire.models.elementos.buildings.ext.VacioExt;
+import com.returnfire.models.elementos.buildings.impl.BaseTierraPequeModel;
+import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
+import com.returnfire.models.elementos.buildings.impl.MolinoEolicoModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.elementos.environment.BrownRock1;
 import com.returnfire.models.elementos.environment.BrownRock2;
@@ -69,6 +71,14 @@ public class ModelFactory extends BaseService{
     @Instance(attachTo = "")
     public BrownRock3 crearRockBrown3(BrownRock3 rock, RockDAO dao, CeldaDAO celda){
         return rock;
+    } 
+    
+    @Instance(attachTo = "")
+    public ConstruyendoModel crearConstruyendo(ConstruyendoModel model, ConstruyendoDAO dao){
+        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
+        model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
+        model.rotate(0, dao.getAng(), 0);
+        return model;
     } 
     
     @Instance(attachTo = "")
