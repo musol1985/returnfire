@@ -1,6 +1,7 @@
 package com.returnfire.dao.elementos.buildings;
 
 import com.entity.utils.Vector2;
+import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.JugadorDAO;
 
@@ -17,7 +18,7 @@ public class ConstruyendoDAO extends EdificioDAO{
         
     }
 	
-	public ConstruyendoDAO(JugadorDAO j, String tipoEdificio){
+	public ConstruyendoDAO(JugadorDAO j, String tipoEdificio, Vector3f pos){
 		super(j);		
 		this.tipoEdificio=tipoEdificio;
 		
@@ -27,6 +28,7 @@ public class ConstruyendoDAO extends EdificioDAO{
 			size=dao.getSize();
 			maxPetroleo=dao.getPetroleoNecesario();
 			maxPiezas=dao.getPiezasNecesarias();
+                        this.pos=pos;
 		}catch(Exception e){
 			e.printStackTrace();
 		}

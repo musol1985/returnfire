@@ -137,18 +137,20 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		}
 	}        
 	
-	public void build(MsgBuild msg)throws Exception{
+	public MsgErrOnBuilt build(MsgBuild msg)throws Exception{
 		CeldaModel celda=getCellById(getCellPosByReal(msg.pos));
 
 		JugadorDAO jugador=world.getPlayers().get(msg.from).dao;
-		ConstruyendoDAO dao=new ConstruyendoDAO(jugador, msg.edificio);
+		ConstruyendoDAO dao=new ConstruyendoDAO(jugador, msg.edificio, getCellLocalPosByReal(msg.pos, celda.dao));
 		
 		if(!celda.isZonaOcupada(msg.pos, dao.getSize())){
 			celda.addConstruyendoEdificio(dao, true, true);
 			new MsgOnBuilding(dao, celda.dao.getId()).send();
 
 		}else{
-			throw new Exception("Atenci�n, la zona "+msg.pos+" est� ocupada!!!");
+                        return new MsgErrOnBuilt(msg.nodo);
+			//throw new Exception("Atenci�n, la zona "+msg.pos+" est� ocupada!!!");
 		}
+                return null;
 	}
 }

@@ -139,6 +139,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
     public boolean isZonaOcupada(Vector3f pReal, Vector2 size)throws Exception{
+        return false;/*
     	Vector2 pos=real2Map(pReal);
     	
     	MapEntry meY=getMapEntry(pos.x, pos.z);
@@ -156,7 +157,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     		meX=meX.getOeste();
     		meY=meX;
     	}
-    	return false;
+    	return false;*/
     }
     
 
@@ -186,7 +187,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     	return map.get(x).get(z);
     }
     
-    private Vector2 real2Map(Vector3f pos){
+    public Vector2 real2Map(Vector3f pos){
     	return new Vector2((int)pos.x/CELL_SIZE,(int)pos.z/CELL_SIZE);
     }
     

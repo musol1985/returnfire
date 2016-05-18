@@ -2,6 +2,7 @@ package com.returnfire.models;
 
 import com.entity.adapters.DirectionalLightShadow;
 import com.entity.anot.Entity;
+import com.entity.anot.OnUpdate;
 import com.entity.anot.Service;
 import com.entity.anot.components.lights.AmbientLightComponent;
 import com.entity.anot.components.lights.DirectionalLightComponent;
@@ -12,6 +13,7 @@ import com.entity.network.core.models.NetWorld;
 import com.jme3.light.AmbientLight;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.water.WaterFilter;
+import com.returnfire.GameContext;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.models.batchs.BalasBatch;
 import com.returnfire.models.batchs.DinamicosBatch;
@@ -106,5 +108,10 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
 		return pick;
 	}
     
-    
+     @OnUpdate
+    public void onUpdate(float tpf)throws Exception{
+        if(GameContext.getJugador()!=null && GameContext.getJugador().hasVehicle()){
+            GameContext.getJugador().getVehiculo().onUpdate(tpf);
+        }
+    }
 }

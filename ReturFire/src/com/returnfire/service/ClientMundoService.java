@@ -1,5 +1,6 @@
 package com.returnfire.service;
 
+import com.entity.anot.OnUpdate;
 import com.entity.anot.RunOnGLThread;
 import com.entity.network.core.service.impl.ClientNetWorldService;
 import com.jme3.math.Vector3f;
@@ -89,7 +90,7 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
     }
     
     public void construirEdificio(BuildModel model)throws Exception{    	
-    	new MsgBuild(model.getEdificio().getClass(), model.getWorldTranslation(), 0, getPlayer().dao.getId()).send();
+    	new MsgBuild(model.getEdificio().getDAO(), model.getEdificio().getClass(), model.getWorldTranslation(), 0, getPlayer().dao.getId()).send();
     }
     
     public void errorConstruir(String edificio)throws Exception{
@@ -98,8 +99,12 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
     	getWorld().buildDrag.setEdificio((Class<? extends BuildNode>) Class.forName(edificio));
     }
     
+    @RunOnGLThread
     public void onConstruyendoEdificio(MsgOnBuilding msg)throws Exception{
     	CeldaModel celda=getCellById(msg.cellId.id);
     	celda.addConstruyendoEdificio(msg.edificio, true, true);
     }
+    
+    
+
 }

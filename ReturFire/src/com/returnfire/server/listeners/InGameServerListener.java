@@ -22,12 +22,9 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
 	}
 
 	public void onBuild(MsgBuild msg, HostedConnection cnn)throws Exception{
-		try{
-			getEntity().getService().build(msg);			
-		}catch(Exception e){
-			log.warning(e.getMessage());
-			cnn.send(new MsgErrOnBuilt(msg.edificio));
-		}
+            MsgErrOnBuilt err=getEntity().getService().build(msg);			
+            if(err!=null)
+                cnn.send(err);
 	}
 
 	

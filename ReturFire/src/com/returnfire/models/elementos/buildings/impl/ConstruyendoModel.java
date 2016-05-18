@@ -11,6 +11,7 @@ import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
 import com.entity.anot.entities.ModelEntity;
 import com.entity.core.IBuilder;
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
@@ -19,19 +20,30 @@ import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.models.elementos.EdificioModel;
 import com.returnfire.models.elementos.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.HammerModel;
 
 /**
  *
  * @author Edu
  */
 
-@ModelEntity
+@ModelEntity(asset = "Models/buildings/construyendo.j3o")
 public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO>{
+    
+    @PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
+    @CustomCollisionShape(methodName = "getZona")
+    public GhostControl zona;
 	
     @Override
     public CollisionShape getColisionShape() {
             // TODO Auto-generated method stub
-            return new BoxCollisionShape(new Vector3f(dao.getSize().x,0.3f,dao.getSize().z));
+            return new BoxCollisionShape(new Vector3f(dao.getSize().x,0.1f,dao.getSize().z));
+    }
+    
+    
+    public CollisionShape getZona() {
+            // TODO Auto-generated method stub
+            return new SphereCollisionShape(dao.getSize().x*2);
     }
 
     @Override
@@ -45,17 +57,16 @@ public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO>{
     @Override
     public void onInstance(IBuilder builder, Object[] params) throws Exception {
         super.onInstance(builder, params); 
-        
-        
+        zona.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+        zona.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
         //TODO add suelo y add de las vallas
     }
-    
-    public CollisionShape getZona(){
-    	return new SphereCollisionShape(dao.getSize().x*2);
-    }
-    
-    @OnCollision
-    public void onColisionVehiculo(VehiculoModel vehiculo)throws Exception{
-    	
+
+    public boolean isVehiculoEnZona(VehiculoModel vehiculo){
+        for(PhysicsCollisionObject obj:zona.getOverlappingObjects()){
+            if(obj.getUserObject()==vehiculo)
+                return true;
+        }
+        return false;
     }
 }

@@ -24,16 +24,16 @@ import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
  */
 @ScreenEntity
 public class BuildGUI extends Screen{
-	@ButtonGUI(sprite=@SpriteGUI(name="btnRecursos", onLeftClick="clickRecursos", position={100,100}),
+	@ButtonGUI(sprite=@SpriteGUI(name="btnRecursos", onLeftClick="clickRecursos", position={100,300}),
 			icon="Interface/icons/recursos.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnRecursos;
 	
 	
-	@ButtonGUI(sprite=@SpriteGUI(name="btnBT", onLeftClick="clickBaseTierra", position={128,100}, attach=false),
+	@ButtonGUI(sprite=@SpriteGUI(name="btnBT", onLeftClick="clickBaseTierra", position={168,300}, attach=false),
 			icon="Interface/icons/baseTierra.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnBaseTierra;
 	
-	@ButtonGUI(sprite=@SpriteGUI(name="btnBT", onLeftClick="clickMolinoEolico", position={168,100}, attach=false),
+	@ButtonGUI(sprite=@SpriteGUI(name="btnBT", onLeftClick="clickMolinoEolico", position={236,300}, attach=false),
 			icon="Interface/icons/molinoEolico.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnMolinoEolico;
 
