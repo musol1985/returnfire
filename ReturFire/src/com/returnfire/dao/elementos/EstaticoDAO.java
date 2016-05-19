@@ -17,27 +17,16 @@ import com.returnfire.dao.elementos.environment.ArbolDAO;
  * @author Edu
  */
 @Serializable
-public abstract class EstaticoDAO<T extends EstaticoDAO> implements java.io.Serializable{
+public abstract class EstaticoDAO extends ElementoDAO{
 	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA, EDIFICIO, CONSTRUYENDO}
 	
 	public static final int INDESTRUCTIBLE=-9999;
 	
-    protected Vector3f pos;
     protected float ang;
     protected int vida;
 
     public EstaticoDAO() {
         vida=getVidaInicial();
-    }
-    
-    
-
-    public Vector3f getPos() {
-        return pos;
-    }
-
-    public void setPos(Vector3f pos) {
-        this.pos = pos;
     }
 
     public int getVida() {
@@ -60,7 +49,7 @@ public abstract class EstaticoDAO<T extends EstaticoDAO> implements java.io.Seri
     public abstract int getVidaInicial();
     
     public String getId(){
-    	return getTipo().name()+"#"+pos;
+    	return getTipo().name()+"#"+getPos();
     }
     
     

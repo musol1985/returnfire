@@ -2,7 +2,7 @@ package com.returnfire.msg;
 
 import com.entity.network.core.msg.BaseNetMessage;
 import com.jme3.network.serializing.Serializable;
-import com.returnfire.models.elementos.BulletModel.BALAS;
+import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 
 @Serializable
 public class MsgDisparar extends BaseNetMessage {

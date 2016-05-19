@@ -5,60 +5,19 @@
  */
 package com.returnfire.models.elementos;
 
-import com.entity.anot.components.model.PhysicsBodyComponent;
-import com.entity.anot.components.model.collision.CustomCollisionShape;
-import com.entity.core.EntityManager;
-import com.entity.core.IBuilder;
-import com.entity.core.items.Model;
-import com.entity.network.core.items.IWorldInGameScene;
-import com.jme3.bullet.collision.shapes.CollisionShape;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.models.CeldaModel;
-import com.returnfire.models.MundoModel;
 import com.returnfire.models.batchs.EstaticosBatch;
+import com.returnfire.models.elementos.bullets.BulletModel;
 
 /**
  *
  * @author Edu
  */
-public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<EstaticosBatch>{
-    protected T dao;
-    @PhysicsBodyComponent
-    @CustomCollisionShape(methodName = "getColisionShape")
-    public RigidBodyControl body;
-
-    public void setDao(T dao) {
-        this.dao = dao;
-    }
+public abstract class EstaticoModel<T extends EstaticoDAO> extends ElementoModel<T, EstaticosBatch>{
     
-    public T getDAO(){
-        return dao;
-    }
-    
-    public abstract CollisionShape getColisionShape();
-    public abstract boolean onEliminar(Vector3f vel);
-     
-    
-    public MundoModel getMundo(){
-        return (MundoModel)((IWorldInGameScene)EntityManager.getCurrentScene()).getWorld();
-    }
-    
-    
-    
-     @Override
-	public void onPreInject(IBuilder builder, Object[] params) throws Exception {
-         setDao((T)params[0]);
-	}
-
-	@Override
-    public void onInstance(IBuilder builder, Object[] params) throws Exception{
-        super.onInstance(builder, params); 
-
-         setName(dao.getId());
-    }
      
      /**
       * Retorna true si destruye el elemento
@@ -81,15 +40,12 @@ public abstract class EstaticoModel<T extends EstaticoDAO> extends Model<Estatic
      
      
      public void eliminar(Vector3f vel){
-         CeldaModel celda=getParentModel().getCelda();
+         CeldaModel celda=getCelda();
          if(GameContext.isServer() || onEliminar(vel))
             getParentModel().eliminar(this);
     	 
     	 celda.dao.getEstaticos().remove(dao);
     	 celda.save();
      }
-     
-     public CeldaModel getCelda(){
-         return getParentModel().getCelda();
-     }
+
 }

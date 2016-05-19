@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import com.entity.anot.entities.BatchModelEntity;
 import com.entity.core.items.BatchModel;
-import com.returnfire.models.elementos.BulletModel;
+import com.returnfire.models.elementos.bullets.BulletModel;
 
 /**
  *

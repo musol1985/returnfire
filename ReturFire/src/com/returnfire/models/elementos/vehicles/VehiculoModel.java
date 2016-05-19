@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.models.elementos;
+package com.returnfire.models.elementos.vehicles;
 
 import com.entity.adapters.ScrollCameraAdapter;
-import com.entity.anot.OnCollision;
 import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.network.NetSync;
 import com.entity.core.IBuilder;
@@ -17,15 +16,8 @@ import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.returnfire.dao.elementos.VehiculoDAO;
-import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
 import com.returnfire.models.JugadorModel;
-import com.returnfire.models.elementos.BulletModel.BALAS;
-import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
-import com.returnfire.msg.MsgDisparar;
 import com.returnfire.msg.sync.Posicion;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  *
@@ -36,8 +28,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     protected float accelerationValue = 0;     
     protected JugadorModel player;
     protected VehiculoDAO dao;
-    
-    private List<ConstruyendoModel> construcciones=new ArrayList<ConstruyendoModel>();
+
 
     @NetSync(timeout=10)
     public Posicion posicion;
@@ -153,10 +144,6 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     	return 100.0f;
     }
     
-    public VEHICULOS getTipoVehiculo(){
-    	return dao.getTipo();
-    }
-    
     public Vector3f getPhysicsLocation(){
     	return getBody().getPhysicsLocation();
     }
@@ -165,26 +152,13 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 		return player;
 	}
     
-    public void disparar(){
-    	new MsgDisparar(BALAS.NORMAL, player.getDao().getId()).send();
+    public abstract void onAccion();
+    
+    public boolean isArmado(){
+    	return this instanceof VehiculoArmadoModel;
     }
     
-    
-     @OnCollision
-    public void onColisionVehiculo(ConstruyendoModel construccion)throws Exception{
-    	System.out.println("oeeeeeee");
-        if(!construcciones.contains(construccion)){
-            construcciones.add(construccion);
-        }
-    }
-    
-    public void onUpdate(float tpf)throws Exception{
-        Iterator<ConstruyendoModel> it=construcciones.iterator();
-        while(it.hasNext()){
-            if(!it.next().isVehiculoEnZona(this)){
-                System.out.println("------------------------>remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                it.remove();
-            }
-        }
+    public boolean isTransporte(){
+    	return this instanceof VehiculoTransporteModel;
     }
 }

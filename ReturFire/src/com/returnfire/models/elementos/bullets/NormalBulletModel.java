@@ -2,7 +2,6 @@ package com.returnfire.models.elementos.bullets;
 
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
-import com.returnfire.models.elementos.BulletModel;
 
 @ModelEntity(asset = "Models/bullets/bala.j3o", attach = true)
 public class NormalBulletModel extends BulletModel{

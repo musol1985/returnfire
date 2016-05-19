@@ -1,4 +1,4 @@
-package com.returnfire.models.elementos.vehicles;
+package com.returnfire.models.elementos.vehicles.impl;
 
 import com.entity.anot.components.model.VehicleComponent;
 import com.entity.anot.components.model.WheelComponent;
@@ -8,11 +8,10 @@ import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.math.Vector3f;
-import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
-import com.returnfire.models.elementos.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.VehiculoArmadoModel;
 
 @ModelEntity(asset = "Models/vehicles/hammer.j3o", attach = false)
-public class HammerModel extends VehiculoModel<VehicleControl>{
+public class HammerModel extends VehiculoArmadoModel<VehicleControl>{
 
 	@VehicleComponent(mass=400.0f,
 		wheels={
@@ -36,12 +35,6 @@ public class HammerModel extends VehiculoModel<VehicleControl>{
 	public VehicleControl getBody() {
 		return body;
 	}
-
-	@Override
-	public VEHICULOS getTipoVehiculo() {
-		return VEHICULOS.HAMMER;
-	}
-
 
  
 }

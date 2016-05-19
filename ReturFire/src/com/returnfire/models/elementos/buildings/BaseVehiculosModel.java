@@ -10,9 +10,9 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
-import com.returnfire.models.elementos.VehiculoModel;
 import com.returnfire.models.elementos.buildings.ext.BuildingExtension;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
 
 /**
  *

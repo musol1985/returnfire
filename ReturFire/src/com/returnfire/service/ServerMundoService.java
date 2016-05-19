@@ -18,13 +18,14 @@ import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
+import com.returnfire.dao.elementos.vehiculos.impl.HammerDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
-import com.returnfire.models.elementos.BulletModel;
-import com.returnfire.models.elementos.BulletModel.BALAS;
-import com.returnfire.models.elementos.EdificioModel;
+import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
+import com.returnfire.models.elementos.bullets.BulletModel;
+import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgErrOnBuilt;
 import com.returnfire.msg.MsgOnBuilding;
@@ -68,7 +69,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
-			VehiculoDAO vehiculoInicial=VehiculoDAO.getHammer(posInicial.add(0, 30, 0), 0);
+			VehiculoDAO vehiculoInicial=VehiculoDAO.getNew(HammerDAO.class, posInicial.add(0, 30, 0), 0);
                                                 
 			BaseTierraDAO base=new BaseTierraDAO(j, VehiculoDAO.getVacio());
             base.addExtension(new ExtensionDAO("zonaA", ExtensionDAO.EXTENSIONES.PIEZAS));

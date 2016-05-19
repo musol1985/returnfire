@@ -38,8 +38,8 @@ import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.map.MapEntry;
 import com.returnfire.models.batchs.EstaticosBatch;
-import com.returnfire.models.elementos.EdificioModel;
 import com.returnfire.models.elementos.EstaticoModel;
+import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.service.HeightService;
 
@@ -161,7 +161,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
 
-    private void addToMap(EstaticoModel e) throws Exception{
+    private void addToMap(EstaticoModel<? extends EstaticoDAO> e) throws Exception{
     	Vector2 pos=real2Map(e.getLocalTranslation());
     	
     	MapEntry meY=getMapEntry(pos.x, pos.z);
@@ -224,8 +224,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         estaticos.batch();
     }
 
-    public EstaticoModel getEstatico(String estaticoId){
-        return (EstaticoModel)estaticos.getEntity(estaticoId);
+    public EstaticoModel<? extends EstaticoDAO> getEstatico(String estaticoId){
+        return (EstaticoModel<? extends EstaticoDAO>)estaticos.getEntity(estaticoId);
     }
     
     /**

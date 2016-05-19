@@ -18,9 +18,9 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
-import com.returnfire.models.elementos.EdificioModel;
-import com.returnfire.models.elementos.VehiculoModel;
-import com.returnfire.models.elementos.vehicles.HammerModel;
+import com.returnfire.models.elementos.buildings.EdificioModel;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.impl.HammerModel;
 
 /**
  *

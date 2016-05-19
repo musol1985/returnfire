@@ -12,9 +12,9 @@ import com.jme3.math.Quaternion;
 import com.returnfire.GameContext;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
-import com.returnfire.models.elementos.BulletModel;
-import com.returnfire.models.elementos.BulletModel.BALAS;
+import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.bullets.NormalBulletModel;
+import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 import com.returnfire.msg.MsgOnDisparar;
 
 /**

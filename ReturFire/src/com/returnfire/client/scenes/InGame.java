@@ -154,7 +154,7 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
         app.getPhysics().add(bulletNode);
         }*/
     	 if(value && player.hasVehicle()){
-             player.getVehiculo().disparar();
+             player.getVehiculo().onAccion();
          }
     }
     

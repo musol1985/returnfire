@@ -8,7 +8,7 @@ package com.returnfire.service;
 import com.entity.anot.RayPick;
 import com.entity.core.items.BaseService;
 import com.jme3.math.Ray;
-import com.returnfire.models.elementos.EdificioModel;
+import com.returnfire.models.elementos.buildings.EdificioModel;
 
 /**
  *

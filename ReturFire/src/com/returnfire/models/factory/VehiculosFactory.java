@@ -8,11 +8,11 @@ package com.returnfire.models.factory;
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
 import com.returnfire.dao.elementos.VehiculoDAO;
-import com.returnfire.dao.elementos.VehiculoDAO.VEHICULOS;
+import com.returnfire.dao.elementos.vehiculos.impl.HammerDAO;
 import com.returnfire.models.JugadorModel;
-import com.returnfire.models.elementos.VehiculoModel;
-import com.returnfire.models.elementos.vehicles.HammerModel;
-import com.returnfire.models.elementos.vehicles.HammerModelRemote;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.impl.HammerModel;
+import com.returnfire.models.elementos.vehicles.impl.HammerModelRemote;
 
 /**
  *
@@ -21,7 +21,7 @@ import com.returnfire.models.elementos.vehicles.HammerModelRemote;
 public class VehiculosFactory extends BaseService{
 
 	public VehiculoModel crearVehiculo(JugadorModel jugador, VehiculoDAO dao){
-		if(dao.getTipo()==VEHICULOS.HAMMER){
+		if(dao instanceof HammerDAO){
 			return crearHammer(jugador, dao);
 		}
 		return null;

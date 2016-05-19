@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.models.elementos;
+package com.returnfire.models.elementos.bullets;
 
 import com.entity.anot.OnCollision;
 import com.entity.anot.OnUpdate;
@@ -19,6 +19,7 @@ import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
 import com.returnfire.msg.MsgOnBalaEstatico;
 
 /**

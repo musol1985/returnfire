@@ -3,8 +3,8 @@ package com.returnfire.msg;
 import com.entity.network.core.msg.BaseNetMessage;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
-import com.returnfire.models.elementos.BulletModel;
-import com.returnfire.models.elementos.BulletModel.BALAS;
+import com.returnfire.models.elementos.bullets.BulletModel;
+import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 
 @Serializable
 public class MsgOnDisparar extends BaseNetMessage {

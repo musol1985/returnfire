@@ -4,7 +4,7 @@ import com.entity.network.core.msg.sync.NetMessage;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
-import com.returnfire.models.elementos.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
 
 @Serializable
 public  class Posicion extends NetMessage<VehiculoModel>{
