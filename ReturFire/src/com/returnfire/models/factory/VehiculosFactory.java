@@ -8,9 +8,11 @@ package com.returnfire.models.factory;
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
 import com.returnfire.dao.elementos.VehiculoDAO;
+import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
 import com.returnfire.dao.elementos.vehiculos.impl.HammerDAO;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.impl.CamionModel;
 import com.returnfire.models.elementos.vehicles.impl.HammerModel;
 import com.returnfire.models.elementos.vehicles.impl.HammerModelRemote;
 
@@ -23,9 +25,16 @@ public class VehiculosFactory extends BaseService{
 	public VehiculoModel crearVehiculo(JugadorModel jugador, VehiculoDAO dao){
 		if(dao instanceof HammerDAO){
 			return crearHammer(jugador, dao);
-		}
+		}else if(dao instanceof CamionDAO){
+                    return crearCamionLocal(null, jugador, dao);
+                }
 		return null;
 	}
+        
+    @Instance(attachTo = "")
+    public CamionModel crearCamionLocal(CamionModel camion, JugadorModel jugador, VehiculoDAO dao){
+        return camion;
+    }
  
     public VehiculoModel crearHammer(JugadorModel jugador, VehiculoDAO dao){
     	if(jugador!=null){

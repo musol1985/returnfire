@@ -35,6 +35,7 @@ import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
+import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.map.MapEntry;
@@ -81,18 +82,20 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         terrain.setShadowMode(RenderQueue.ShadowMode.Receive);
         
-        if(dao.hasEstaticos()){
+        if(dao.hasEstaticos() || dao.hasContenedores()){
             for(EstaticoDAO estaticoDAO:dao.getEstaticos()){
             	addEstatico(estaticoDAO, false);
+            }
+            for(ContenedorDAO contenedor:dao.getContenedores()){
+            	addContenedor(contenedor, false, false);
             }
             estaticos.getNode().setShadowMode(shadowMode.Cast);
             estaticos.batch();
         }
         
         if(dao.hasEdificios()){
-            for(EdificioDAO edificio:dao.getEdificios()){
-                edificio.getPos().y=HeightService.MAX_HEIGHT-10;
-                EdificioModel model=addEdificio(edificio, false, false);            
+            for(EdificioDAO edificio:dao.getEdificios()){                
+                addEdificio(edificio, false, false);            
             }
 
             edificios.getNode().setShadowMode(shadowMode.Cast);
@@ -235,6 +238,32 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
     /**
+     * Crea el contenedorModel a partir del dao y lo anyade al dao de la celda
+     * @param dao
+     * @return
+     */
+    public ContenedorModel addContenedor(ContenedorDAO dao, boolean addDAO, boolean isNew)throws Exception{
+        if(addDAO)
+            this.dao.addContenedor(dao);
+        
+        ContenedorModel model=null;
+        if(dao instanceof BarrilDAO){
+            model=getMundo().getFactory().modelFactory.crearBarril(null, (BarrilDAO)dao);   
+        }
+        
+        estaticos.attachEntity(model);
+        
+        if(isNew){
+        	
+            estaticos.batch();
+        }
+        
+        //addToMap(model);
+        
+        return model;
+    }
+    
+    /**
      * Crea el edificioModel a partir del dao y lo anyade al dao de la celda
      * @param dao
      * @return
@@ -291,7 +320,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
      */
     public EstaticoModel addEstatico(EstaticoDAO estaticoDAO, boolean batch)throws Exception{
     	EstaticoModel model=null;
-    	estaticoDAO.getPos().y=HeightService.MAX_HEIGHT-10;
+    	
     	
         if(estaticoDAO instanceof RockDAO){                    
             model=getMundo().getFactory().modelFactory.crearRoca((RockDAO)estaticoDAO, dao);                    

@@ -13,6 +13,7 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO.EXTENSIONES;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
+import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.elementos.EstaticoModel;
@@ -23,6 +24,7 @@ import com.returnfire.models.elementos.buildings.ext.VacioExt;
 import com.returnfire.models.elementos.buildings.impl.BaseTierraPequeModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.buildings.impl.MolinoEolicoModel;
+import com.returnfire.models.elementos.contenedores.impl.BarrilModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.elementos.environment.BrownRock1;
 import com.returnfire.models.elementos.environment.BrownRock2;
@@ -121,6 +123,12 @@ public class ModelFactory extends BaseService{
     
     @Instance(attachTo = "")
     public VacioExt crearExtensionVacia(VacioExt model){
+        return model;
+    } 
+    
+    @Instance(attachTo = "")
+    public BarrilModel crearBarril(BarrilModel model, BarrilDAO dao){
+        model.move(dao.getPos());
         return model;
     } 
 }

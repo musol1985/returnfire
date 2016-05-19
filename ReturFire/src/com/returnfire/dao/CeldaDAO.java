@@ -9,12 +9,14 @@ import com.entity.utils.Utils;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.environment.ArbolDAO;
 import com.returnfire.dao.elementos.environment.RockDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
+import com.returnfire.service.HeightService;
 
 @Serializable
 public class CeldaDAO extends NetWorldCellDAO{
@@ -22,6 +24,7 @@ public class CeldaDAO extends NetWorldCellDAO{
         
         private List<EstaticoDAO> estaticos;
         private List<EdificioDAO> edificios;
+        private List<ContenedorDAO> contenedores;
         
         public void generar(Random rnd, MundoModel mundo){
             if(!mundo.dao.isSide(getId())){
@@ -34,15 +37,16 @@ public class CeldaDAO extends NetWorldCellDAO{
                         if(i<elementos){
                             float ang=Utils.getRandomBetween(rnd, 0, FastMath.TWO_PI);
                             if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.ARBOL.ordinal()){
-                                estaticos.add(ArbolDAO.getNew(new Vector3f(x,0,z), ang));
+                                estaticos.add(ArbolDAO.getNew(new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
                             }else if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.ROCA.ordinal()){                                
-                                estaticos.add(RockDAO.getNew(new Vector3f(x,0,z),ang, rnd));
+                                estaticos.add(RockDAO.getNew(new Vector3f(x,HeightService.MAX_HEIGHT-10,z),ang, rnd));
                             }
                         }
                     } 
                 }
                 
                 edificios=new ArrayList<EdificioDAO>();
+                contenedores=new ArrayList<ContenedorDAO>();
             }
         }
 
@@ -71,6 +75,20 @@ public class CeldaDAO extends NetWorldCellDAO{
     
     public void addEdificio(EdificioDAO edificio){
     	edificios.add(edificio);
+    	getId().timestamp=System.currentTimeMillis();    	
+    }
+    
+    public List<ContenedorDAO> getContenedores() {
+	return contenedores;
+    }
+        
+    public boolean hasContenedores(){
+        return contenedores!=null;
+    }
+    
+    
+    public void addContenedor(ContenedorDAO edificio){
+    	contenedores.add(edificio);
     	getId().timestamp=System.currentTimeMillis();    	
     }
 }

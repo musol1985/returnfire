@@ -18,10 +18,10 @@ public class CamionModel extends VehiculoTransporteModel<VehicleControl>{
 
 	@VehicleComponent(mass=800.0f,
 		wheels={
-			@WheelComponent(nodeName="wheel_fl", offset={1.5f,1f,2.5f}, frontWheel=true),
-			@WheelComponent(nodeName="wheel_fr", offset={-1.5f,1f,2.5f}, frontWheel=true),
-			@WheelComponent(nodeName="wheel_rl", offset={1.5f,1f,-2.5f}),
-			@WheelComponent(nodeName="wheel_rr", offset={-1.5f,1f,-2.5f}),
+			@WheelComponent(nodeName="wheel_fl", offset={1.8f,1f,4.6f}, frontWheel=true),
+			@WheelComponent(nodeName="wheel_fr", offset={-1.8f,1f,4.6f}, frontWheel=true),
+			@WheelComponent(nodeName="wheel_rl2", offset={1.8f,1f,-3.5f}),
+			@WheelComponent(nodeName="wheel_rr2", offset={-1.8f,1f,-3.5f}),
 		})
 	@CustomCollisionShape(methodName="getCollisionShape")
 	public VehicleControl body;
@@ -30,7 +30,7 @@ public class CamionModel extends VehiculoTransporteModel<VehicleControl>{
 	
     public CompoundCollisionShape getCollisionShape() {
     	CompoundCollisionShape compoundShape = new CompoundCollisionShape();
-        BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.5f, 1f, 3f));
+        BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.8f, 1f, 6f));
         compoundShape.addChildShape(box, new Vector3f(0, 2, 0));
         return compoundShape;    
     }

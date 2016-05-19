@@ -11,13 +11,14 @@ import com.jme3.math.Vector3f;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
-import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
-import com.returnfire.dao.elementos.vehiculos.impl.HammerDAO;
+import com.returnfire.dao.elementos.contenedores.BarrilDAO;
+import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -65,11 +66,11 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
                 
                 x=600;
                 z=600;
-		Vector3f posInicial=new Vector3f(x, 0f, z);
+		Vector3f posInicial=new Vector3f(x, HeightService.MAX_HEIGHT-10, z);
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
-			VehiculoDAO vehiculoInicial=VehiculoDAO.getNew(HammerDAO.class, posInicial.add(0, 30, 0), 0);
+			VehiculoDAO vehiculoInicial=VehiculoDAO.getNew(CamionDAO.class, posInicial, 0);
                                                 
 			BaseTierraDAO base=new BaseTierraDAO(j, VehiculoDAO.getVacio());
             base.addExtension(new ExtensionDAO("zonaA", ExtensionDAO.EXTENSIONES.PIEZAS));
@@ -78,6 +79,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			j.setVehiculo(vehiculoInicial);
 			posInicial.addLocal(20,0,20);
 		}
+
 	}
 	
 	public void addEdificio(EdificioVehiculosDAO edificio, Vector3f worldPos)throws Exception{
@@ -88,8 +90,10 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
         Vector3f cellLocalPosition=celda.worldToLocal(worldPos, null);
         edificio.setPos(cellLocalPosition);
 
-        celda.addEdificio(edificio, true, false);
+        celda.addEdificio(edificio, true, false);            
+            celda.addContenedor(ContenedorDAO.getNew(BarrilDAO.class, cellLocalPosition.add(20,0,0)), true, false);
 	}
+
 
 	@Override
 	public void onNewPlayerDAO(JugadorDAO player) {

@@ -40,15 +40,15 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
      */
     public abstract void colocarContenedor(ContenedorModel c, int size)throws Exception;
     
-    @OnCollision
+    @OnCollision(includeSubClass = true)
     public void onColisionContenedor(ContenedorModel<ContenedorDAO> contenedor)throws Exception{
     	/*int size=dao.getContenedoresSize();
     	if(dao.addContenedor(contenedor.getDAO())){
     		contenedor.dettach();
     		contenedor.attachToParent(this);
     		colocarContenedor(contenedor, size);
-    	}*/
-    	contenedor.dettach();
+    	}*/        
+    	contenedor.body.setEnabled(false);
     	new MsgOnVehiculoCogeContenedor(contenedor.getCelda().dao.getId(), dao.getIdLong(), contenedor.getDAO().getIdLong()).send();
     }
     
@@ -59,7 +59,7 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     		contenedor.attachToParent(this);
     		colocarContenedor(contenedor, size);
     	}else{
-    		throw new Exception("No se ha podido añadir el contenedor "+contenedor.getDAO().getId());
+    		throw new Exception("No se ha podido aï¿½adir el contenedor "+contenedor.getDAO().getId());
     	}
     }
     

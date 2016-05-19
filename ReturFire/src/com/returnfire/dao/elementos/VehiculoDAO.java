@@ -9,7 +9,7 @@ public abstract class VehiculoDAO extends ElementoIdDAO{
 	protected int vida;
 	protected int combustible;
 	
-    protected Vector3f pos;
+
     protected float ang;
 
 

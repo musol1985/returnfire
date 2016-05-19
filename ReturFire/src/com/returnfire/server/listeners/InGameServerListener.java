@@ -29,8 +29,10 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
 	}
 
 	public void onVehiculoCogeContenedor(MsgOnVehiculoCogeContenedor msg, HostedConnection cnn)throws Exception{
-        MsgErrOnBuilt err=getEntity().getService().vehiculoCogeContenedor(msg);			
-        if(err!=null)
-            cnn.send(err);
+            try{
+                getEntity().getService().onVehiculoCogeContenedor(msg);			
+            }catch(Exception e){
+                e.printStackTrace();
+            }
 	}
 }
