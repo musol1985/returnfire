@@ -28,6 +28,7 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.returnfire.GameContext;
 import com.returnfire.dao.CeldaDAO;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
@@ -41,6 +42,7 @@ import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
+import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.service.HeightService;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
@@ -226,6 +228,10 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
 
     public EstaticoModel<? extends EstaticoDAO> getEstatico(String estaticoId){
         return (EstaticoModel<? extends EstaticoDAO>)estaticos.getEntity(estaticoId);
+    }
+    
+    public ContenedorModel<? extends ContenedorDAO> getContenedor(long id){
+        return (ContenedorModel<? extends ContenedorDAO>)estaticos.getEntity(String.valueOf(id));
     }
     
     /**

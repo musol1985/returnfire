@@ -8,6 +8,7 @@ package com.returnfire.models.elementos.vehicles;
 import com.entity.anot.components.model.SubModelComponent;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.scene.Node;
+import com.returnfire.dao.elementos.vehiculos.VehiculoArmadoDAO;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 import com.returnfire.msg.MsgDisparar;
 
@@ -15,7 +16,7 @@ import com.returnfire.msg.MsgDisparar;
  *
  * @author Edu
  */
-public abstract class VehiculoArmadoModel<T extends PhysicsRigidBody> extends VehiculoModel<T>{	
+public abstract class VehiculoArmadoModel<T extends PhysicsRigidBody> extends VehiculoModel<T, VehiculoArmadoDAO>{	
     
 	@SubModelComponent(name="gun")
 	protected Node arma;

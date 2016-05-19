@@ -5,6 +5,7 @@ import com.jme3.network.HostedConnection;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgDisparar;
 import com.returnfire.msg.MsgErrOnBuilt;
+import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 import com.returnfire.msg.sync.Posicion;
 import com.returnfire.server.scenes.InGame;
 
@@ -27,5 +28,9 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
                 cnn.send(err);
 	}
 
-	
+	public void onVehiculoCogeContenedor(MsgOnVehiculoCogeContenedor msg, HostedConnection cnn)throws Exception{
+        MsgErrOnBuilt err=getEntity().getService().vehiculoCogeContenedor(msg);			
+        if(err!=null)
+            cnn.send(err);
+	}
 }

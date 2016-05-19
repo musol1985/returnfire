@@ -23,11 +23,11 @@ import com.returnfire.msg.sync.Posicion;
  *
  * @author Edu
  */
-public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkModel{	
+public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends VehiculoDAO> extends NetworkModel{	
 	protected float steeringValue = 0;
     protected float accelerationValue = 0;     
     protected JugadorModel player;
-    protected VehiculoDAO dao;
+    protected D dao;
 
 
     @NetSync(timeout=10)
@@ -51,9 +51,9 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
 	        if(player.isMe()){
 	            getBody().setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
 	        }                    
-	        dao=(VehiculoDAO)params[1];
+	        dao=(D)params[1];
 		}else{//Vehiculos aparcados(solo vien el dao
-			dao=(VehiculoDAO)params[0];
+			dao=(D)params[0];
 		}
 	}
 
@@ -161,4 +161,10 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody> extends NetworkM
     public boolean isTransporte(){
     	return this instanceof VehiculoTransporteModel;
     }
+
+	public D getDao() {
+		return dao;
+	}
+    
+    
 }

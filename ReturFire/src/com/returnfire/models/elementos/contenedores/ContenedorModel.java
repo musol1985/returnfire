@@ -5,7 +5,7 @@
  */
 package com.returnfire.models.elementos.contenedores;
 
-import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.ElementoModel;
 
@@ -13,7 +13,7 @@ import com.returnfire.models.elementos.ElementoModel;
  *
  * @author Edu
  */
-public abstract class ContenedorModel<T extends RecursoDAO> extends ElementoModel<T, EstaticosBatch>{
+public abstract class ContenedorModel<T extends ContenedorDAO> extends ElementoModel<T, EstaticosBatch>{
     
 
 

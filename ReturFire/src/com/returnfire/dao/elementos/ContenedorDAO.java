@@ -4,18 +4,18 @@ import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 
 @Serializable
-public abstract class RecursoDAO extends ElementoIdDAO{
+public abstract class ContenedorDAO extends ElementoIdDAO{
 	public enum RECURSO{PETROLEO, PIEZAS};
 
 	
 	public abstract RECURSO getTipo();
 	public abstract int getCantidad();
 	
-	public static <T extends RecursoDAO> T getNew(Class<T> contenedor){
+	public static <T extends ContenedorDAO> T getNew(Class<T> contenedor){
 		return getNew(contenedor, new Vector3f());
 	}
 	
-	public static <T extends RecursoDAO> T getNew(Class<T> contenedor, Vector3f pos){
+	public static <T extends ContenedorDAO> T getNew(Class<T> contenedor, Vector3f pos){
 		try{
 			T c=contenedor.newInstance();
 			c.setNewID();

@@ -7,6 +7,7 @@ package com.returnfire.models.batchs;
 
 import com.entity.anot.entities.BatchModelEntity;
 import com.entity.core.items.BatchModel;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
 
 /**
  *
@@ -14,5 +15,11 @@ import com.entity.core.items.BatchModel;
  */
 @BatchModelEntity(name="vehiculos",autoBatch = false)
 public class VehiculosBatch extends BatchModel{
-
+	public VehiculoModel getVehiculo(String id){
+		return (VehiculoModel)getChild(id);
+	}
+	
+	public VehiculoModel getVehiculo(long id){
+		return getVehiculo(String.valueOf(id));
+	}
 }

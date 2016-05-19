@@ -3,7 +3,6 @@ package com.returnfire.service;
 import java.util.Random;
 
 import com.entity.anot.RunOnGLThread;
-import com.entity.core.EntityManager;
 import com.entity.network.core.beans.CellId;
 import com.entity.network.core.service.impl.ServerNetWorldService;
 import com.entity.utils.Utils;
@@ -14,23 +13,24 @@ import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
-import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
+import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.dao.elementos.vehiculos.impl.HammerDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
-import com.returnfire.models.elementos.buildings.EdificioModel;
-import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
+import com.returnfire.models.elementos.contenedores.ContenedorModel;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgErrOnBuilt;
 import com.returnfire.msg.MsgOnBuilding;
-import com.returnfire.msg.MsgOnBuilt;
 import com.returnfire.msg.MsgOnDisparar;
+import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
         private Random rnd;
@@ -154,4 +154,25 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		}
                 return null;
 	}
+	
+	public void onVehiculoCogeContenedor(MsgOnVehiculoCogeContenedor msg)throws Exception{
+		CeldaModel celda=getCellById(msg.cellId.id);
+		
+		VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+		if(v==null)
+			throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado en "+msg.cellId.id);
+		
+		ContenedorModel c=celda.getContenedor(msg.contenedorId);
+		if(c==null)
+			throw new Exception("Contenedor con id: "+msg.contenedorId+" no encontrado en "+msg.cellId.id);
+		
+		if(!v.isTransporte())
+			throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");
+		
+		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+		vt.cogeContenedor(c);
+		
+		//TODO send msg de contenedor cogido, con el contenedor DAO, y el vehiculoId.
+	}
+	
 }
