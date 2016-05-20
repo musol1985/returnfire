@@ -13,10 +13,14 @@ import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.buildings.BuildModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.bullets.BulletModel;
+import com.returnfire.models.elementos.contenedores.ContenedorModel;
+import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgOnBalaEstatico;
 import com.returnfire.msg.MsgOnBuilding;
 import com.returnfire.msg.MsgOnDisparar;
+import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
     @Override
@@ -105,6 +109,22 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
     	celda.addConstruyendoEdificio(msg.edificio, true, true);
     }
     
-    
+    public void onVehiculoCogeContenedor(MsgOnVehiculoCogeContenedor msg)throws Exception{
+		CeldaModel celda=getCellById(msg.cellId.id);
+		
+		VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+		if(v==null)
+			throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+		
+		ContenedorModel c=celda.getContenedor(msg.contenedorId);
+		if(c==null)
+			throw new Exception("Contenedor con id: "+msg.contenedorId+" no encontrado en "+msg.cellId.id);
+		
+		if(!v.isTransporte())
+			throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");
+		
+		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+		vt.cogeContenedor(c);
+	}
 
 }

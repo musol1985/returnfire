@@ -20,6 +20,6 @@ public class VehiculosBatch extends BatchModel{
 	}
 	
 	public VehiculoModel getVehiculo(long id){
-		return getVehiculo(String.valueOf(id));
+		return getVehiculo(id+"#");
 	}
 }

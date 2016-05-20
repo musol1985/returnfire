@@ -164,7 +164,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		
 		VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
 		if(v==null)
-			throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado en "+msg.cellId.id);
+			throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
 		
 		ContenedorModel c=celda.getContenedor(msg.contenedorId);
 		if(c==null)
@@ -175,7 +175,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		
 		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
 		vt.cogeContenedor(c);
-		
+		msg.send();
 		//TODO send msg de contenedor cogido, con el contenedor DAO, y el vehiculoId.
 	}
 	
