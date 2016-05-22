@@ -7,6 +7,7 @@ package com.returnfire.client.scenes;
 
 import com.entity.adapters.FollowCameraAdapter;
 import com.entity.adapters.ScrollCameraAdapter;
+import com.entity.adapters.listeners.ICameraUpdate;
 import com.entity.adapters.listeners.IFollowCameraListener;
 import com.entity.anot.Entity;
 import com.entity.anot.FollowCameraNode;
@@ -130,6 +131,14 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
                 scrollCam.setLocalTranslation(pos);
             }		            
 	}
+        
+        public void addCamUpdate(ICameraUpdate update){
+            followCam.addUpdate(update);
+        }
+        
+        public void removeCamUpdate(ICameraUpdate update){
+            followCam.removeUpdate(update);
+        }
 
 	@Override
 	public void onLoadRemotePlayers() throws Exception{

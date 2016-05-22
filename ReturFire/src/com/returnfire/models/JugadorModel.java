@@ -54,7 +54,7 @@ public class JugadorModel extends NetPlayer<JugadorDAO>{
 	    	vehiculo=factory.crearVehiculo(this, dao.getVehiculo());
 	    	
 	    	
-	    	vehiculo.attachToParent(GameContext.getMundo());    	
+	    	vehiculo.attachToParent(GameContext.getMundo().getVehiculos());    	
 	        vehiculo.setPosicionInicial(dao.getVehiculo().getPos());
 	        
 	        if(!isRemote()){

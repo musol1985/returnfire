@@ -237,6 +237,10 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         return (ContenedorModel<? extends ContenedorDAO>)estaticos.getEntity(String.valueOf(id));
     }
     
+    public EdificioModel<? extends EdificioDAO> getEdificio(String id){
+        return (EdificioModel<? extends EdificioDAO>)edificios.getEntity(id);
+    }
+    
     /**
      * Crea el contenedorModel a partir del dao y lo anyade al dao de la celda
      * @param dao
@@ -261,6 +265,12 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         //addToMap(model);
         
         return model;
+    }
+    
+    public void removeContenedor(ContenedorModel contenedor, boolean rebatch)throws Exception{
+        estaticos.dettachEntity(contenedor);
+        if(rebatch)
+            estaticos.batch();
     }
     
     /**
@@ -338,5 +348,15 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         //addToMap(model);
         
         return  model;
+    }
+    
+    public EdificioDAO onEdificioConstruido(ConstruyendoModel construyendo)throws Exception{
+        return onEdificioConstruido(construyendo, construyendo.getDAO().getEdificioConstruido());
+    }
+    
+    public EdificioDAO onEdificioConstruido(ConstruyendoModel construyendo, EdificioDAO nuevoEdificio)throws Exception{
+        edificios.dettachEntity(construyendo);
+        addEdificio(nuevoEdificio, true, true);
+        return nuevoEdificio;
     }
 }

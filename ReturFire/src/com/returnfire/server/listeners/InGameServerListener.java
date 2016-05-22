@@ -5,6 +5,7 @@ import com.jme3.network.HostedConnection;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgDisparar;
 import com.returnfire.msg.MsgErrOnBuilt;
+import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 import com.returnfire.msg.sync.Posicion;
 import com.returnfire.server.scenes.InGame;
@@ -35,4 +36,13 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
                 e.printStackTrace();
             }
 	}
+        
+        
+        public void onContenedorEdificio(MsgOnContenedorEdificio msg, HostedConnection cnn)throws Exception{
+            try{
+                getEntity().getService().onContenedorEdificio(msg);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
 }

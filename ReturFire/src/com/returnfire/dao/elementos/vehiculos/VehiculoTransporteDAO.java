@@ -25,6 +25,7 @@ public abstract class VehiculoTransporteDAO extends VehiculoDAO{
 	public boolean addContenedor(ContenedorDAO contenedor){
 		if(contenedores.size()<getMaxSlots()){
 			contenedores.add(contenedor);
+                        return true;
 		}
 		return false;
 	}
@@ -37,5 +38,11 @@ public abstract class VehiculoTransporteDAO extends VehiculoDAO{
 		return contenedores;
 	}
 	
-	
+	public ContenedorDAO getContenedorById(long id){
+            for(ContenedorDAO c:contenedores){
+                if(c.getIdLong()==id)
+                    return c;
+            }
+            return null;
+        }
 }

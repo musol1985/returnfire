@@ -42,12 +42,12 @@ public class CamionModel extends VehiculoTransporteModel<VehicleControl>{
 
 	@Override
 	public void colocarContenedor(ContenedorModel c, int size) throws Exception {		
-		if(size>1){
+		if(size>0){
 			Vector3f pos=null;
 			if(size%2==0){
-				pos=dao.getContenedores().get(size-1).getPos().add(0, 0, 10);
+				pos=dao.getContenedores().get(size-2).getPos().add(0, 0, -2);
 			}else{
-				pos=contenedoresReference.getChild(size-2).getLocalTranslation().add(10, 0, 0);
+				pos=dao.getContenedores().get(size-1).getPos().add(-2, 0, 0);//contenedoresReference.getChild(size-1).getLocalTranslation().add(2, 0, 0);
 			}
 			c.setLocalTranslation(pos);
 		}else{

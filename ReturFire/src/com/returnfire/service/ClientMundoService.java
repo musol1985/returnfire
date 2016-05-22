@@ -1,16 +1,17 @@
 package com.returnfire.service;
 
-import com.entity.anot.OnUpdate;
 import com.entity.anot.RunOnGLThread;
 import com.entity.network.core.service.impl.ClientNetWorldService;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.buildings.BuildModel;
+import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
@@ -19,7 +20,9 @@ import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgOnBalaEstatico;
 import com.returnfire.msg.MsgOnBuilding;
+import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
+import com.returnfire.msg.MsgOnEdificioConstruido;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -109,6 +112,7 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
     	celda.addConstruyendoEdificio(msg.edificio, true, true);
     }
     
+    @RunOnGLThread
     public void onVehiculoCogeContenedor(MsgOnVehiculoCogeContenedor msg)throws Exception{
 		CeldaModel celda=getCellById(msg.cellId.id);
 		
@@ -124,7 +128,48 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 			throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");
 		
 		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
-		vt.cogeContenedor(c);
+		vt.cogeContenedor(c, celda);
 	}
+    
+    @RunOnGLThread
+    public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
+        CeldaModel celda=getCellById(msg.cellId.id);
+        ConstruyendoModel e=(ConstruyendoModel)celda.getEdificio(msg.edificioId);
+        VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+        if(v==null)
+                throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+        if(!v.isTransporte())
+		throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");		
+	VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+        
+        for(Long cId:msg.contenedorId){
+            ContenedorModel<ContenedorDAO> c=vt.getContenedorById(cId);
+            if(c==null)
+                throw new Exception("Contenedor con id: "+cId+" no encontrado en "+msg.cellId.id);
 
+            if(e.getDAO().addRecurso(c.getDAO().getTipo())){                
+                vt.quitaContenedor(c);
+            }
+        }
+    }
+
+    @RunOnGLThread
+    public void onEdificioConstruido(MsgOnEdificioConstruido msg)throws Exception{
+        CeldaModel celda=getCellById(msg.cellId.id);
+        ConstruyendoModel e=(ConstruyendoModel)celda.getEdificio(msg.construyendoId);
+        VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+        if(v==null)
+                throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+        if(!v.isTransporte())
+		throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");		
+	VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+        
+        celda.onEdificioConstruido(e, msg.nuevoEdificio);
+        
+        for(Long cId:msg.contenedorId){
+            if(vt.quitaContenedor(cId)==null){
+                throw new Exception("Error al quitar el contenedor "+cId+"del vehiculo "+vt.getDao().getId());
+            }
+        }                
+    }
 }

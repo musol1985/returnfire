@@ -28,7 +28,7 @@ public class MolinoEolicoDAO extends EdificioDAO{
 	@Override
 	public int getPetroleoNecesario() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 3;
 	}
 
 	@Override

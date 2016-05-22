@@ -5,7 +5,6 @@
  */
 package com.returnfire.models.elementos.buildings.impl;
 
-import com.entity.anot.OnCollision;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
@@ -17,10 +16,13 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.math.Vector3f;
+import com.returnfire.client.gui.items.RecursosWindow;
+import com.returnfire.dao.elementos.ContenedorDAO;
+import com.returnfire.dao.elementos.ContenedorDAO.RECURSO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
-import com.returnfire.models.elementos.vehicles.impl.HammerModel;
+import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 
 /**
  *
@@ -28,7 +30,8 @@ import com.returnfire.models.elementos.vehicles.impl.HammerModel;
  */
 
 @ModelEntity(asset = "Models/buildings/construyendo.j3o")
-public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO>{
+public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO> {
+    private RecursosWindow window;
     
     @PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)
     @CustomCollisionShape(methodName = "getZona")
@@ -69,4 +72,21 @@ public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO>{
         }
         return false;
     }
+    
+    public void onVehiculoEnZona(VehiculoModel v){
+        if(window==null && v.isTransporte()){
+            window=RecursosWindow.getNewWindow(getWorldTranslation(), this, (VehiculoTransporteModel)v);
+            window.addRow(ContenedorDAO.RECURSO.PETROLEO, 10);
+            window.addRow(ContenedorDAO.RECURSO.PIEZAS, 10);
+        }
+    }
+    
+    public void onVehiculoFueraZona(VehiculoModel v){
+        if(window!=null){
+            window.remove();
+            window=null;
+        }
+    }
+
+  
 }
