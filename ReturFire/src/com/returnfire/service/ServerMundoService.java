@@ -1,5 +1,8 @@
 package com.returnfire.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import com.entity.anot.RunOnGLThread;
@@ -7,7 +10,6 @@ import com.entity.network.core.beans.CellId;
 import com.entity.network.core.service.impl.ServerNetWorldService;
 import com.entity.utils.Utils;
 import com.entity.utils.Vector2;
-import static com.google.common.collect.Ranges.all;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
@@ -37,9 +39,6 @@ import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
         private Random rnd;
@@ -193,7 +192,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//TODO send msg de contenedor cogido, con el contenedor DAO, y el vehiculoId.
 	}
 	
-        public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
+    public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
 		CeldaModel celda=getCellById(msg.cellId.id);
 		
 		VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
@@ -202,35 +201,46 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		
 		if(!v.isTransporte())
 			throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");
-                VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
-                
-                ConstruyendoModel e=(ConstruyendoModel)celda.getEdificio(msg.edificioId);
 		
-		
-                List<Long> contenedoresAdded=new ArrayList<Long>(msg.contenedorId.size());
+        VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+        
+        ConstruyendoModel e=(ConstruyendoModel)celda.getEdificio(msg.edificioId);
+
+
+        List<Long> contenedoresAdded=new ArrayList<Long>(msg.contenedorId.size());
+        Iterator<Long> it=msg.contenedorId.iterator();
+        
+        try{
+	        while(it.hasNext()){
+	        	long cId=it.next();
+	            ContenedorModel<ContenedorDAO> c=vt.getContenedorById(cId);
+	            if(c==null)
+	            	throw new Exception("Contenedor con id: "+cId+" no encontrado en "+msg.cellId.id);
+	
+	            if(e.getDAO().puedeAlmacenarMas(c.getDAO().getTipo())){
+	            	e.getDAO().addRecursoByTipo(c.getDAO().getTipo(), 1);
+	                contenedoresAdded.add(c.getDAO().getIdLong());
+	                vt.quitaContenedor(c);
+	                it.remove();
+	            }            
+	        }
+        }catch(Exception ee){
+        	ee.printStackTrace();
+        }
+        
+        if(e.getDAO().isConstruyendo() && contenedoresAdded.size()>0){
+            ConstruyendoDAO dao=(ConstruyendoDAO)e.getDAO();
+            if(dao.isConstruido()){
+                EdificioDAO daoNuevo=celda.onEdificioConstruido(e);
+                new MsgOnEdificioConstruido(msg.cellId, msg.vehiculoId, msg.edificioId, daoNuevo, contenedoresAdded).send();
+            }else{
+                new MsgOnContenedorEdificio(msg.cellId, msg.vehiculoId, msg.edificioId, contenedoresAdded).send();
+            }
+        }
                 
-                for(Long cId:msg.contenedorId){
-                    ContenedorModel<ContenedorDAO> c=vt.getContenedorById(cId);
-                    if(c==null)
-			throw new Exception("Contenedor con id: "+cId+" no encontrado en "+msg.cellId.id);
-		
-                    if(e.getDAO().addRecurso(c.getDAO().getTipo())){
-                        contenedoresAdded.add(c.getDAO().getIdLong());
-                        vt.quitaContenedor(c);
-                    }
-                }
-                
-                if(e.getDAO().isConstruyendo()){
-                    ConstruyendoDAO dao=(ConstruyendoDAO)e.getDAO();
-                    if(dao.isConstruido()){
-                        EdificioDAO daoNuevo=celda.onEdificioConstruido(e);
-                        new MsgOnEdificioConstruido(msg.cellId, msg.vehiculoId, msg.edificioId, daoNuevo, contenedoresAdded).send();
-                    }else{
-                        new MsgOnContenedorEdificio(msg.cellId, msg.vehiculoId, msg.edificioId, contenedoresAdded).send();
-                    }
-                }
-                
-                
+        if(msg.contenedorId.size()>0){
+        	//TODO Error, se debe de enviar al tio una sincronizacion del edificio
+        }
 		//TODO send msg de contenedor cogido, con el contenedor DAO, y el vehiculoId.
 	}
 }

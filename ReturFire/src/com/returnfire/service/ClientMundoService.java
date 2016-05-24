@@ -1,5 +1,9 @@
 package com.returnfire.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.entity.anot.RunOnGLThread;
 import com.entity.network.core.service.impl.ClientNetWorldService;
 import com.jme3.math.Vector3f;
@@ -7,6 +11,10 @@ import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.ContenedorDAO;
+import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
+import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -131,6 +139,39 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 		vt.cogeContenedor(c, celda);
 	}
     
+    /**
+	    * Envia al servidor que tiene que añadir ese recurso
+	    * Se comprueba que se pueda añadir ese recurso
+	    * 
+	    * @param edificio
+	    * @param recurso
+	    * @param all
+	    * @return la cantidad de recursos added
+	    */
+    public int addRecursoTo(CeldaDAO celda, EdificioAlmacenDAO daoEdificio, VehiculoTransporteDAO daoVehiculo, RECURSOS tipoRecurso, boolean all){
+        List<Long> contenedoresToAdd=new ArrayList<Long>();
+        
+        boolean seguir=true;
+        Iterator<ContenedorDAO> it=daoVehiculo.getContenedoresByTipoRecurso(tipoRecurso).iterator();
+        int cantidadPuedeAlmacenar=daoEdificio.getCantidadQuePuedeAlmacenar(tipoRecurso);
+        
+        while(it.hasNext() && seguir){
+        	ContenedorDAO c=it.next();
+
+			if(cantidadPuedeAlmacenar>0){
+				cantidadPuedeAlmacenar--;
+				contenedoresToAdd.add(c.getIdLong());
+				if(!all)
+					seguir=false;
+			}
+
+        }
+
+        new MsgOnContenedorEdificio(celda.getId(), daoVehiculo.getIdLong(), daoEdificio.getId(), contenedoresToAdd).send();
+        
+        return contenedoresToAdd.size();
+    }
+    
     @RunOnGLThread
     public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
         CeldaModel celda=getCellById(msg.cellId.id);
@@ -139,15 +180,16 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
         if(v==null)
                 throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
         if(!v.isTransporte())
-		throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");		
-	VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+        	throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");		
+        VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
         
         for(Long cId:msg.contenedorId){
             ContenedorModel<ContenedorDAO> c=vt.getContenedorById(cId);
             if(c==null)
                 throw new Exception("Contenedor con id: "+cId+" no encontrado en "+msg.cellId.id);
 
-            if(e.getDAO().addRecurso(c.getDAO().getTipo())){                
+            if(e.getDAO().puedeAlmacenarMas(c.getDAO().getTipo())){   
+            	e.getDAO().addRecursoByTipo(c.getDAO().getTipo(), 1);
                 vt.quitaContenedor(c);
             }
         }

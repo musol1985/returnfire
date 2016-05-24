@@ -2,18 +2,16 @@ package com.returnfire.dao.elementos.contenedores;
 
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.ContenedorDAO;
+import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 
 @Serializable
 public class CajaDAO extends ContenedorDAO{
 
 	@Override
-	public RECURSO getTipo() {
-		return RECURSO.PIEZAS;
+	public RECURSOS getTipo() {
+		return RECURSOS.PIEZAS;
 	}
 
-	@Override
-	public int getCantidad() {
-		return 50;
-	}
 
 }

@@ -351,7 +351,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
     public EdificioDAO onEdificioConstruido(ConstruyendoModel construyendo)throws Exception{
-        return onEdificioConstruido(construyendo, construyendo.getDAO().getEdificioConstruido());
+        return onEdificioConstruido(construyendo, construyendo.getDAO().getNewEdificioConstruido());
     }
     
     public EdificioDAO onEdificioConstruido(ConstruyendoModel construyendo, EdificioDAO nuevoEdificio)throws Exception{

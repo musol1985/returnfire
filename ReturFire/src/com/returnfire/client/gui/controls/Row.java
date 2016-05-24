@@ -6,16 +6,16 @@
 package com.returnfire.client.gui.controls;
 
 import com.entity.modules.gui.anot.SpriteGUI.ALIGN;
-import com.entity.modules.gui.items.Sprite;
+import com.entity.modules.gui.items.Sprite2Patch;
 
 /**
  *
  * @author Edu
  */
-public class Row<W extends Window> extends Sprite<W>{
+public class Row<W extends Window> extends Sprite2Patch<W>{
  
     public void instance(int index){
-        super.instance("windowRow"+index, "Interface/windowRow.png", ALIGN.NONE);
+        super.instance("windowRow"+index, "Interface/windowRow.png", ALIGN.NONE, 10);
     }
     
 }

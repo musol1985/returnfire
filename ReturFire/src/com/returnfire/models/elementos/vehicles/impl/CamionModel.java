@@ -1,6 +1,8 @@
 package com.returnfire.models.elementos.vehicles.impl;
 
-import com.entity.anot.components.model.SubModelComponent;
+import java.util.List;
+import java.util.Map.Entry;
+
 import com.entity.anot.components.model.VehicleComponent;
 import com.entity.anot.components.model.WheelComponent;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
@@ -9,7 +11,8 @@ import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
+import com.returnfire.dao.elementos.ContenedorDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 
@@ -40,21 +43,16 @@ public class CamionModel extends VehiculoTransporteModel<VehicleControl>{
 		return body;
 	}
 
+
 	@Override
-	public void colocarContenedor(ContenedorModel c, int size) throws Exception {		
-		if(size>0){
-			Vector3f pos=null;
-			if(size%2==0){
-				pos=dao.getContenedores().get(size-2).getPos().add(0, 0, -2);
-			}else{
-				pos=dao.getContenedores().get(size-1).getPos().add(-2, 0, 0);//contenedoresReference.getChild(size-1).getLocalTranslation().add(2, 0, 0);
-			}
-			c.setLocalTranslation(pos);
-		}else{
-			c.setLocalTranslation(contenedoresReference.getLocalTranslation());
-		}
-		c.getDAO().setPos(c.getLocalTranslation().clone());
+	public Vector3f getCoordenadasContenedorByIndex(int index) {
+		int z=(int)index/2;
+		int x=index-(z*2);
+		return new Vector3f(x,0,z);
 	}
 
- 
+	@Override
+	public Vector3f getPosicionContenedorByCoordenadas(Vector3f coordenadas){
+		return coordenadas.multLocal(2, 0, 2);
+	}
 }

@@ -8,23 +8,22 @@ package com.returnfire.models.elementos.vehicles;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.entity.anot.OnCollision;
 import com.entity.anot.components.model.SubModelComponent;
 import com.jme3.bullet.objects.PhysicsRigidBody;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.returnfire.dao.elementos.ContenedorDAO;
-import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
-import com.returnfire.dao.elementos.buildings.EdificioDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.CeldaModel;
-import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.msg.MsgDisparar;
-import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 
 /**
@@ -37,14 +36,12 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     
 	@SubModelComponent(name="contenedoresReference")
 	public Node contenedoresReference;
+
+    
 	
-    /**
-     * Metodo que se encarga de colocar el contenedor en el model
-     * Solo sera llamado desde el server!!
-     * @param c
-     * @throws Exception
-     */
-    public abstract void colocarContenedor(ContenedorModel c, int size)throws Exception;
+	public abstract Vector3f getCoordenadasContenedorByIndex(int index);
+	public abstract Vector3f getPosicionContenedorByCoordenadas(Vector3f coordenadas);
+
     
     @OnCollision(includeSubClass = true)
     public void onColisionContenedor(ContenedorModel<ContenedorDAO> contenedor)throws Exception{
@@ -99,39 +96,6 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
 	public void onAccion() {
 		new MsgDisparar(BALAS.NORMAL, player.getDao().getId()).send();
 	}
-        
-        
-    public void addRecursoTo(EdificioModel<EdificioDAO> edificio, ContenedorDAO.RECURSO recurso, boolean all){
-        List<Long> contenedores=new ArrayList<Long>();
-        
-        boolean seguir=true;
-        
-        int oldValor=0;
-        if(recurso==ContenedorDAO.RECURSO.PETROLEO){
-            oldValor=edificio.getDAO().getPetroleoNecesario();
-        }else{
-            oldValor=edificio.getDAO().getPiezasNecesarias();
-        }
-        
-        Iterator<ContenedorDAO> it=dao.getContenedores().iterator();
-        while(seguir && it.hasNext()){
-            ContenedorDAO c=it.next();
-            if(edificio.getDAO().addRecurso(recurso)){
-                contenedores.add(c.getIdLong());
-                //it.remove();
-                if(!all)
-                    seguir=false;
-            }
-        }
-        
-        if(recurso==ContenedorDAO.RECURSO.PETROLEO){
-            ((ConstruyendoDAO)edificio.getDAO()).setPetroleo(oldValor);
-        }else{
-            ((ConstruyendoDAO)edificio.getDAO()).setPiezas(oldValor);
-        }
-
-       new MsgOnContenedorEdificio(edificio.getCelda().dao.getId(), dao.getIdLong(), edificio.getDAO().getId(), contenedores).send();
-    }
     
     public ContenedorModel<ContenedorDAO> getContenedorById(long id){
         for(Spatial s:getChildren()){
@@ -158,4 +122,26 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
         return c;
     }
 
+    
+	
+	public boolean existeContenedorInPosicion(Vector3f pos){
+		for(Entry<RECURSOS, List<ContenedorDAO>> ce:dao.getContenedores().entrySet()){
+			for(ContenedorDAO c:ce.getValue()){
+				if(c.getPos().equals(pos))
+					return true;
+			}
+		}
+		return false;
+	}
+
+
+	public void colocarContenedor(ContenedorModel c, int size) throws Exception {		
+		for(int i=0;i<dao.getMaxSlots();i++){
+			Vector3f coordenadas=getCoordenadasContenedorByIndex(i);
+			if(!existeContenedorInPosicion(coordenadas)){
+				c.getDAO().setPos(coordenadas.clone());
+				c.setLocalTranslation(contenedoresReference.getLocalTranslation().add(getPosicionContenedorByCoordenadas(coordenadas)));
+			}			
+		}
+	}
 }

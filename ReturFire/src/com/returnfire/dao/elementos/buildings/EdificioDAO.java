@@ -1,10 +1,12 @@
 package com.returnfire.dao.elementos.buildings;
 
+import java.util.List;
+
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.JugadorDAO;
-import com.returnfire.dao.elementos.ContenedorDAO;
-import com.returnfire.dao.elementos.ContenedorDAO.RECURSO;
 import com.returnfire.dao.elementos.EstaticoDAO;
+import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 
 @Serializable
 public abstract class EdificioDAO extends EstaticoDAO{
@@ -32,26 +34,42 @@ public abstract class EdificioDAO extends EstaticoDAO{
 	public boolean isEnergia(){
 		return false;
 	}
-        
-        public boolean puedeCogerMas(ContenedorDAO.RECURSO r){
-            return false;
-        }
-        public boolean addRecurso(RECURSO r){
-            return false;
-        }
-        public boolean isConstruyendo(){
-            return this instanceof ConstruyendoDAO;
-        }
+
+    public boolean isConstruyendo(){
+        return this instanceof ConstruyendoDAO;
+    }
+    
+    public boolean puedeAlmacenarAlgo(){
+    	return this instanceof EdificioAlmacenDAO;
+    }
 	
-	public abstract int getPetroleoNecesario();
-	public abstract int getPiezasNecesarias();
+	public abstract List<RecursoDAO> getRecursosNecesarios();
+
+	public int getNecesarioByTipo(RECURSOS tipo){
+		return getNecesarioByRecurso(getRecursoNecesarioByTipo(tipo));
+	}
+	
+	public int getNecesarioByRecurso(RecursoDAO recurso){
+		if(recurso==null){
+			return 0;
+		}
+		return recurso.cantidad;
+	}
+	
+	public RecursoDAO getRecursoNecesarioByTipo(RECURSOS tipo){
+		for(RecursoDAO r:getRecursosNecesarios()){
+			if(r.tipo==tipo)
+				return r;
+		}
+		return null;
+	}
         
         
-        public static EdificioDAO getFromConstruyendoDAO(ConstruyendoDAO cDao){
-            EdificioDAO dao=cDao.getEdificio();
-            dao.jugador=cDao.jugador;
-            dao.pos=cDao.getPos();
-            dao.vida=dao.getVidaInicial();
-            return dao;
-        }
+    public static EdificioDAO getFromConstruyendoDAO(ConstruyendoDAO cDao){
+        EdificioDAO dao=cDao.getEdificio();
+        dao.jugador=cDao.jugador;
+        dao.pos=cDao.getPos();
+        dao.vida=dao.getVidaInicial();
+        return dao;
+    }
 }

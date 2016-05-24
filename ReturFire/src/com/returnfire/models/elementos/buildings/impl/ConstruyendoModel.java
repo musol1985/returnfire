@@ -18,8 +18,9 @@ import com.jme3.bullet.control.GhostControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.client.gui.items.RecursosWindow;
 import com.returnfire.dao.elementos.ContenedorDAO;
-import com.returnfire.dao.elementos.ContenedorDAO.RECURSO;
+import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
+import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
@@ -76,8 +77,11 @@ public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO> {
     public void onVehiculoEnZona(VehiculoModel v){
         if(window==null && v.isTransporte()){
             window=RecursosWindow.getNewWindow(getWorldTranslation(), this, (VehiculoTransporteModel)v);
-            window.addRow(ContenedorDAO.RECURSO.PETROLEO, 10);
-            window.addRow(ContenedorDAO.RECURSO.PIEZAS, 10);
+            VehiculoTransporteDAO vDao=(VehiculoTransporteDAO)v.getDao();
+            
+            for(RecursoDAO rEdificio:getDAO().getRecursosNecesarios()){
+            	window.addRow(rEdificio, dao.getEdificio().getNecesarioByTipo(rEdificio.tipo), vDao.getCantidadContenedorByTipoRecurso(rEdificio.tipo));
+            }
         }
     }
     
