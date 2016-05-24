@@ -114,7 +114,8 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     
     public ContenedorModel quitaContenedor(ContenedorModel c){
         try{
-            dao.getContenedores().remove((ContenedorDAO)c.getDAO());
+            ContenedorDAO cDao=(ContenedorDAO)c.getDAO();
+            dao.getContenedores().get(cDao.getTipo()).remove(cDao);
             c.dettach();            
         }catch(Exception e){
             e.printStackTrace();

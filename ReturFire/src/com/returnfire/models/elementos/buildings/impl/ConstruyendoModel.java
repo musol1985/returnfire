@@ -79,8 +79,8 @@ public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO> {
             window=RecursosWindow.getNewWindow(getWorldTranslation(), this, (VehiculoTransporteModel)v);
             VehiculoTransporteDAO vDao=(VehiculoTransporteDAO)v.getDao();
             
-            for(RecursoDAO rEdificio:getDAO().getRecursosNecesarios()){
-            	window.addRow(rEdificio, dao.getEdificio().getNecesarioByTipo(rEdificio.tipo), vDao.getCantidadContenedorByTipoRecurso(rEdificio.tipo));
+            for(RecursoDAO rNecesario:getDAO().getRecursosNecesarios()){
+            	window.addRow(getDAO().getRecursoByTipo(rNecesario.tipo, true), rNecesario.cantidad, vDao.getCantidadContenedorByTipoRecurso(rNecesario.tipo));
             }
         }
     }

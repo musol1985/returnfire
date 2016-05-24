@@ -53,6 +53,6 @@ public class CamionModel extends VehiculoTransporteModel<VehicleControl>{
 
 	@Override
 	public Vector3f getPosicionContenedorByCoordenadas(Vector3f coordenadas){
-		return coordenadas.multLocal(2, 0, 2);
+		return coordenadas.multLocal(-2, 0, -2);
 	}
 }

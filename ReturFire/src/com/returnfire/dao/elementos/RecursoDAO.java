@@ -9,6 +9,9 @@ public class RecursoDAO implements java.io.Serializable{
 	public int cantidad;
 	public RECURSOS tipo;
 
+        public RecursoDAO() {
+            
+        }
 	
 	public RecursoDAO( RECURSOS tipo, int cantidad) {
 		this.cantidad = cantidad;

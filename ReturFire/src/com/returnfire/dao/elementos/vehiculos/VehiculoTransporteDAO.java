@@ -62,10 +62,15 @@ public abstract class VehiculoTransporteDAO extends VehiculoDAO{
 		return 0;
 	}
 	
+        /**
+         * 
+         */
 	public List<ContenedorDAO> getContenedoresByTipoRecurso(RECURSOS recurso){
 		List<ContenedorDAO> res=contenedores.get(recurso);
-		if(res!=null)
-			return res;
-		return new ArrayList<ContenedorDAO>();
+		if(res==null){			
+                    res=new ArrayList<ContenedorDAO>();
+                    contenedores.put(recurso, res);
+                }
+                return res;
 	}
 }

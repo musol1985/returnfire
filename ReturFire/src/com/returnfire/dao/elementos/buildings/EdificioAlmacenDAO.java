@@ -6,6 +6,7 @@ import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
+import java.util.ArrayList;
 
 @Serializable
 public abstract class EdificioAlmacenDAO extends EdificioDAO{
@@ -21,6 +22,7 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
 	
 	public EdificioAlmacenDAO(JugadorDAO j){
 		super(j);
+                recursos=new ArrayList<RecursoDAO>();
 	}
 	
 	
@@ -37,10 +39,19 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
 	}
 
 	public RecursoDAO getRecursoByTipo(RECURSOS tipo){
+            return getRecursoByTipo(tipo, false);
+	}
+        
+        public RecursoDAO getRecursoByTipo(RECURSOS tipo, boolean addIfNotExist){
 		for(RecursoDAO r:recursos){
 			if(r.tipo==tipo)
 				return r;
 		}
+                if(addIfNotExist){
+                    RecursoDAO r=new RecursoDAO(tipo, 0);
+                    recursos.add(r);
+                    return r;
+                }
 		return null;
 	}
 	

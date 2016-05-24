@@ -33,9 +33,9 @@ public class RecursosRow extends Row<RecursosWindow>{
 			icon="Interface/addAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
     public Button btnAddAll;    
     
-    @TextGUI(position={80,10 }, font="Interface/fonst/font.png", name="txtRecVehiculo")
+    @TextGUI(position={80,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecVehiculo", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecVehiculo;    
-    @TextGUI(position={300,10 }, font="Interface/fonst/font.png", name="txtRecEdificio")
+    @TextGUI(position={300,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecEdificio", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecEdificio;    
     
 
