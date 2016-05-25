@@ -10,7 +10,7 @@ import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.models.elementos.EstaticoModel;
 
-@ModelEntity(asset = "Models/buildings/extractorPetroleo.j3o")
+@ModelEntity(asset = "Models/buildings/extractor_petroleo.j3o")
 public class ExtractorPetroleoNode extends BuildNode {
 
 	@Override

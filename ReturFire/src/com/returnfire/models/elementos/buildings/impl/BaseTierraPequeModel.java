@@ -32,7 +32,14 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
 	//@Entity(conditional="injectZona", conditionalIncludeFieldName=true, substituteNode="zonaB")
 	@Conditional(method="injectZona", includeFieldName=true)
 	public BuildingExtension zonaB;
-	
+
+    @Entity
+    public BaseTierraPequeNode building;
+    
+    @Override
+    public BaseTierraPequeNode getNodo() {
+        return building;
+    }
 	
     @Override
     public CollisionShape getColisionShape() {
@@ -51,6 +58,8 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
 		// TODO Auto-generated method stub
 		return new SphereCollisionShape(5f);
 	}
+
+
 
 
 

@@ -39,7 +39,7 @@ public class ExtractorPetroleoDAO extends EdificioExtractorDAO{
 	public List<RecursoDAO> getRecursosNecesarios() {
 		List<RecursoDAO> recursos=new ArrayList<RecursoDAO>(1);
 		
-		recursos.add(new RecursoDAO(RECURSOS.HIERRO, 3));
+		recursos.add(new RecursoDAO(RECURSOS.PETROLEO, 1));
 		
 		return recursos;
 	}

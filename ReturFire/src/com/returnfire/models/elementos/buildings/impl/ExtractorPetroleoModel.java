@@ -5,6 +5,7 @@
  */
 package com.returnfire.models.elementos.buildings.impl;
 
+import com.entity.anot.Entity;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -12,6 +13,7 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
+import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
 
 /**
@@ -22,6 +24,13 @@ import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
 @ModelEntity
 public class ExtractorPetroleoModel extends EdificioAlmacenModel<ExtractorPetroleoDAO, ExtractorPetroleoNode>{
 	
+    @Entity
+    public ExtractorPetroleoNode building;
+    
+    @Override
+    public ExtractorPetroleoNode getNodo() {
+        return building;
+    }
 
     @Override
     public CollisionShape getColisionShape() {

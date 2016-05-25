@@ -8,7 +8,7 @@ import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.models.elementos.EstaticoModel;
 
-@ModelEntity(asset = "Models/environment/recursoPetroleo.j3o")
+@ModelEntity(asset = "Models/environment/recurso_petroleo.j3o")
 public class RecursoPetroleoModel extends EstaticoModel<RecursoPetroleoDAO, GhostControl>{
 
 

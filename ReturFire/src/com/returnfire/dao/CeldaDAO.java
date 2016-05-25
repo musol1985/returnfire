@@ -46,7 +46,7 @@ public class CeldaDAO extends NetWorldCellDAO{
                             }else if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.RECURSO_PETROLEO.ordinal()){
                             	estaticos.add(RecursoNaturalDAO.getNew(RecursoPetroleoDAO.class, new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
                             }else if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.RECURSO_HIERRO.ordinal()){
-                            	estaticos.add(RecursoNaturalDAO.getNew(RecursoHierroDAO.class, new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
+                            	//estaticos.add(RecursoNaturalDAO.getNew(RecursoHierroDAO.class, new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
                             }
                         }
                     } 

@@ -1,9 +1,11 @@
 package com.returnfire.dao.elementos.environment.impl;
 
 import com.entity.utils.Vector2;
+import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.dao.elementos.environment.RecursoNaturalDAO;
 
+@Serializable
 public class RecursoHierroDAO extends RecursoNaturalDAO{
 
 	@Override

@@ -7,11 +7,8 @@ import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 
 public abstract class EdificioConstruibleModel<T extends EdificioDAO, N extends BuildNode> extends EdificioModel<T, RigidBodyControl>{
 
-    @Entity
-    public N building;
 
-	public N getNodo() {
-		return building;
-	}
+
+	public abstract N getNodo();
 
 }

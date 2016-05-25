@@ -35,6 +35,7 @@ import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
@@ -289,6 +290,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
         }else if(dao instanceof MolinoEolicoDAO){
             model=getMundo().getFactory().modelFactory.crearMolinoEolico(null, (MolinoEolicoDAO)dao);  
+        }else if(dao instanceof ExtractorPetroleoDAO){
+            model=getMundo().getFactory().modelFactory.crearExtractorPetroleo(null, (ExtractorPetroleoDAO)dao);  
         }
         
         edificios.attachEntity(model);
@@ -341,7 +344,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         }else if(estaticoDAO instanceof RecursoPetroleoDAO){
             model=getMundo().getFactory().modelFactory.crearRecursoPetroleo(null, (RecursoPetroleoDAO)estaticoDAO);   
         }
-        
+        System.out.println("....."+estaticoDAO);
         estaticos.attachEntity(model);
         
         estaticos.getNode().setShadowMode(shadowMode.Cast);

@@ -5,12 +5,14 @@
  */
 package com.returnfire.models.elementos.buildings.impl;
 
+import com.entity.anot.Entity;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.models.elementos.buildings.EdificioConstruibleModel;
+import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
 import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
 
 /**
@@ -21,6 +23,13 @@ import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
 @ModelEntity
 public class MolinoEolicoModel extends EdificioConstruibleModel<MolinoEolicoDAO, MolinoEolicoNode>{
 
+    @Entity
+    public MolinoEolicoNode building;
+    
+    @Override
+    public MolinoEolicoNode getNodo() {
+        return building;
+    }
 	
     @Override
     public CollisionShape getColisionShape() {

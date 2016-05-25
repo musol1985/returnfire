@@ -12,6 +12,7 @@ import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO.EXTENSIONES;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
@@ -24,6 +25,7 @@ import com.returnfire.models.elementos.buildings.ext.PiezasExt;
 import com.returnfire.models.elementos.buildings.ext.VacioExt;
 import com.returnfire.models.elementos.buildings.impl.BaseTierraPequeModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
+import com.returnfire.models.elementos.buildings.impl.ExtractorPetroleoModel;
 import com.returnfire.models.elementos.buildings.impl.MolinoEolicoModel;
 import com.returnfire.models.elementos.contenedores.impl.BarrilModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
@@ -95,6 +97,14 @@ public class ModelFactory extends BaseService{
     
     @Instance(attachTo = "")
     public MolinoEolicoModel crearMolinoEolico(MolinoEolicoModel base, MolinoEolicoDAO dao){
+        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
+        base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
+        base.rotate(0, dao.getAng(), 0);
+        return base;
+    }
+    
+    @Instance(attachTo = "")
+    public ExtractorPetroleoModel crearExtractorPetroleo(ExtractorPetroleoModel base, ExtractorPetroleoDAO dao){
         //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
         base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
         base.rotate(0, dao.getAng(), 0);
