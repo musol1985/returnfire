@@ -5,6 +5,7 @@
  */
 package com.returnfire.models.elementos;
 
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.EstaticoDAO;
@@ -16,7 +17,7 @@ import com.returnfire.models.elementos.bullets.BulletModel;
  *
  * @author Edu
  */
-public abstract class EstaticoModel<T extends EstaticoDAO> extends ElementoModel<T, EstaticosBatch>{
+public abstract class EstaticoModel<T extends EstaticoDAO, P extends PhysicsCollisionObject> extends ElementoModel<T, EstaticosBatch, P>{
     
      
      /**

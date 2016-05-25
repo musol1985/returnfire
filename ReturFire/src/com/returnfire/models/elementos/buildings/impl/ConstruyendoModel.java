@@ -31,7 +31,7 @@ import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
  */
 
 @ModelEntity(asset = "Models/buildings/construyendo.j3o")
-public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO> {
+public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO, GhostControl> {
     private RecursosWindow window;
     
     @PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)

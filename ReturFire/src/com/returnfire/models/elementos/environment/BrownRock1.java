@@ -3,12 +3,13 @@ package com.returnfire.models.elementos.environment;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
-import com.returnfire.dao.elementos.environment.RockDAO;
+import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.models.elementos.EstaticoModel;
 
 @ModelEntity(asset = "Models/environment/rock_brown_01.j3o")
-public class BrownRock1 extends EstaticoModel<RockDAO>{
+public class BrownRock1 extends EstaticoModel<RockDAO, RigidBodyControl>{
     
     
     public CollisionShape getColisionShape(){

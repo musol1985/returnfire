@@ -15,6 +15,7 @@ import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorldCell;
 import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.control.PhysicsControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -36,15 +37,16 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
-import com.returnfire.dao.elementos.environment.ArbolDAO;
-import com.returnfire.dao.elementos.environment.RockDAO;
+import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
+import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
+import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.map.MapEntry;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
-import com.returnfire.service.HeightService;
+import com.returnfire.models.elementos.environment.RecursoPetroleoModel;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
 	public static final int CELL_SIZE=256;   
@@ -166,7 +168,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     }
     
 
-    private void addToMap(EstaticoModel<? extends EstaticoDAO> e) throws Exception{
+    private void addToMap(EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl> e) throws Exception{
     	Vector2 pos=real2Map(e.getLocalTranslation());
     	
     	MapEntry meY=getMapEntry(pos.x, pos.z);
@@ -229,16 +231,16 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         estaticos.batch();
     }
 
-    public EstaticoModel<? extends EstaticoDAO> getEstatico(String estaticoId){
-        return (EstaticoModel<? extends EstaticoDAO>)estaticos.getEntity(estaticoId);
+    public EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl> getEstatico(String estaticoId){
+        return (EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl>)estaticos.getEntity(estaticoId);
     }
     
     public ContenedorModel<? extends ContenedorDAO> getContenedor(long id){
         return (ContenedorModel<? extends ContenedorDAO>)estaticos.getEntity(String.valueOf(id));
     }
     
-    public EdificioModel<? extends EdificioDAO> getEdificio(String id){
-        return (EdificioModel<? extends EdificioDAO>)edificios.getEntity(id);
+    public EdificioModel<? extends EdificioDAO, ? extends PhysicsControl> getEdificio(String id){
+        return (EdificioModel<? extends EdificioDAO, ? extends PhysicsControl>)edificios.getEntity(id);
     }
     
     /**
@@ -336,6 +338,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             model=getMundo().getFactory().modelFactory.crearRoca((RockDAO)estaticoDAO, dao);                    
         }else if(estaticoDAO instanceof ArbolDAO){
             model=getMundo().getFactory().modelFactory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);   
+        }else if(estaticoDAO instanceof RecursoPetroleoDAO){
+            model=getMundo().getFactory().modelFactory.crearRecursoPetroleo(null, (RecursoPetroleoDAO)estaticoDAO);   
         }
         
         estaticos.attachEntity(model);
@@ -356,7 +360,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     
     public EdificioDAO onEdificioConstruido(ConstruyendoModel construyendo, EdificioDAO nuevoEdificio)throws Exception{
         edificios.dettachEntity(construyendo);
-        addEdificio(nuevoEdificio, true, true);
+        EdificioModel m=addEdificio(nuevoEdificio, true, true);
+        
         return nuevoEdificio;
     }
 }

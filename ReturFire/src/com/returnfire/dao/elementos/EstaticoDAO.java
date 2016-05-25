@@ -10,7 +10,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
-import com.returnfire.dao.elementos.environment.ArbolDAO;
+import com.returnfire.dao.elementos.environment.RecursoNaturalDAO;
+import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
+import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 
 /**
  *
@@ -18,7 +20,7 @@ import com.returnfire.dao.elementos.environment.ArbolDAO;
  */
 @Serializable
 public abstract class EstaticoDAO extends ElementoDAO{
-	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA, EDIFICIO, CONSTRUYENDO}
+	public enum ELEMENTOS_ESTATICOS{ARBOL,ROCA, RECURSO_PETROLEO, RECURSO_HIERRO, EDIFICIO, CONSTRUYENDO}
 	
 	public static final int INDESTRUCTIBLE=-9999;
 	
@@ -60,6 +62,10 @@ public abstract class EstaticoDAO extends ElementoDAO{
             return ELEMENTOS_ESTATICOS.EDIFICIO;
     	}else if(this instanceof ConstruyendoDAO){
     		return ELEMENTOS_ESTATICOS.CONSTRUYENDO;
+    	}else if(this instanceof RecursoNaturalDAO){
+    		return ELEMENTOS_ESTATICOS.RECURSO_PETROLEO;
+    	}else if(this instanceof RecursoPetroleoDAO){
+    		return ELEMENTOS_ESTATICOS.RECURSO_PETROLEO;
     	}else{
     		return ELEMENTOS_ESTATICOS.ROCA;
     	}

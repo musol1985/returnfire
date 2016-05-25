@@ -8,10 +8,11 @@ package com.returnfire.models.elementos.buildings.impl;
 import com.entity.anot.entities.ModelEntity;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
-import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
-import com.returnfire.models.elementos.buildings.EdificioConstruibleModel;
-import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
+import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
+import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
 
 /**
  *
@@ -19,9 +20,9 @@ import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
  */
 
 @ModelEntity
-public class MolinoEolicoModel extends EdificioConstruibleModel<MolinoEolicoDAO, MolinoEolicoNode>{
-
+public class ExtractorPetroleoModel extends EdificioAlmacenModel<ExtractorPetroleoDAO, ExtractorPetroleoNode>{
 	
+
     @Override
     public CollisionShape getColisionShape() {
             // TODO Auto-generated method stub
@@ -33,6 +34,14 @@ public class MolinoEolicoModel extends EdificioConstruibleModel<MolinoEolicoDAO,
             // TODO Auto-generated method stub
             return false;
     }
+
+	@Override
+	public CollisionShape getZonaShape() {
+		return new SphereCollisionShape(10);
+	}
+
+
+
 
 
 }

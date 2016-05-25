@@ -12,8 +12,11 @@ import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
-import com.returnfire.dao.elementos.environment.ArbolDAO;
-import com.returnfire.dao.elementos.environment.RockDAO;
+import com.returnfire.dao.elementos.environment.RecursoNaturalDAO;
+import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
+import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
+import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
+import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.service.HeightService;
@@ -40,6 +43,10 @@ public class CeldaDAO extends NetWorldCellDAO{
                                 estaticos.add(ArbolDAO.getNew(new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
                             }else if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.ROCA.ordinal()){                                
                                 estaticos.add(RockDAO.getNew(new Vector3f(x,HeightService.MAX_HEIGHT-10,z),ang, rnd));
+                            }else if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.RECURSO_PETROLEO.ordinal()){
+                            	estaticos.add(RecursoNaturalDAO.getNew(RecursoPetroleoDAO.class, new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
+                            }else if(i==EstaticoDAO.ELEMENTOS_ESTATICOS.RECURSO_HIERRO.ordinal()){
+                            	estaticos.add(RecursoNaturalDAO.getNew(RecursoHierroDAO.class, new Vector3f(x,HeightService.MAX_HEIGHT-10,z), ang));
                             }
                         }
                     } 

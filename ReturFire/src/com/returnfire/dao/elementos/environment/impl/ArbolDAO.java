@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.returnfire.dao.elementos.environment;
+package com.returnfire.dao.elementos.environment.impl;
 
 import com.entity.utils.Vector2;
 import com.jme3.math.Vector3f;

@@ -10,6 +10,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
+import com.returnfire.models.elementos.EstaticoModel;
 
 
 
@@ -48,4 +49,6 @@ public abstract class BuildNode extends Model{
     	}
     	return size;
     }
+    
+    public abstract boolean puedeConstruirseAqui(EstaticoModel edificioColision);
 }

@@ -4,7 +4,7 @@ import com.jme3.network.serializing.Serializable;
 
 @Serializable
 public class RecursoDAO implements java.io.Serializable{
-	public enum RECURSOS{PETROLEO, PIEZAS};
+	public enum RECURSOS{PETROLEO, PIEZAS, HIERRO};
 
 	public int cantidad;
 	public RECURSOS tipo;

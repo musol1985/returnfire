@@ -83,7 +83,7 @@ public class ConstruyendoDAO extends EdificioAlmacenDAO{
         
     public boolean isConstruido(){
     	for(RecursoDAO r: recursos){
-    		int necesarios=getEdificio().getNecesarioByTipo(r.tipo);
+    		int necesarios=getCantidadMaximaQuePuedeAlmacenar(r.tipo);
     		if(necesarios>0 && necesarios>r.cantidad)
     			return false;
     	}
@@ -94,12 +94,12 @@ public class ConstruyendoDAO extends EdificioAlmacenDAO{
 	@Override
 	public boolean puedeAlmacenarMas(RECURSOS tipo) {
 		int cantidadTiene=getCantidadRecursoByTipo(tipo);
-		int cantidadNecesaria=getEdificio().getNecesarioByTipo(tipo);
+		int cantidadNecesaria=getCantidadMaximaQuePuedeAlmacenar(tipo);
 		
 		return cantidadTiene<cantidadNecesaria;
 	}
 
-	@Override
+	/*@Override
 	public List<RecursoDAO> getCantidadesQuePuedeAlmacenar() {
 		List<RecursoDAO> res=new ArrayList<RecursoDAO>();
 		
@@ -113,12 +113,17 @@ public class ConstruyendoDAO extends EdificioAlmacenDAO{
 		}
 		
 		return res;
-	}
+	}*/
 
 	@Override
 	public int getCantidadQuePuedeAlmacenar(RECURSOS tipo) {
-		int necesario=getEdificio().getNecesarioByTipo(tipo);
+		int necesario=getCantidadMaximaQuePuedeAlmacenar(tipo);
 		int rTiene=getCantidadRecursoByTipo(tipo);
 		return necesario-rTiene;
+	}
+
+	@Override
+	public int getCantidadMaximaQuePuedeAlmacenar(RECURSOS tipo) {
+		return getEdificio().getNecesarioByTipo(tipo);
 	}
 }

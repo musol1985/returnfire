@@ -7,6 +7,7 @@ package com.returnfire.models.elementos.contenedores;
 
 import com.entity.core.IBuilder;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.ElementoModel;
@@ -15,7 +16,7 @@ import com.returnfire.models.elementos.ElementoModel;
  *
  * @author Edu
  */
-public abstract class ContenedorModel<T extends ContenedorDAO> extends ElementoModel<T, EstaticosBatch>{
+public abstract class ContenedorModel<T extends ContenedorDAO> extends ElementoModel<T, EstaticosBatch, RigidBodyControl>{
 
     @Override
     public void onInstance(IBuilder builder, Object[] params) throws Exception {

@@ -26,9 +26,28 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
 	}
 	
 	
+	/**
+	 * Indica si puede almacenar mas unidades de ese recurso
+	 * @param tipo
+	 * @return
+	 */
 	public abstract boolean puedeAlmacenarMas(RECURSOS tipo);
-	public abstract List<RecursoDAO> getCantidadesQuePuedeAlmacenar();
+
+	/**
+	 * Cantidad de ese recurso que puede ser almacenada
+	 * Tiene en cuenta la cantidad que ya tiene almacenado
+	 * @param tipo
+	 * @return
+	 */
 	public abstract int getCantidadQuePuedeAlmacenar(RECURSOS tipo);
+	
+	/**
+	 * Cantidad maxima de ese recurso que puede ser almacenada
+	 * No tiene en cuenta lo que tiene almacenado
+	 * @param tipo
+	 * @return
+	 */
+	public abstract int getCantidadMaximaQuePuedeAlmacenar(RECURSOS tipo);
 
 	
 	public int getCantidadRecursoByTipo(RECURSOS tipo){

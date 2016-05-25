@@ -1,6 +1,7 @@
 package com.returnfire.msg;
 
 import com.entity.network.core.beans.CellId;
+import com.jme3.bullet.control.PhysicsControl;
 import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializable;
 import com.returnfire.dao.elementos.EstaticoDAO;
@@ -21,7 +22,7 @@ public class MsgOnBalaEstatico extends MsgOnImpactoBala {
 		
 	}
 	
-	public MsgOnBalaEstatico(String idBala, Vector3f v, EstaticoModel<? extends EstaticoDAO> estatico, CeldaModel celda, long t) {
+	public MsgOnBalaEstatico(String idBala, Vector3f v, EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl> estatico, CeldaModel celda, long t) {
 		super(idBala);
                 this.v=v;
 		this.celdaTimestampOld=t;

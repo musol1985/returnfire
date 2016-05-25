@@ -25,9 +25,6 @@ import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 @ModelEntity
 public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDAO, BaseTierraPequeNode>{
 	
-	@Entity
-	public BaseTierraPequeNode building;
-	
 	//@Entity(substituteNode="zonaA")
 	@Conditional(method="injectZona", includeFieldName=true)
 	public BuildingExtension zonaA;
@@ -55,10 +52,7 @@ public class BaseTierraPequeModel extends BaseVehiculosModel<EdificioVehiculosDA
 		return new SphereCollisionShape(5f);
 	}
 
-	@Override
-	public BaseTierraPequeNode getNodo() {
-		return building;
-	}
+
 
 
 

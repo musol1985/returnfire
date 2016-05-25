@@ -78,13 +78,13 @@ public class BuildModel extends Model implements IDraggable{
 	@Override
 	public boolean onDrop(BUTTON button) throws Exception {
 		if(button==BUTTON.LEFT){
-			if(isColision()){
-				return true;
-			}else{
+			if(puedeConstruirse()){				
 				GameContext.getClientService().construirEdificio(this);
 				setEdificioMaterial(null);
 				edificio.dettach();	
 				EntityManager.getGame().getPhysics().remove(ghost);				
+			}else{
+				return true;
 			}
 		}
 		
@@ -93,18 +93,18 @@ public class BuildModel extends Model implements IDraggable{
 
 	@Override
 	public void onDragging(ModelBase over) throws Exception {
-		if(isColision()){
+		if(!puedeConstruirse()){
 			dragMat.setColor("Color", ColorRGBA.Red);
 		}else{
 			dragMat.setColor("Color", ColorRGBA.Green);
 		}
 	}
 	
-	private boolean isColision(){
+	private boolean puedeConstruirse(){
 		if(ghost.getOverlappingCount()>0)
 			for(PhysicsCollisionObject obj:ghost.getOverlappingObjects()){
 				if(obj.getUserObject() instanceof EstaticoModel){
-					return true;
+					return edificio.puedeConstruirseAqui((EstaticoModel)obj.getUserObject());
 				}
 			}
 		return false;

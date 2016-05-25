@@ -14,12 +14,12 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.controllers.DynamicController;
-import com.returnfire.dao.elementos.environment.ArbolDAO;
+import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.bullets.BulletModel;
 
 @ModelEntity(asset = "Models/environment/palm_03.j3o")
-public class ArbolModel extends EstaticoModel<ArbolDAO>{
+public class ArbolModel extends EstaticoModel<ArbolDAO, RigidBodyControl>{
  
     @EffectParticle(asset = "Models/fx/hojas.j3o")
     public EffectParticleAdapter hojas;

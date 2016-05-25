@@ -12,6 +12,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
+import com.returnfire.models.elementos.EstaticoModel;
 
 @ModelEntity(asset = "Models/buildings/eolic.j3o")
 public class MolinoEolicoNode extends BuildNode {
@@ -36,6 +37,11 @@ public class MolinoEolicoNode extends BuildNode {
         helix.addControl(new ModifierRotation(new Vector3f(0,0,0), new Vector3f(0,0,FastMath.TWO_PI), 10000, true, null));
  
     }
+
+	@Override
+	public boolean puedeConstruirseAqui(EstaticoModel edificioColision) {
+		return false;
+	}
 
 	
 }
