@@ -17,11 +17,11 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.client.gui.items.RecursosWindow;
-import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.elementos.buildings.EdificioModel;
+import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 
@@ -31,7 +31,7 @@ import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
  */
 
 @ModelEntity(asset = "Models/buildings/construyendo.j3o")
-public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO, GhostControl> {
+public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO, GhostControl> implements IAlmacenable{
     private RecursosWindow window;
     
     @PhysicsBodyComponent(type=PhysicsBodyType.GHOST_BODY)

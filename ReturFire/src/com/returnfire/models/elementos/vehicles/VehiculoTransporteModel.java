@@ -5,26 +5,30 @@
  */
 package com.returnfire.models.elementos.vehicles;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
 import com.entity.anot.OnCollision;
 import com.entity.anot.components.model.SubModelComponent;
+import com.entity.network.core.beans.CellId;
 import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.CeldaModel;
+import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
+import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.msg.MsgDisparar;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgSyncRecursos;
 
 /**
  *
@@ -32,7 +36,7 @@ import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
  */
 public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extends VehiculoModel<T, VehiculoTransporteDAO>{	
     
-    private List<ConstruyendoModel> construcciones=new ArrayList<ConstruyendoModel>();
+    private IAlmacenable edificio;
     
 	@SubModelComponent(name="contenedoresReference")
 	public Node contenedoresReference;
@@ -74,22 +78,27 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     
     @OnCollision
    public void onColisionVehiculo(ConstruyendoModel construccion)throws Exception{
-       if(!construcciones.contains(construccion)){
-           construcciones.add(construccion);
-           construccion.onVehiculoEnZona(this);
-       }
+    	onColisionAlmacenable(construccion, construccion.getCelda(), construccion.getDAO());
    }
+    
+    @OnCollision(includeSubClass=true)
+    public void onColisionVehiculo(EdificioAlmacenModel almacen)throws Exception{
+     	onColisionAlmacenable(almacen, almacen.getCelda(), (EdificioAlmacenDAO)almacen.getDAO());
+    }
+    
+    private void onColisionAlmacenable(IAlmacenable edificio, CeldaModel celda, EdificioAlmacenDAO dao)throws Exception{
+    	if(this.edificio!=edificio){
+    		this.edificio=edificio;
+    		new MsgSyncRecursos(celda.dao.getId(), dao).send();
+            edificio.onVehiculoEnZona(this);
+    	}
+    }
    
    public void onUpdate(float tpf)throws Exception{
-       Iterator<ConstruyendoModel> it=construcciones.iterator();
-       while(it.hasNext()){
-           ConstruyendoModel edificio=it.next();
-           if(!edificio.isVehiculoEnZona(this)){
-               System.out.println("------------------------>remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-               edificio.onVehiculoFueraZona(this);
-               it.remove();               
-           }
-       }
+	   if(this.edificio!=null && !edificio.isVehiculoEnZona(this)){
+		   edificio.onVehiculoFueraZona(this);
+		   edificio=null;
+	   }      
    }
    
    @Override

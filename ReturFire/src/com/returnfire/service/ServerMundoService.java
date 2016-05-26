@@ -17,6 +17,7 @@ import com.returnfire.dao.MundoDAO;
 import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
@@ -26,6 +27,8 @@ import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
+import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
+import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
@@ -39,6 +42,7 @@ import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgSyncRecursos;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
         private Random rnd;
@@ -243,4 +247,15 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
         }
 		//TODO send msg de contenedor cogido, con el contenedor DAO, y el vehiculoId.
 	}
+    
+    
+    public EdificioAlmacenDAO syncRecursos(MsgSyncRecursos msg)throws Exception{
+    	CeldaModel celda=getCellById(msg.cellId.id);
+    	EdificioModel e=celda.getEdificio(msg.edificioId);
+    	
+    	if(!(e.getDAO() instanceof EdificioAlmacenDAO)){
+    		throw new Exception("No se pueden sincronizar recursos de un vehiculo que no es almacen: "+msg.edificioId+ " en "+msg.cellId.id);    		
+    	}
+    	return (EdificioAlmacenDAO)e.getDAO();
+    }
 }

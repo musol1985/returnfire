@@ -5,6 +5,8 @@
  */
 package com.returnfire.client.gui.items;
 
+import java.util.Map.Entry;
+
 import com.entity.adapters.listeners.ICameraUpdate;
 import com.entity.core.EntityManager;
 import com.jme3.math.Vector3f;
@@ -13,9 +15,7 @@ import com.returnfire.GameContext;
 import com.returnfire.client.gui.controls.Window;
 import com.returnfire.client.scenes.InGame;
 import com.returnfire.dao.elementos.RecursoDAO;
-import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
-import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 
@@ -66,5 +66,14 @@ public class RecursosWindow extends Window<RecursosRow> implements ICameraUpdate
         	VehiculoTransporteDAO vt=(VehiculoTransporteDAO)vehiculo.getDao();
         	row.setText(vt.getCantidadContenedorByTipoRecurso(rEdificio.tipo)-added, rEdificio.getCantidad()+added);
         }
+    }
+    
+    public void actualizar(){
+    	VehiculoTransporteDAO vt=(VehiculoTransporteDAO)vehiculo.getDao();
+    	for(Entry<String,RecursosRow> row:rows.entrySet()){    
+    		RecursoDAO rEdificio=row.getValue().getRecursoEdificio();
+        	row.getValue().setText(vt.getCantidadContenedorByTipoRecurso(rEdificio.tipo), rEdificio.getCantidad());
+    	}
+
     }
 }

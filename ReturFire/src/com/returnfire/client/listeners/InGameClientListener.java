@@ -2,14 +2,15 @@ package com.returnfire.client.listeners;
 
 import com.entity.network.core.listeners.InGameClientMessageListener;
 import com.jme3.network.HostedConnection;
-import com.jme3.network.MessageConnection;
 import com.returnfire.client.scenes.InGame;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.msg.MsgErrOnBuilt;
 import com.returnfire.msg.MsgOnBalaEstatico;
 import com.returnfire.msg.MsgOnBuilding;
 import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
+import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 
 
@@ -40,5 +41,9 @@ public class InGameClientListener extends InGameClientMessageListener<InGame> {
         
         public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
             getEntity().getService().onContenedorEdificio(msg);		            
+        }
+        
+        public void onSyncRecursos(MsgOnSyncRecursos msg)throws Exception{
+            getEntity().getService().onSyncRecursos(msg);
         }
 }

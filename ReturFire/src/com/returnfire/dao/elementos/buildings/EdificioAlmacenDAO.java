@@ -73,6 +73,10 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
                 }
 		return null;
 	}
+        
+    public List<RecursoDAO> getRecursosAlmacenados(){
+    	return recursos;
+    }
 	
 	/*
 	 * Le suma cantidad al recurso R

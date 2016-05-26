@@ -19,6 +19,7 @@ import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.buildings.BuildModel;
+import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.bullets.BulletModel;
@@ -31,6 +32,7 @@ import com.returnfire.msg.MsgOnBuilding;
 import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
+import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -213,5 +215,20 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
                 throw new Exception("Error al quitar el contenedor "+cId+"del vehiculo "+vt.getDao().getId());
             }
         }                
+    }
+    
+    @RunOnGLThread
+    public void onSyncRecursos(MsgOnSyncRecursos msg)throws Exception{
+        CeldaModel celda=getCellById(msg.cellId.id);
+        EdificioAlmacenModel e=(EdificioAlmacenModel)celda.getEdificio(msg.edificioId);       
+        
+        EdificioAlmacenDAO dao=(EdificioAlmacenDAO)e.getDAO();
+        
+        for(RecursoDAO r:msg.recursos){
+        	dao.getRecursoByTipo(r.tipo, true).cantidad=r.cantidad;
+        }
+        
+        if(e.getWindow()!=null)
+        	e.getWindow().actualizar();
     }
 }
