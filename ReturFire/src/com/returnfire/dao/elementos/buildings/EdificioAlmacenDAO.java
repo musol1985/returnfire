@@ -21,11 +21,13 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
     }
 	
 	public EdificioAlmacenDAO(JugadorDAO j){
-		super(j);
-                recursos=new ArrayList<RecursoDAO>();
+		super(j);                
 	}
 	
-	
+        @Override
+	public void onNew(){
+            recursos=new ArrayList<RecursoDAO>();
+        }
 	/**
 	 * Indica si puede almacenar mas unidades de ese recurso
 	 * @param tipo
@@ -48,6 +50,10 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
 	 * @return
 	 */
 	public abstract int getCantidadMaximaQuePuedeAlmacenar(RECURSOS tipo);
+        
+        public boolean puedeAlmacenar(RECURSOS tipo){
+            return getCantidadMaximaQuePuedeAlmacenar(tipo)>0;
+        }
 
 	
 	public int getCantidadRecursoByTipo(RECURSOS tipo){

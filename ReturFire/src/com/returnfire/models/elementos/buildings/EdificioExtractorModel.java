@@ -10,7 +10,7 @@ public abstract class EdificioExtractorModel<T extends EdificioExtractorDAO, N e
 	@OnUpdate
 	public void onUpdate(float tpf){
 		if(System.currentTimeMillis()-t>EdificioExtractorDAO.VELOCIDAD_EXTRACCION){
-			
+			System.out.println("Produciendo!!!!!!!!!!!!!!!!!!!!!!!!!");
 			getDAO().producir();
 			
 			t=System.currentTimeMillis();

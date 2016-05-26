@@ -9,13 +9,16 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.returnfire.client.gui.items.RecursosWindow;
 import com.returnfire.dao.elementos.RecursoDAO;
-import com.returnfire.dao.elementos.buildings.EdificioDAO;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class EdificioAlmacenModel<T extends EdificioDAO, N extends BuildNode> extends EdificioConstruibleModel<T, N> implements IAlmacenable{
+public abstract class EdificioAlmacenModel<T extends EdificioAlmacenDAO, N extends BuildNode> extends EdificioConstruibleModel<T, N> implements IAlmacenable{
 
 	private RecursosWindow window;
 	
@@ -64,12 +67,13 @@ public abstract class EdificioAlmacenModel<T extends EdificioDAO, N extends Buil
 	@Override
     public void onVehiculoEnZona(VehiculoModel v){
         if(window==null && v.isTransporte()){
-        	setVehiculoInZona((VehiculoTransporteModel) v);
+            setVehiculoInZona((VehiculoTransporteModel) v);
             window=RecursosWindow.getNewWindow(getWorldTranslation(), this, (VehiculoTransporteModel)v);
             VehiculoTransporteDAO vDao=(VehiculoTransporteDAO)v.getDao();
             
-            for(RecursoDAO rNecesario:getDAO().getRecursosNecesarios()){
-            	window.addRow(getDAO().getRecursoByTipo(rNecesario.tipo, true), rNecesario.cantidad, vDao.getCantidadContenedorByTipoRecurso(rNecesario.tipo));
+
+            for(RecursoDAO rEdificio:getDAO().getRecursosAlmacenados()){
+            	window.addRow(rEdificio, getDAO().getCantidadMaximaQuePuedeAlmacenar(rEdificio.tipo), vDao.getCantidadContenedorByTipoRecurso(rEdificio.tipo));
             }
         }
     }
@@ -86,6 +90,16 @@ public abstract class EdificioAlmacenModel<T extends EdificioDAO, N extends Buil
 	public RecursosWindow getWindow() {
 		return window;
 	}
+
+    @Override
+    public EdificioAlmacenDAO getAlmacenDAO() {
+        return (EdificioAlmacenDAO)getDAO();
+    }
+
+    @Override
+    public CeldaModel getAlmacenCelda() {
+        return getCelda();
+    }
 	
 	
 

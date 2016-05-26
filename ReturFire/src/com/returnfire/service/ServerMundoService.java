@@ -29,6 +29,7 @@ import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
+import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
@@ -208,7 +209,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		
         VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
         
-        ConstruyendoModel e=(ConstruyendoModel)celda.getEdificio(msg.edificioId);
+        IAlmacenable e=(IAlmacenable)celda.getEdificio(msg.edificioId);
 
 
         List<Long> contenedoresAdded=new ArrayList<Long>(msg.contenedorId.size());
@@ -221,8 +222,8 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 	            if(c==null)
 	            	throw new Exception("Contenedor con id: "+cId+" no encontrado en "+msg.cellId.id);
 	
-	            if(e.getDAO().puedeAlmacenarMas(c.getDAO().getTipo())){
-	            	e.getDAO().addRecursoByTipo(c.getDAO().getTipo(), 1);
+	            if(e.getAlmacenDAO().puedeAlmacenarMas(c.getDAO().getTipo())){
+	            	e.getAlmacenDAO().addRecursoByTipo(c.getDAO().getTipo(), 1);
 	                contenedoresAdded.add(c.getDAO().getIdLong());
 	                vt.quitaContenedor(c);
 	                it.remove();
@@ -232,10 +233,10 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
         	ee.printStackTrace();
         }
         
-        if(e.getDAO().isConstruyendo() && contenedoresAdded.size()>0){
-            ConstruyendoDAO dao=(ConstruyendoDAO)e.getDAO();
+        if(e.getAlmacenDAO().isConstruyendo() && contenedoresAdded.size()>0){
+            ConstruyendoDAO dao=(ConstruyendoDAO)e.getAlmacenDAO();
             if(dao.isConstruido()){
-                EdificioDAO daoNuevo=celda.onEdificioConstruido(e);
+                EdificioDAO daoNuevo=celda.onEdificioConstruido((ConstruyendoModel)e);
                 new MsgOnEdificioConstruido(msg.cellId, msg.vehiculoId, msg.edificioId, daoNuevo, contenedoresAdded).send();
             }else{
                 new MsgOnContenedorEdificio(msg.cellId, msg.vehiculoId, msg.edificioId, contenedoresAdded).send();

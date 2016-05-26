@@ -19,7 +19,9 @@ import com.jme3.math.Vector3f;
 import com.returnfire.client.gui.items.RecursosWindow;
 import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
@@ -90,6 +92,16 @@ public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO, GhostContr
             window.remove();
             window=null;
         }
+    }
+
+    @Override
+    public EdificioAlmacenDAO getAlmacenDAO() {
+        return getDAO();
+    }
+
+    @Override
+    public CeldaModel getAlmacenCelda() {
+        return getCelda();
     }
 
   

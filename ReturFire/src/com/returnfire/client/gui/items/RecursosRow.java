@@ -26,28 +26,40 @@ public class RecursosRow extends Row<RecursosWindow>{
     @SpriteGUI(name="rowIco", position={10,0}, align = SpriteGUI.ALIGN.CENTER_Y)
     public Sprite recursoIco;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnAdd", position={154,10}, onLeftClick = "onBtnAdd", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnAdd", position={288,10}, onLeftClick = "onBtnAdd", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/add.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
     public Button btnAdd;
-    @ButtonGUI(sprite=@SpriteGUI(name="btnAddAll", position={225,10}, onLeftClick = "onBtnAddAll", align = SpriteGUI.ALIGN.CENTER_Y),
+    
+    @ButtonGUI(sprite=@SpriteGUI(name="btnAddAll", position={357,10}, onLeftClick = "onBtnAddAll", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/addAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
-    public Button btnAddAll;    
+    public Button btnAddAll; 
+    
+    @ButtonGUI(sprite=@SpriteGUI(name="btnRemove", position={219,10}, onLeftClick = "onBtnAdd", align = SpriteGUI.ALIGN.CENTER_Y),
+			icon="Interface/remove.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+    public Button btnRemove;
+    
+    @ButtonGUI(sprite=@SpriteGUI(name="btnRemoveAll", position={150,10}, onLeftClick = "onBtnAddAll", align = SpriteGUI.ALIGN.CENTER_Y),
+			icon="Interface/removeAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+    public Button btnRemoveAll;    
     
     @TextGUI(position={80,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecVehiculo", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecVehiculo;    
-    @TextGUI(position={300,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecEdificio", align = SpriteGUI.ALIGN.CENTER_Y)
+    @TextGUI(position={426,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecEdificio", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecEdificio;    
     
 
     private RecursoDAO rEdificio;
-    private String recursosNecesariosTotales;
+    private String recursosMaximos;
 
-    public void instance(int index, int contenedoresVehiculo, RecursoDAO rEdificio, int maxTotales) {
+    public void instance(int index, int contenedoresVehiculo, RecursoDAO rEdificio, int maxTotales, boolean mostrarRemove) {
         super.instance(index); 
         this.rEdificio=rEdificio;
 
         recursoIco.setImage("Interface/icons/"+rEdificio.tipo.name()+".png", true);
-        recursosNecesariosTotales="/"+maxTotales;
+        recursosMaximos="/"+maxTotales;
+
+        btnRemoveAll.setEnabled(mostrarRemove);
+        btnRemove.setEnabled(mostrarRemove);
         
         setText(contenedoresVehiculo, rEdificio.cantidad);
     }
@@ -79,6 +91,6 @@ public class RecursosRow extends Row<RecursosWindow>{
  
     public void setText(String contenedoresVehiculo, String recursosEdificio){
     	txtRecVehiculo.setText(contenedoresVehiculo);
-    	txtRecEdificio.setText(recursosEdificio+recursosNecesariosTotales);
+    	txtRecEdificio.setText(recursosEdificio+recursosMaximos);
     }
 }

@@ -12,8 +12,7 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
-import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
-import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
+import com.returnfire.models.elementos.buildings.EdificioExtractorModel;
 import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
 
 /**
@@ -22,7 +21,7 @@ import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
  */
 
 @ModelEntity
-public class ExtractorPetroleoModel extends EdificioAlmacenModel<ExtractorPetroleoDAO, ExtractorPetroleoNode>{
+public class ExtractorPetroleoModel extends EdificioExtractorModel<ExtractorPetroleoDAO, ExtractorPetroleoNode>{
 	
     @Entity
     public ExtractorPetroleoNode building;

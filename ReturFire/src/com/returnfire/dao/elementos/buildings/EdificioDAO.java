@@ -21,7 +21,13 @@ public abstract class EdificioDAO extends EstaticoDAO{
 	public EdificioDAO(JugadorDAO j){
 		super();
 		jugador=j.getId();
+                onNew();
 	}
+        
+        public void onNew(){
+            
+        }
+        
 	@Override
 	public int getVidaInicial() {
 		return 100;
@@ -66,10 +72,11 @@ public abstract class EdificioDAO extends EstaticoDAO{
         
         
     public static EdificioDAO getFromConstruyendoDAO(ConstruyendoDAO cDao){
-        EdificioDAO dao=cDao.getEdificio();
+        EdificioDAO dao=cDao.getEdificio();        
         dao.jugador=cDao.jugador;
         dao.pos=cDao.getPos();
         dao.vida=dao.getVidaInicial();
+        dao.onNew();
         return dao;
     }
 }

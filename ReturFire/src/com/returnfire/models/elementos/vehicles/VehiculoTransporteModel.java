@@ -89,7 +89,8 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     private void onColisionAlmacenable(IAlmacenable edificio, CeldaModel celda, EdificioAlmacenDAO dao)throws Exception{
     	if(this.edificio!=edificio){
     		this.edificio=edificio;
-    		new MsgSyncRecursos(celda.dao.getId(), dao).send();
+                if(!(edificio instanceof ConstruyendoModel))
+                    new MsgSyncRecursos(celda.dao.getId(), dao).send();
             edificio.onVehiculoEnZona(this);
     	}
     }
