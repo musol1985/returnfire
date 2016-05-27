@@ -8,6 +8,7 @@ package com.returnfire.models.factory;
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
 import com.returnfire.dao.CeldaDAO;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
@@ -27,6 +28,7 @@ import com.returnfire.models.elementos.buildings.impl.BaseTierraPequeModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.buildings.impl.ExtractorPetroleoModel;
 import com.returnfire.models.elementos.buildings.impl.MolinoEolicoModel;
+import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.models.elementos.contenedores.impl.BarrilModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.elementos.environment.BrownRock1;
@@ -144,6 +146,18 @@ public class ModelFactory extends BaseService{
     public VacioExt crearExtensionVacia(VacioExt model){
         return model;
     } 
+    
+    public ContenedorModel crearContenedor(ContenedorDAO dao){
+    	ContenedorModel model=null;
+    	
+    	if(dao instanceof BarrilDAO){
+            model=crearBarril(null, (BarrilDAO)dao);   
+        }
+    	
+        return model;
+    }
+    
+    
     
     @Instance(attachTo = "")
     public BarrilModel crearBarril(BarrilModel model, BarrilDAO dao){

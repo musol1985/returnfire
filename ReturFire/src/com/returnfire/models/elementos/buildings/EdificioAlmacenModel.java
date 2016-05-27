@@ -1,5 +1,8 @@
 package com.returnfire.models.elementos.buildings;
 
+import java.util.List;
+import java.util.Map.Entry;
+
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent.PhysicsBodyType;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
@@ -8,15 +11,15 @@ import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.returnfire.client.gui.items.RecursosWindow;
+import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class EdificioAlmacenModel<T extends EdificioAlmacenDAO, N extends BuildNode> extends EdificioConstruibleModel<T, N> implements IAlmacenable{
 
@@ -73,7 +76,16 @@ public abstract class EdificioAlmacenModel<T extends EdificioAlmacenDAO, N exten
             
 
             for(RecursoDAO rEdificio:getDAO().getRecursosAlmacenados()){
-            	window.addRow(rEdificio, getDAO().getCantidadMaximaQuePuedeAlmacenar(rEdificio.tipo), vDao.getCantidadContenedorByTipoRecurso(rEdificio.tipo));
+            	RECURSOS tipo=rEdificio.getTipo();
+            	window.addRow(tipo, vDao.getCantidadContenedorByTipoRecurso(tipo), getDAO().getCantidadRecursoByTipo(tipo), getDAO().getCantidadMaximaQuePuedeAlmacenar(tipo), true, true);
+            }
+            
+            for(Entry<RECURSOS, List<ContenedorDAO>> cVehiculo:vDao.getContenedores().entrySet()){
+            	RECURSOS tipo=cVehiculo.getKey();
+            	
+            	if(!getDAO().hasRecurso(tipo)){
+            		window.addRow(tipo, cVehiculo.getValue().size(), 0, getDAO().getCantidadMaximaQuePuedeAlmacenar(tipo), true, getDAO().puedeAlmacenar(tipo));
+            	}            	
             }
         }
     }

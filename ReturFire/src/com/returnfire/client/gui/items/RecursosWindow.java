@@ -16,6 +16,8 @@ import com.returnfire.GameContext;
 import com.returnfire.client.gui.controls.Window;
 import com.returnfire.client.scenes.InGame;
 import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
+import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
@@ -53,28 +55,45 @@ public class RecursosWindow extends Window<RecursosRow> implements ICameraUpdate
         setPosition(pos.x, pos.y);
     }
     
-    public void addRow(RecursoDAO rEdificio, int max, int contenedoresVehiculo){
-        RecursosRow row=(RecursosRow)EntityManager.instanceGeneric(RecursosRow.class);
-        row.instance(rows.size(),contenedoresVehiculo,  rEdificio, max, !(edificio instanceof ConstruyendoModel));
-        super.addRow(rEdificio.tipo.name(), row);
+    public void addRow(RECURSOS tipo, int contenedoresVehiculo, int cantidadEdificio, int max, boolean vehiculoPuedeAlmacenar, boolean edificioPuedeAlmacenar){
+        RecursosRow row=(RecursosRow)EntityManager.instanceGeneric(RecursosRow.class);        
+        
+        row.instance(rows.size(),tipo, contenedoresVehiculo, cantidadEdificio, max);
+        
+        row.puedeAlmacenar(vehiculoPuedeAlmacenar, edificioPuedeAlmacenar);
+        
+        super.addRow(tipo.name(), row);
     }
     
-    public void onAdd(boolean all, RecursosRow row){    	
-    	RecursoDAO rEdificio=row.getRecursoEdificio();
-    	
-    	int added=GameContext.getClientService().addRecursoTo(edificio.getAlmacenCelda().getDao(), edificio.getAlmacenDAO(), (VehiculoTransporteDAO)vehiculo.getDao(), rEdificio.tipo, all);
+    public void onAddToEdificio(boolean all, RecursosRow row){    	
+    	RECURSOS tipoRecurso=row.getTipoRecurso();
+    	    	
+    	int added=GameContext.getClientService().addRecursoToEdificio(edificio.getAlmacenCelda().getDao(), edificio.getAlmacenDAO(), (VehiculoTransporteDAO)vehiculo.getDao(), tipoRecurso, all);
     	
         if(added>0){
         	VehiculoTransporteDAO vt=(VehiculoTransporteDAO)vehiculo.getDao();
-        	row.setText(vt.getCantidadContenedorByTipoRecurso(rEdificio.tipo)-added, rEdificio.getCantidad()+added);
+        	row.setText(vt.getCantidadContenedorByTipoRecurso(tipoRecurso)-added, edificio.getAlmacenDAO().getCantidadRecursoByTipo(tipoRecurso)+added);
+        }
+    }
+    
+    public void onAddToVehiculo(boolean all, RecursosRow row){    	
+    	RECURSOS tipoRecurso=row.getTipoRecurso();
+    	
+    	int added=GameContext.getClientService().addRecursoToVehiculo(edificio.getAlmacenCelda().getDao(), edificio.getAlmacenDAO(), (VehiculoTransporteDAO)vehiculo.getDao(), tipoRecurso, all);
+    	
+    	if(added>0){
+        	VehiculoTransporteDAO vt=(VehiculoTransporteDAO)vehiculo.getDao();
+        	row.setText(vt.getCantidadContenedorByTipoRecurso(tipoRecurso)+added, edificio.getAlmacenDAO().getCantidadRecursoByTipo(tipoRecurso)-added);
         }
     }
     
     public void actualizar(){
     	VehiculoTransporteDAO vt=(VehiculoTransporteDAO)vehiculo.getDao();
+    	EdificioAlmacenDAO ea=(EdificioAlmacenDAO)edificio.getAlmacenDAO();
+    	
     	for(Entry<String,RecursosRow> row:rows.entrySet()){    
-    		RecursoDAO rEdificio=row.getValue().getRecursoEdificio();
-        	row.getValue().setText(vt.getCantidadContenedorByTipoRecurso(rEdificio.tipo), rEdificio.getCantidad());
+    		RECURSOS tipoRecurso=row.getValue().getTipoRecurso();
+        	row.getValue().setText(vt.getCantidadContenedorByTipoRecurso(tipoRecurso), ea.getCantidadRecursoByTipo(tipoRecurso));
     	}
 
     }

@@ -9,6 +9,7 @@ import com.returnfire.msg.MsgErrOnBuilt;
 import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgRecursoToVehiculo;
 import com.returnfire.msg.MsgSyncRecursos;
 import com.returnfire.msg.sync.Posicion;
 import com.returnfire.server.scenes.InGame;
@@ -39,6 +40,14 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
                 e.printStackTrace();
             }
 	}
+	
+	public void onRecursoToVehiculo(MsgRecursoToVehiculo msg, HostedConnection cnn)throws Exception{
+        try{
+            getEntity().getService().onRecursoToVehiculo(msg);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
         
         
         public void onContenedorEdificio(MsgOnContenedorEdificio msg, HostedConnection cnn)throws Exception{

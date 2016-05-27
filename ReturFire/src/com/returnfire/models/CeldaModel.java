@@ -253,10 +253,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         if(addDAO)
             this.dao.addContenedor(dao);
         
-        ContenedorModel model=null;
-        if(dao instanceof BarrilDAO){
-            model=getMundo().getFactory().modelFactory.crearBarril(null, (BarrilDAO)dao);   
-        }
+        ContenedorModel model=getMundo().getFactory().modelFactory.crearContenedor(dao);
         
         estaticos.attachEntity(model);
         

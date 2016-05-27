@@ -51,6 +51,10 @@ public abstract class VehiculoTransporteDAO extends VehiculoDAO{
 		return contenedores;
 	}
 	
+	public int getSlotsDisponibles(){
+		return getMaxSlots()-getContenedoresSize();
+	}
+	
 	/**
 	 * @param recurso
 	 * @return

@@ -20,6 +20,7 @@ import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
 import com.returnfire.models.elementos.buildings.BuildModel;
 import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
+import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.bullets.BulletModel;
@@ -32,8 +33,10 @@ import com.returnfire.msg.MsgOnBuilding;
 import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
+import com.returnfire.msg.MsgOnRecursoToVehiculo;
 import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgRecursoToVehiculo;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
     @Override
@@ -150,7 +153,7 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 	    * @param all
 	    * @return la cantidad de recursos added
 	    */
-    public int addRecursoTo(CeldaDAO celda, EdificioAlmacenDAO daoEdificio, VehiculoTransporteDAO daoVehiculo, RECURSOS tipoRecurso, boolean all){
+    public int addRecursoToEdificio(CeldaDAO celda, EdificioAlmacenDAO daoEdificio, VehiculoTransporteDAO daoVehiculo, RECURSOS tipoRecurso, boolean all){
         List<Long> contenedoresToAdd=new ArrayList<Long>();
         
         boolean seguir=true;
@@ -174,6 +177,32 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
         return contenedoresToAdd.size();
     }
     
+    /**
+	    * Envia al servidor que tiene que añadir ese recurso
+	    * Se comprueba que se pueda añadir ese recurso
+	    * 
+	    * @param edificio
+	    * @param recurso
+	    * @param all
+	    * @return la cantidad de recursos added
+	    */
+	 public int addRecursoToVehiculo(CeldaDAO celda, EdificioAlmacenDAO daoEdificio, VehiculoTransporteDAO daoVehiculo, RECURSOS tipoRecurso, boolean all){
+	     int cantidadPuedeAlmacenar=daoVehiculo.getMaxSlots()-daoVehiculo.getContenedoresSize();
+	     
+	     if(cantidadPuedeAlmacenar>0){
+	    	 int cantidadQueSeAlmacenara=1;
+	    	 
+	    	 if(all)
+	    		 cantidadQueSeAlmacenara=cantidadPuedeAlmacenar;
+	    	 
+	    	 new MsgRecursoToVehiculo(celda.getId(), daoVehiculo.getIdLong(), daoEdificio.getId(), tipoRecurso, cantidadQueSeAlmacenara).send();	    		        
+	    	 
+	    	 return cantidadQueSeAlmacenara;
+	     }
+	     
+	     return 0;
+	 }
+    
     @RunOnGLThread
     public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
         CeldaModel celda=getCellById(msg.cellId.id);
@@ -196,6 +225,35 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
             }
         }
     }
+    
+
+    @RunOnGLThread
+    public void onRecursoToVehiculo(MsgOnRecursoToVehiculo msg)throws Exception{
+		CeldaModel celda=getCellById(msg.cellId.id);
+		
+		VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+		if(v==null)
+			throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+		
+		if(!v.isTransporte())
+			throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");
+		
+		IAlmacenable e=(IAlmacenable)celda.getEdificio(msg.edificioId);
+		if(e==null)
+			throw new Exception("El edificio con id: "+msg.edificioId+" no existe en la celda "+msg.cellId.id);
+		
+		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+		VehiculoTransporteDAO vDAO=(VehiculoTransporteDAO)vt.getDao();
+		
+		for(ContenedorDAO cDAO:msg.contenedores){
+			ContenedorModel c=getWorld().getFactory().modelFactory.crearContenedor(cDAO);
+
+			vt.cogeContenedor(c, celda);
+		}
+		
+		if(msg.contenedores.size()>0)
+			e.getAlmacenDAO().removeRecursoByTipo(msg.getContenedores().get(0).getTipo(), msg.getContenedores().size());
+	}
 
     @RunOnGLThread
     public void onEdificioConstruido(MsgOnEdificioConstruido msg)throws Exception{

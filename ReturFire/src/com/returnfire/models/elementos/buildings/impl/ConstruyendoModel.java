@@ -82,7 +82,7 @@ public class ConstruyendoModel extends EdificioModel<ConstruyendoDAO, GhostContr
             VehiculoTransporteDAO vDao=(VehiculoTransporteDAO)v.getDao();
             
             for(RecursoDAO rNecesario:getDAO().getRecursosNecesarios()){
-            	window.addRow(getDAO().getRecursoByTipo(rNecesario.tipo, true), rNecesario.cantidad, vDao.getCantidadContenedorByTipoRecurso(rNecesario.tipo));
+            	window.addRow(rNecesario.tipo, vDao.getCantidadContenedorByTipoRecurso(rNecesario.tipo), getDAO().getCantidadRecursoByTipo(rNecesario.tipo), rNecesario.cantidad, false, getDAO().puedeAlmacenar(rNecesario.tipo));
             }
         }
     }

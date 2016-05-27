@@ -23,11 +23,11 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
+import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
-import com.returnfire.models.elementos.buildings.EdificioAlmacenModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.IAlmacenable;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
@@ -42,7 +42,9 @@ import com.returnfire.msg.MsgOnBuilding;
 import com.returnfire.msg.MsgOnContenedorEdificio;
 import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
+import com.returnfire.msg.MsgOnRecursoToVehiculo;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgRecursoToVehiculo;
 import com.returnfire.msg.MsgSyncRecursos;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -194,7 +196,43 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
 		vt.cogeContenedor(c, celda);
 		msg.send();
-		//TODO send msg de contenedor cogido, con el contenedor DAO, y el vehiculoId.
+	}
+	
+	public void onRecursoToVehiculo(MsgRecursoToVehiculo msg)throws Exception{
+		CeldaModel celda=getCellById(msg.cellId.id);
+		
+		VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+		if(v==null)
+			throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+		
+		if(!v.isTransporte())
+			throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un transporte y no puede coger un contenedor!");
+		
+		IAlmacenable e=(IAlmacenable)celda.getEdificio(msg.edificioId);
+		if(e==null)
+			throw new Exception("El edificio con id: "+msg.edificioId+" no existe en la celda "+msg.cellId.id);
+		
+		VehiculoTransporteModel vt=(VehiculoTransporteModel)v;
+		VehiculoTransporteDAO vDAO=(VehiculoTransporteDAO)vt.getDao();
+		
+		if(vDAO.getSlotsDisponibles()>=msg.cantidad && e.getAlmacenDAO().getCantidadRecursoByTipo(msg.tipoRecurso)>=msg.cantidad){
+			List<ContenedorDAO> contenedoresAdded=new ArrayList<ContenedorDAO>(msg.cantidad);
+			
+			for(int i=0;i<msg.cantidad;i++){
+				ContenedorDAO cDAO=ContenedorDAO.getNew(msg.tipoRecurso);
+				ContenedorModel c=getWorld().getFactory().modelFactory.crearContenedor(cDAO);
+
+				vt.cogeContenedor(c, celda);
+					
+				contenedoresAdded.add(cDAO);
+			}
+			
+			e.getAlmacenDAO().removeRecursoByTipo(msg.tipoRecurso, msg.cantidad);
+			
+			new MsgOnRecursoToVehiculo(msg.cellId, msg.vehiculoId, msg.edificioId, contenedoresAdded).send();
+		}else{
+			//TODO send mensaje de error
+		}
 	}
 	
     public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{

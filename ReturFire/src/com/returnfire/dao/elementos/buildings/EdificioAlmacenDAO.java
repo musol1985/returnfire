@@ -66,6 +66,13 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
 	public RecursoDAO getRecursoByTipo(RECURSOS tipo){
             return getRecursoByTipo(tipo, false);
 	}
+	
+	/*
+	 * Comprueba si tiene este recurso en la lista de recursos
+	 */
+	public boolean hasRecurso(RECURSOS tipo){
+		return getRecursoByTipo(tipo,false)!=null;
+	}
         
         public RecursoDAO getRecursoByTipo(RECURSOS tipo, boolean addIfNotExist){
 		for(RecursoDAO r:recursos){
@@ -92,6 +99,19 @@ public abstract class EdificioAlmacenDAO extends EdificioDAO{
 		RecursoDAO rEdificio=getRecursoByTipo(r);
 		if(rEdificio!=null){
 			rEdificio.cantidad+=cantidad;			
+		}else{
+			recursos.add(new RecursoDAO(r, cantidad));
+		}
+	}
+	
+	/*
+	 * Le resta cantidad al recurso R
+	 * En caso de que no tenga de ese recurso, lo anyade
+	 */
+	public void removeRecursoByTipo(RECURSOS r, int cantidad){
+		RecursoDAO rEdificio=getRecursoByTipo(r);
+		if(rEdificio!=null){
+			rEdificio.cantidad-=cantidad;			
 		}else{
 			recursos.add(new RecursoDAO(r, cantidad));
 		}

@@ -5,8 +5,6 @@
  */
 package com.returnfire.client.gui.items;
 
-import java.util.List;
-
 import com.entity.modules.gui.anot.ButtonGUI;
 import com.entity.modules.gui.anot.SpriteGUI;
 import com.entity.modules.gui.anot.TextGUI;
@@ -15,8 +13,8 @@ import com.entity.modules.gui.items.Button;
 import com.entity.modules.gui.items.Sprite;
 import com.entity.modules.gui.items.Text;
 import com.returnfire.client.gui.controls.Row;
-import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.RecursoDAO;
+import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 
 /**
  *
@@ -26,21 +24,21 @@ public class RecursosRow extends Row<RecursosWindow>{
     @SpriteGUI(name="rowIco", position={10,0}, align = SpriteGUI.ALIGN.CENTER_Y)
     public Sprite recursoIco;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnAdd", position={288,10}, onLeftClick = "onBtnAdd", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnAdd", position={288,10}, onLeftClick = "onBtnAddEdificio", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/add.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
-    public Button btnAdd;
+    public Button btnAddEdificio;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnAddAll", position={357,10}, onLeftClick = "onBtnAddAll", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnAddAll", position={357,10}, onLeftClick = "onBtnAddAllEdificio", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/addAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
-    public Button btnAddAll; 
+    public Button btnAddAllEdificio; 
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnRemove", position={219,10}, onLeftClick = "onBtnAdd", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnRemove", position={219,10}, onLeftClick = "onBtnAddVehiculo", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/remove.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
-    public Button btnRemove;
+    public Button btnAddVehiculo;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnRemoveAll", position={150,10}, onLeftClick = "onBtnAddAll", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnRemoveAll", position={150,10}, onLeftClick = "onBtnAddAllVehiculo", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/removeAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
-    public Button btnRemoveAll;    
+    public Button btnAddAllVehiculo;    
     
     @TextGUI(position={80,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecVehiculo", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecVehiculo;    
@@ -48,33 +46,53 @@ public class RecursosRow extends Row<RecursosWindow>{
     public Text txtRecEdificio;    
     
 
-    private RecursoDAO rEdificio;
+    private RECURSOS tipoRecurso;
     private String recursosMaximos;
 
-    public void instance(int index, int contenedoresVehiculo, RecursoDAO rEdificio, int maxTotales, boolean mostrarRemove) {
+    public void instance(int index, RECURSOS tipoRecurso, int contenedoresVehiculo, int cantidadEdificio, int maxTotales) {
         super.instance(index); 
-        this.rEdificio=rEdificio;
+        this.tipoRecurso=tipoRecurso;
 
-        recursoIco.setImage("Interface/icons/"+rEdificio.tipo.name()+".png", true);
+        recursoIco.setImage("Interface/icons/"+tipoRecurso.name()+".png", true);
         recursosMaximos="/"+maxTotales;
 
-        btnRemoveAll.setEnabled(mostrarRemove);
-        btnRemove.setEnabled(mostrarRemove);
         
-        setText(contenedoresVehiculo, rEdificio.cantidad);
+        
+        setText(contenedoresVehiculo, cantidadEdificio);
+    }
+    
+    public void puedeAlmacenar(boolean vehiculoPuedeAlmacenar, boolean edificioPuedeAlmacenar){
+    	btnAddAllVehiculo.setEnabled(vehiculoPuedeAlmacenar);
+        btnAddVehiculo.setEnabled(vehiculoPuedeAlmacenar);
+        btnAddEdificio.setEnabled(edificioPuedeAlmacenar);
+        btnAddAllEdificio.setEnabled(edificioPuedeAlmacenar);
     }
 
     
-    public boolean onBtnAdd(Sprite btn, ClickEvent event)throws Exception{		
+    public boolean onBtnAddEdificio(Sprite btn, ClickEvent event)throws Exception{		
         if(event.value)
-            getParentModel().onAdd(false, this);
+            getParentModel().onAddToEdificio(false, this);
 
         return true;
     }
     
-    public boolean onBtnAddAll(Sprite btn, ClickEvent event)throws Exception{		
+    public boolean onBtnAddAllEdificio(Sprite btn, ClickEvent event)throws Exception{		
         if(event.value)
-            getParentModel().onAdd(true, this);
+            getParentModel().onAddToEdificio(true, this);
+
+        return true;
+    }
+    
+    public boolean onBtnAddVehiculo(Sprite btn, ClickEvent event)throws Exception{		
+        if(event.value)
+            getParentModel().onAddToVehiculo(false, this);
+
+        return true;
+    }
+    
+    public boolean onBtnAddAllVehiculo(Sprite btn, ClickEvent event)throws Exception{		
+        if(event.value)
+            getParentModel().onAddToVehiculo(true, this);
 
         return true;
     }
@@ -83,14 +101,17 @@ public class RecursosRow extends Row<RecursosWindow>{
     public void setText(int contenedoresVehiculo, int recursosEdificio){
     	setText(String.valueOf(contenedoresVehiculo), String.valueOf(recursosEdificio));
     }
-    
-    public RecursoDAO getRecursoEdificio(){
-    	return rEdificio;
-    }
 
  
     public void setText(String contenedoresVehiculo, String recursosEdificio){
     	txtRecVehiculo.setText(contenedoresVehiculo);
     	txtRecEdificio.setText(recursosEdificio+recursosMaximos);
     }
+
+
+	public RECURSOS getTipoRecurso() {
+		return tipoRecurso;
+	}
+    
+    
 }

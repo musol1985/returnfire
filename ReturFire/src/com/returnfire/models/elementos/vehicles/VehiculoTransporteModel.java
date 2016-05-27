@@ -68,7 +68,9 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     public void cogeContenedor(ContenedorModel<ContenedorDAO> contenedor, CeldaModel celda)throws Exception{
     	int size=getDao().getContenedoresSize();
     	if(dao.addContenedor(contenedor.getDAO())){
-            celda.removeContenedor(contenedor, true);    		
+    		if(contenedor.getParent()!=null)
+    			celda.removeContenedor(contenedor, true);
+    		
             contenedor.attachToParent(this);
             colocarContenedor(contenedor, size);
     	}else{
