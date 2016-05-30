@@ -189,7 +189,7 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 	 public int addRecursoToVehiculo(CeldaDAO celda, EdificioAlmacenDAO daoEdificio, VehiculoTransporteDAO daoVehiculo, RECURSOS tipoRecurso, boolean all){
 	     int cantidadPuedeAlmacenar=daoVehiculo.getMaxSlots()-daoVehiculo.getContenedoresSize();
 	     
-	     if(cantidadPuedeAlmacenar>0){
+	     if(cantidadPuedeAlmacenar>0 && daoEdificio.getCantidadRecursoByTipo(tipoRecurso)>0){
 	    	 int cantidadQueSeAlmacenara=1;
 	    	 
 	    	 if(all)
