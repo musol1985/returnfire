@@ -70,8 +70,9 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
     	if(dao.addContenedor(contenedor.getDAO())){
     		if(contenedor.getParent()!=null)
     			celda.removeContenedor(contenedor, true);
-    		
+            
             contenedor.attachToParent(this);
+            contenedor.getBody().setEnabled(false);
             colocarContenedor(contenedor, size);
     	}else{
     		throw new Exception("No se ha podido a�adir el contenedor "+contenedor.getDAO().getId());

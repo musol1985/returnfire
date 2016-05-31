@@ -24,25 +24,25 @@ public class RecursosRow extends Row<RecursosWindow>{
     @SpriteGUI(name="rowIco", position={10,0}, align = SpriteGUI.ALIGN.CENTER_Y)
     public Sprite recursoIco;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnAdd", position={288,10}, onLeftClick = "onBtnAddEdificio", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnAdd", position={238,10}, onLeftClick = "onBtnAddEdificio", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/add.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
     public Button btnAddEdificio;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnAddAll", position={357,10}, onLeftClick = "onBtnAddAllEdificio", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnAddAll", position={307,10}, onLeftClick = "onBtnAddAllEdificio", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/addAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
     public Button btnAddAllEdificio; 
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnRemove", position={219,10}, onLeftClick = "onBtnAddVehiculo", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnRemove", position={169,10}, onLeftClick = "onBtnAddVehiculo", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/remove.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
     public Button btnAddVehiculo;
     
-    @ButtonGUI(sprite=@SpriteGUI(name="btnRemoveAll", position={150,10}, onLeftClick = "onBtnAddAllVehiculo", align = SpriteGUI.ALIGN.CENTER_Y),
+    @ButtonGUI(sprite=@SpriteGUI(name="btnRemoveAll", position={100,10}, onLeftClick = "onBtnAddAllVehiculo", align = SpriteGUI.ALIGN.CENTER_Y),
 			icon="Interface/removeAll.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
     public Button btnAddAllVehiculo;    
     
-    @TextGUI(position={80,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecVehiculo", align = SpriteGUI.ALIGN.CENTER_Y)
+    @TextGUI(position={60,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecVehiculo", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecVehiculo;    
-    @TextGUI(position={426,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecEdificio", align = SpriteGUI.ALIGN.CENTER_Y)
+    @TextGUI(position={376,10 }, font="Interface/fonts/Texto34.fnt", name="txtRecEdificio", align = SpriteGUI.ALIGN.CENTER_Y)
     public Text txtRecEdificio;    
     
 
@@ -56,8 +56,6 @@ public class RecursosRow extends Row<RecursosWindow>{
         recursoIco.setImage("Interface/icons/"+tipoRecurso.name()+".png", true);
         recursosMaximos="/"+maxTotales;
 
-        
-        
         setText(contenedoresVehiculo, cantidadEdificio);
     }
     

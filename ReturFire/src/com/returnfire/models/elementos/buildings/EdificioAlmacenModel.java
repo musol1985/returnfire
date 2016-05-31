@@ -15,6 +15,7 @@ import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
+import com.returnfire.dao.elementos.buildings.EdificioExtractorDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
@@ -77,14 +78,14 @@ public abstract class EdificioAlmacenModel<T extends EdificioAlmacenDAO, N exten
 
             for(RecursoDAO rEdificio:getDAO().getRecursosAlmacenados()){
             	RECURSOS tipo=rEdificio.getTipo();
-            	window.addRow(tipo, vDao.getCantidadContenedorByTipoRecurso(tipo), getDAO().getCantidadRecursoByTipo(tipo), getDAO().getCantidadMaximaQuePuedeAlmacenar(tipo), true, true);
+            	window.addRow(tipo, vDao.getCantidadContenedorByTipoRecurso(tipo), getDAO().getCantidadRecursoByTipo(tipo), getDAO().getCantidadMaximaQuePuedeAlmacenar(tipo), true, !(getDAO() instanceof EdificioExtractorDAO));
             }
             
             for(Entry<RECURSOS, List<ContenedorDAO>> cVehiculo:vDao.getContenedores().entrySet()){
             	RECURSOS tipo=cVehiculo.getKey();
             	
             	if(!getDAO().hasRecurso(tipo)){
-            		window.addRow(tipo, cVehiculo.getValue().size(), 0, getDAO().getCantidadMaximaQuePuedeAlmacenar(tipo), true, getDAO().puedeAlmacenar(tipo));
+                    window.addRow(tipo, cVehiculo.getValue().size(), 0, getDAO().getCantidadMaximaQuePuedeAlmacenar(tipo), true, getDAO().puedeAlmacenar(tipo) && !(getDAO() instanceof EdificioExtractorDAO));
             	}            	
             }
         }

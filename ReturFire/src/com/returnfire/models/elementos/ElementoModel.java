@@ -49,7 +49,9 @@ public abstract class ElementoModel<T extends ElementoDAO, B extends BatchModel,
         return (MundoModel)((IWorldInGameScene)EntityManager.getCurrentScene()).getWorld();
     }
     
-    
+    public P getBody(){
+        return body;
+    }
     
      @Override
 	public void onPreInject(IBuilder builder, Object[] params) throws Exception {
