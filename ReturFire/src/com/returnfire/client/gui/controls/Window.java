@@ -47,7 +47,7 @@ public class Window<R extends Row> extends Sprite2Patch{
     
     public void addRow(String rowId, R row){
         try{
-            row.setHeight(head.getHeight());
+            row.setHeight(HEIGHT);
             row.attachToParent(this);
             row.setWidth(head.getWidth());
             row.setPosition(0, head.getHeight()+row.getHeight()*rows.size());

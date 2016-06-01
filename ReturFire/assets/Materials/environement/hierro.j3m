@@ -1,0 +1,17 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Repeat Textures/environement/iron/iron_diffuse.tga
+        NormalMap : Repeat Textures/environement/iron/iron_normal.tga
+        UseMaterialColors : true
+        UseVertexColor : false
+        Shininess : 15.0
+        SteepParallax : false
+        EnvMapAsSphereMap : false
+        HardwareShadows : false
+        VertexLighting : false
+        Diffuse : 1.0 1.0 1.0 1.0
+        Specular : 0.6 0.6 0.6 1.0
+     }
+    AdditionalRenderState {
+    }
+}

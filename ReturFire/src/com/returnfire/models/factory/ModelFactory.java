@@ -13,10 +13,12 @@ import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO;
 import com.returnfire.dao.elementos.buildings.ExtensionDAO.EXTENSIONES;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorHierroDAO;
 import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
+import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.models.elementos.EstaticoModel;
@@ -26,6 +28,7 @@ import com.returnfire.models.elementos.buildings.ext.PiezasExt;
 import com.returnfire.models.elementos.buildings.ext.VacioExt;
 import com.returnfire.models.elementos.buildings.impl.BaseTierraPequeModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
+import com.returnfire.models.elementos.buildings.impl.ExtractorHierroModel;
 import com.returnfire.models.elementos.buildings.impl.ExtractorPetroleoModel;
 import com.returnfire.models.elementos.buildings.impl.MolinoEolicoModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
@@ -34,6 +37,7 @@ import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.elementos.environment.BrownRock1;
 import com.returnfire.models.elementos.environment.BrownRock2;
 import com.returnfire.models.elementos.environment.BrownRock3;
+import com.returnfire.models.elementos.environment.RecursoHierroModel;
 import com.returnfire.models.elementos.environment.RecursoPetroleoModel;
 
 /**
@@ -106,6 +110,14 @@ public class ModelFactory extends BaseService{
     }
     
     @Instance(attachTo = "")
+    public ExtractorHierroModel crearExtractorHierro(ExtractorHierroModel base, ExtractorHierroDAO dao){
+        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
+        base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
+        base.rotate(0, dao.getAng(), 0);
+        return base;
+    }
+    
+    @Instance(attachTo = "")
     public ExtractorPetroleoModel crearExtractorPetroleo(ExtractorPetroleoModel base, ExtractorPetroleoDAO dao){
         //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
         base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
@@ -115,6 +127,13 @@ public class ModelFactory extends BaseService{
     
     @Instance(attachTo = "")
     public RecursoPetroleoModel crearRecursoPetroleo(RecursoPetroleoModel model, RecursoPetroleoDAO  dao){
+    	model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
+        model.rotate(0, dao.getAng(), 0);
+        return model;
+    } 
+    
+    @Instance(attachTo = "")
+    public RecursoHierroModel crearRecursoHierro(RecursoHierroModel model, RecursoHierroDAO  dao){
     	model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
         model.rotate(0, dao.getAng(), 0);
         return model;
