@@ -34,7 +34,7 @@ import com.returnfire.msg.MsgSyncRecursos;
  *
  * @author Edu
  */
-public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extends VehiculoModel<T, VehiculoTransporteDAO>{	
+public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody, D extends VehiculoTransporteDAO> extends VehiculoModel<T, D>{	
     
     private IAlmacenable edificio;
     
@@ -105,7 +105,7 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody> extend
    }
    
    @Override
-	public void onAccion() {
+	public void onAccion(boolean valor) {
 		new MsgDisparar(BALAS.NORMAL, player.getDao().getId()).send();
 	}
     

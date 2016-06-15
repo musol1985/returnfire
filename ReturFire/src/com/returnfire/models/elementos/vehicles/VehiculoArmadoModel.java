@@ -34,7 +34,7 @@ public abstract class VehiculoArmadoModel<T extends PhysicsRigidBody> extends Ve
 
 
 	@Override
-	public void onAccion() {
+	public void onAccion(boolean valor) {
 		new MsgDisparar(BALAS.NORMAL, player.getDao().getId()).send();
 	}
 

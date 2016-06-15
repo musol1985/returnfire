@@ -152,7 +152,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
 		return player;
 	}
     
-    public abstract void onAccion();
+    public abstract void onAccion(boolean valor);
     
     public boolean isArmado(){
     	return this instanceof VehiculoArmadoModel;
