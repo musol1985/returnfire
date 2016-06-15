@@ -26,5 +26,8 @@ public abstract class ContenedorModel<T extends ContenedorDAO> extends ElementoM
     }
     
 
-
+    @Override
+    public Class getBodyType(){
+        return RigidBodyControl.class;
+    }
 }

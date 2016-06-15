@@ -11,6 +11,7 @@ import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 public class MsgVehiculoRecolectaRecurso extends BaseNetMessage {
     public long vehiculoId;
     public RECURSOS tipoRecurso;
+    public CellId cellId;
 	
 	public MsgVehiculoRecolectaRecurso() {
 		
@@ -18,9 +19,10 @@ public class MsgVehiculoRecolectaRecurso extends BaseNetMessage {
 	
 	
 
-	public MsgVehiculoRecolectaRecurso(long vehiculoId,RECURSOS tipoRecurso) {
+	public MsgVehiculoRecolectaRecurso(CellId cellId, long vehiculoId,RECURSOS tipoRecurso) {
 		this.vehiculoId = vehiculoId;
 		this.tipoRecurso = tipoRecurso;
+                this.cellId=cellId;
 	}
 
 	public long getVehiculoId() {

@@ -22,4 +22,8 @@ public class BrownRock1 extends EstaticoModel<RockDAO, RigidBodyControl>{
         return true;
     }
 
+    @Override
+    public Class getBodyType(){
+        return RigidBodyControl.class;
+    }
 }

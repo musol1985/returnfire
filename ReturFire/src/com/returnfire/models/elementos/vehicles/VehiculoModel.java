@@ -78,25 +78,29 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onLeft(boolean value){
     	if(isVehicleControl()){
+            if(puedeMoverse()){
 	       	 if (value) {
 	                steeringValue += .5f;
 	            } else {
 	                steeringValue += -.5f;
 	            }
 	       	getVehicleControl().steer(steeringValue);
-	   	}else{
-	   		throw new RuntimeException("No vehicle control onLeft!!");
-	   	}
+            }
+        }else{
+                throw new RuntimeException("No vehicle control onLeft!!");
+        }
     }
     
     public void onRight(boolean value){
         if(isVehicleControl()){
+            if(puedeMoverse()){
         	 if (value) {
-                 steeringValue += -.5f;
-             } else {
-                 steeringValue += .5f;
-             }
-        	getVehicleControl().steer(steeringValue);
+                    steeringValue += -.5f;
+                } else {
+                    steeringValue += .5f;
+                }
+                getVehicleControl().steer(steeringValue);
+            }
     	}else{
     		throw new RuntimeException("No vehicle control onRight!!");
     	}
@@ -104,12 +108,14 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onAccelerate(boolean value){
         if(isVehicleControl()){
+            if(puedeMoverse()){
         	if (value) {
-                accelerationValue += getAccelerationForce();
-            } else {
-                accelerationValue -= getAccelerationForce();
+                    accelerationValue += getAccelerationForce();
+                } else {
+                    accelerationValue -= getAccelerationForce();
+                }
+                getVehicleControl().accelerate(accelerationValue);
             }
-        	getVehicleControl().accelerate(accelerationValue);
     	}else{
     		throw new RuntimeException("No vehicle control onAccelerate!!");
     	}
@@ -117,11 +123,13 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onBrake(boolean value){
     	if(isVehicleControl()){
+            if(puedeMoverse()){
 	        if (value) {
 	        	getVehicleControl().brake(getBrakeForce());
 	        } else {
 	        	getVehicleControl().brake(0f);
 	        }
+            }
     	}else{
     		throw new RuntimeException("No vehicle control onbrake!!");
     	}
@@ -161,10 +169,18 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     public boolean isTransporte(){
     	return this instanceof VehiculoTransporteModel;
     }
+    
+    public boolean isRecolector(){
+        return this instanceof VehiculoRecolectorModel;
+    }
 
 	public D getDao() {
 		return dao;
 	}
     
+    public boolean puedeMoverse(){
+        return true;
+    }
+
     
 }

@@ -51,7 +51,7 @@ public class CeldaDAO extends NetWorldCellDAO{
                         }
                     } 
                 }
-                
+                estaticos.add(RecursoNaturalDAO.getNew(RecursoHierroDAO.class, new Vector3f(0,HeightService.MAX_HEIGHT-10,0), 0));
                 edificios=new ArrayList<EdificioDAO>();
                 contenedores=new ArrayList<ContenedorDAO>();
             }

@@ -11,6 +11,7 @@ import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.objects.PhysicsRigidBody;
 import com.jme3.math.Vector3f;
 import com.returnfire.GameContext;
 import com.returnfire.controllers.DynamicController;
@@ -73,5 +74,11 @@ public class ArbolModel extends EstaticoModel<ArbolDAO, RigidBodyControl>{
             coco.caer();
             coco=null;
         }
+    }
+    
+        
+    @Override
+    public Class getBodyType(){
+        return RigidBodyControl.class;
     }
 }

@@ -11,6 +11,7 @@ import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
 import com.returnfire.msg.MsgRecursoToVehiculo;
 import com.returnfire.msg.MsgSyncRecursos;
+import com.returnfire.msg.MsgVehiculoRecolectaRecurso;
 import com.returnfire.msg.sync.Posicion;
 import com.returnfire.server.scenes.InGame;
 
@@ -61,5 +62,13 @@ public class InGameServerListener extends InGameServerMessageListener<InGame> {
         public void syncRecursos(MsgSyncRecursos msg, HostedConnection cnn)throws Exception{
                EdificioAlmacenDAO edificio=getEntity().getService().syncRecursos(msg);
                cnn.send(new MsgOnSyncRecursos(msg.cellId, edificio));
+        }
+        
+        public void onVehiculoRecolectaRecurso(MsgVehiculoRecolectaRecurso msg, HostedConnection cnn)throws Exception{
+            try{
+                getEntity().getService().onVehiculoRecolectaRecurso(msg);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
 }

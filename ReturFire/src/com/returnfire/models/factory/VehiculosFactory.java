@@ -10,11 +10,13 @@ import com.entity.core.items.BaseService;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
 import com.returnfire.dao.elementos.vehiculos.impl.HammerDAO;
+import com.returnfire.dao.elementos.vehiculos.impl.RecolectorDAO;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
 import com.returnfire.models.elementos.vehicles.impl.CamionModel;
 import com.returnfire.models.elementos.vehicles.impl.HammerModel;
 import com.returnfire.models.elementos.vehicles.impl.HammerModelRemote;
+import com.returnfire.models.elementos.vehicles.impl.RecolectorModel;
 
 /**
  *
@@ -27,6 +29,8 @@ public class VehiculosFactory extends BaseService{
 			return crearHammer(jugador, dao);
 		}else if(dao instanceof CamionDAO){
                     return crearCamionLocal(null, jugador, dao);
+                }else if(dao instanceof RecolectorDAO){
+                    return crearRecolectorLocal(null, jugador, dao);
                 }
 		return null;
 	}
@@ -34,6 +38,11 @@ public class VehiculosFactory extends BaseService{
     @Instance(attachTo = "")
     public CamionModel crearCamionLocal(CamionModel camion, JugadorModel jugador, VehiculoDAO dao){
         return camion;
+    }
+    
+    @Instance(attachTo = "")
+    public RecolectorModel crearRecolectorLocal(RecolectorModel v, JugadorModel jugador, VehiculoDAO dao){
+        return v;
     }
  
     public VehiculoModel crearHammer(JugadorModel jugador, VehiculoDAO dao){

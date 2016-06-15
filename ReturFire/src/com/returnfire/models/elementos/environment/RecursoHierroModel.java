@@ -6,10 +6,9 @@ import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
-import com.returnfire.models.elementos.EstaticoModel;
 
 @ModelEntity(asset = "Models/environment/recurso_hierro.j3o")
-public class RecursoHierroModel extends EstaticoModel<RecursoHierroDAO, GhostControl>{
+public class RecursoHierroModel extends RecursoNaturalModel<RecursoHierroDAO, GhostControl>{
 
 
     
@@ -23,4 +22,5 @@ public class RecursoHierroModel extends EstaticoModel<RecursoHierroDAO, GhostCon
     public boolean onEliminar(Vector3f vel) {   
         return false;
     }
+    
 }

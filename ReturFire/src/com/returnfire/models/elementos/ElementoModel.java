@@ -28,11 +28,13 @@ public abstract class ElementoModel<T extends ElementoDAO, B extends BatchModel,
     protected T dao;
     
 
-    @PhysicsBodyComponent
+    @PhysicsBodyComponent(typeMethod = "getBodyType")
     @CustomCollisionShape(methodName = "getColisionShape")
     public P body;
     
     public abstract CollisionShape getColisionShape();
+    
+    public abstract Class getBodyType();
 
     public void setDao(T dao) {
         this.dao = dao;

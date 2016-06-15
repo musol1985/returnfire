@@ -11,6 +11,7 @@ import com.returnfire.msg.MsgOnEdificioConstruido;
 import com.returnfire.msg.MsgOnRecursoToVehiculo;
 import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgOnVehiculoRecolecta;
 
 
 public class InGameClientListener extends InGameClientMessageListener<InGame> {
@@ -45,6 +46,10 @@ public class InGameClientListener extends InGameClientMessageListener<InGame> {
         
         public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
             getEntity().getService().onContenedorEdificio(msg);		            
+        }
+        
+        public void onVehiculoRecolecta(MsgOnVehiculoRecolecta msg)throws Exception{
+            getEntity().getService().onVehiculoRecolecta(msg);		            
         }
         
         public void onSyncRecursos(MsgOnSyncRecursos msg)throws Exception{

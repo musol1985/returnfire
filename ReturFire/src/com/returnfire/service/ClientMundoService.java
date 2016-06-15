@@ -27,6 +27,7 @@ import com.returnfire.models.elementos.buildings.nodos.BuildNode;
 import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.VehiculoRecolectorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgOnBalaEstatico;
@@ -37,6 +38,7 @@ import com.returnfire.msg.MsgOnEdificioConstruido;
 import com.returnfire.msg.MsgOnRecursoToVehiculo;
 import com.returnfire.msg.MsgOnSyncRecursos;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgOnVehiculoRecolecta;
 import com.returnfire.msg.MsgRecursoToVehiculo;
 
 public class ClientMundoService extends ClientNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
@@ -230,6 +232,23 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
         }
     }
     
+    @RunOnGLThread
+    public void onVehiculoRecolecta(MsgOnVehiculoRecolecta msg)throws Exception{
+        CeldaModel celda=getCellById(msg.cellId.id);
+		
+        VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+        if(v==null)
+            throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+		
+        if(!v.isRecolector())
+            throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un recolector y no puede recolectar!");
+        
+        VehiculoRecolectorModel vr=(VehiculoRecolectorModel)v;
+
+        ContenedorModel c=getWorld().getFactory().modelFactory.crearContenedor(msg.contenedor);
+
+        vr.cogeContenedor(c, celda);
+    }       
 
     @RunOnGLThread
     public void onRecursoToVehiculo(MsgOnRecursoToVehiculo msg)throws Exception{

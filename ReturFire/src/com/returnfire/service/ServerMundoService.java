@@ -25,6 +25,7 @@ import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
+import com.returnfire.dao.elementos.vehiculos.impl.RecolectorDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
 import com.returnfire.models.MundoModel;
@@ -35,6 +36,7 @@ import com.returnfire.models.elementos.bullets.BulletModel;
 import com.returnfire.models.elementos.bullets.BulletModel.BALAS;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoModel;
+import com.returnfire.models.elementos.vehicles.VehiculoRecolectorModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 import com.returnfire.msg.MsgBuild;
 import com.returnfire.msg.MsgErrOnBuilt;
@@ -44,8 +46,10 @@ import com.returnfire.msg.MsgOnDisparar;
 import com.returnfire.msg.MsgOnEdificioConstruido;
 import com.returnfire.msg.MsgOnRecursoToVehiculo;
 import com.returnfire.msg.MsgOnVehiculoCogeContenedor;
+import com.returnfire.msg.MsgOnVehiculoRecolecta;
 import com.returnfire.msg.MsgRecursoToVehiculo;
 import com.returnfire.msg.MsgSyncRecursos;
+import com.returnfire.msg.MsgVehiculoRecolectaRecurso;
 
 public class ServerMundoService extends ServerNetWorldService<MundoModel, JugadorModel, CeldaModel, MundoDAO, JugadorDAO, CeldaDAO>{
         private Random rnd;
@@ -84,7 +88,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		//We put the players near
 		for(JugadorDAO j:world.getDao().getPlayers().values()){
 			j.setPosition(posInicial.clone());
-			VehiculoDAO vehiculoInicial=VehiculoDAO.getNew(CamionDAO.class, posInicial, 0);
+			VehiculoDAO vehiculoInicial=VehiculoDAO.getNew(RecolectorDAO.class, posInicial, 0);
                                                 
 			BaseTierraDAO base=new BaseTierraDAO(j, VehiculoDAO.getVacio());
             base.addExtension(new ExtensionDAO("zonaA", ExtensionDAO.EXTENSIONES.PIEZAS));
@@ -234,6 +238,25 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 			//TODO send mensaje de error
 		}
 	}
+        
+    public void onVehiculoRecolectaRecurso(MsgVehiculoRecolectaRecurso msg)throws Exception{
+        CeldaModel celda=getCellById(msg.cellId.id);
+        
+        VehiculoModel v=(VehiculoModel) getWorld().getVehiculos().getVehiculo(msg.vehiculoId);
+        if(v==null)
+            throw new Exception("Vehiculo con id: "+msg.vehiculoId+" no ecnotrnado");
+		
+        if(!v.isRecolector())
+            throw new Exception("El vehiculo con id: "+msg.vehiculoId+" no es un recolector y no puede recolectar!");
+        
+        VehiculoRecolectorModel vr=(VehiculoRecolectorModel)v;
+        
+        ContenedorDAO cDAO=ContenedorDAO.getNew(msg.tipoRecurso);
+        ContenedorModel c=getWorld().getFactory().modelFactory.crearContenedor(cDAO);
+        vr.cogeContenedor(c, celda);
+        
+        new MsgOnVehiculoRecolecta(msg.cellId, msg.vehiculoId, cDAO).send();
+    }
 	
     public void onContenedorEdificio(MsgOnContenedorEdificio msg)throws Exception{
 		CeldaModel celda=getCellById(msg.cellId.id);

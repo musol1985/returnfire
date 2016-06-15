@@ -21,4 +21,9 @@ public class BrownRock3 extends EstaticoModel<RockDAO, RigidBodyControl>{
     public boolean onEliminar(Vector3f vel) {
         return true;
     }
+    
+    @Override
+    public Class getBodyType(){
+        return RigidBodyControl.class;
+    }
 }

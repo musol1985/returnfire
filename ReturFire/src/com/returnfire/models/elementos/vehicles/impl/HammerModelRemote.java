@@ -30,7 +30,7 @@ public class HammerModelRemote extends VehiculoArmadoModel<RigidBodyControl>{
 	}
 
 	@Override
-	public void onAccion() {
+	public void onAccion(boolean value) {
 		
 	}
 

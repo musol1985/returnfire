@@ -8,20 +8,23 @@ package com.returnfire.models.elementos.vehicles;
 import com.entity.anot.OnCollision;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
+import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.environment.RecursoNaturalDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoRecolectorDAO;
 import com.returnfire.models.elementos.environment.RecursoNaturalModel;
+import com.returnfire.msg.MsgVehiculoRecolectaRecurso;
 
 /**
  *
  * @author Edu
  */
 public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D extends VehiculoRecolectorDAO> extends VehiculoTransporteModel<T, D>{	
-	private long tRecoleccion;
+	private long tRecoleccion=0l;
 	private RecursoNaturalModel<RecursoNaturalDAO, GhostControl> recursoNatural;
 	
     @OnCollision(includeSubClass=true)
     public void onColisionConRecursoNatural(RecursoNaturalModel recursoNatural)throws Exception{
+        System.out.println("ieeeeee");
      	if(this.recursoNatural!=recursoNatural){
      		this.recursoNatural=recursoNatural;
      	}
@@ -56,7 +59,8 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	}
 	
 	public void onRecolectar(){
-		onIniRecolectar();
+            new MsgVehiculoRecolectaRecurso(recursoNatural.getCelda().dao.getId(), dao.getIdLong(), recursoNatural.getDAO().getTipoRecurso()).send();
+            onIniRecolectar();
 	}
 	
 	  public void onUpdate(float tpf)throws Exception{
@@ -70,4 +74,9 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 			   }
 		   }      
 	   }
+        
+    @Override
+    public boolean puedeMoverse(){
+        return tRecoleccion==0l;
+    }
 }
