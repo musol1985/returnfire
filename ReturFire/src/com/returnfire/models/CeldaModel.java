@@ -35,10 +35,11 @@ import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorHierroDAO;
 import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
-import com.returnfire.dao.elementos.contenedores.BarrilDAO;
 import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
+import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.map.MapEntry;
@@ -47,7 +48,6 @@ import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
-import com.returnfire.models.elementos.environment.RecursoPetroleoModel;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
 	public static final int CELL_SIZE=256;   
@@ -289,6 +289,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             model=getMundo().getFactory().modelFactory.crearMolinoEolico(null, (MolinoEolicoDAO)dao);  
         }else if(dao instanceof ExtractorPetroleoDAO){
             model=getMundo().getFactory().modelFactory.crearExtractorPetroleo(null, (ExtractorPetroleoDAO)dao);  
+        }else if(dao instanceof ExtractorHierroDAO){
+            model=getMundo().getFactory().modelFactory.crearExtractorHierro(null, (ExtractorHierroDAO)dao);  
         }
         
         edificios.attachEntity(model);
@@ -340,8 +342,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             model=getMundo().getFactory().modelFactory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);   
         }else if(estaticoDAO instanceof RecursoPetroleoDAO){
             model=getMundo().getFactory().modelFactory.crearRecursoPetroleo(null, (RecursoPetroleoDAO)estaticoDAO);   
+        }else if(estaticoDAO instanceof RecursoHierroDAO){
+            model=getMundo().getFactory().modelFactory.crearRecursoHierro(null, (RecursoHierroDAO)estaticoDAO);   
         }
-        System.out.println("....."+estaticoDAO);
         estaticos.attachEntity(model);
         
         estaticos.getNode().setShadowMode(shadowMode.Cast);

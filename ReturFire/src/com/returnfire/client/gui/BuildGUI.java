@@ -16,6 +16,7 @@ import com.returnfire.GameContext;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
+import com.returnfire.models.elementos.buildings.nodos.ExtractorHierroNode;
 import com.returnfire.models.elementos.buildings.nodos.ExtractorPetroleoNode;
 import com.returnfire.models.elementos.buildings.nodos.MolinoEolicoNode;
 
@@ -41,6 +42,10 @@ public class BuildGUI extends Screen{
         @ButtonGUI(sprite=@SpriteGUI(name="btnEP", onLeftClick="clickExtractorPetroleo", position={310,300}, attach=false),
 			icon="Interface/icons/extractor.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnExtractorPetroleo;
+        
+        @ButtonGUI(sprite=@SpriteGUI(name="btnEP", onLeftClick="clickExtractorHierro", position={379,300}, attach=false),
+			icon="Interface/icons/extractorHierro.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+	public Button btnExtractorHierro;
 
 	public void build(Class<? extends BuildNode> node)throws Exception{
 		GameContext.getMundo().buildDrag.setEdificio(node);
@@ -49,6 +54,7 @@ public class BuildGUI extends Screen{
 		btnBaseTierra.dettach();
 		btnMolinoEolico.dettach();
                 btnExtractorPetroleo.dettach();
+                btnExtractorHierro.dettach();
 	}		
 	
 	public boolean clickBaseTierra(Sprite btn, ClickEvent event)throws Exception{		
@@ -71,12 +77,20 @@ public class BuildGUI extends Screen{
 
 		return true;
 	}
+        
+        public boolean clickExtractorHierro(Sprite btn, ClickEvent event)throws Exception{		
+		if(event.value)
+			build(ExtractorHierroNode.class);
+
+		return true;
+	}
 	
 	public boolean clickRecursos(Sprite btn, ClickEvent event)throws Exception{
 		if(event.value){
 			btnBaseTierra.attachToParent(this);
 			btnMolinoEolico.attachToParent(this);
                         btnExtractorPetroleo.attachToParent(this);
+                        btnExtractorHierro.attachToParent(this);
 		}
 			
 		return true;

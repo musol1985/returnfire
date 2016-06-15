@@ -28,12 +28,14 @@ import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
  * @author Edu
  */
 public class RecursosWindow extends Window<RecursosRow> implements ICameraUpdate{
+    public static final int WIDTH=460;
+    
     private IAlmacenable edificio;
     private VehiculoTransporteModel vehiculo;
     
     public static RecursosWindow getNewWindow(Vector3f pos, IAlmacenable edificio, VehiculoTransporteModel v){
         RecursosWindow window=(RecursosWindow)EntityManager.instanceGeneric(RecursosWindow.class);
-        window.instance("recursosWindow", pos);        
+        window.instance("recursosWindow", pos, WIDTH);        
         window.edificio=edificio;
         window.vehiculo=v;
         ((InGame)EntityManager.getCurrentScene()).addCamUpdate(window);        

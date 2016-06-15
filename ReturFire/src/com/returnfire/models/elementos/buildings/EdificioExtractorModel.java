@@ -14,6 +14,10 @@ public abstract class EdificioExtractorModel<T extends EdificioExtractorDAO, N e
 			getDAO().producir();
 			
 			t=System.currentTimeMillis();
+                        
+                        if(getWindow()!=null){
+                            getWindow().actualizar();
+                        }
 		}
 	}
 	

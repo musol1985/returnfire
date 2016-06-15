@@ -7,7 +7,7 @@ import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 
 @Serializable
 public abstract class EdificioExtractorDAO extends EdificioAlmacenDAO{
-	public static int VELOCIDAD_EXTRACCION=30000;
+	public static int VELOCIDAD_EXTRACCION=1000;//30000;
 	
 	public abstract RECURSOS recursoProducido();
 	public abstract int getVelocidadProduccion();

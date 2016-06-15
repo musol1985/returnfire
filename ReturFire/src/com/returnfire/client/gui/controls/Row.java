@@ -15,7 +15,7 @@ import com.entity.modules.gui.items.Sprite2Patch;
 public class Row<W extends Window> extends Sprite2Patch<W>{
  
     public void instance(int index){
-        super.instance("windowRow"+index, "Interface/windowRow.png", ALIGN.NONE, 10);
+        super.instance("windowRow"+index, "Interface/winRow.png", ALIGN.NONE, 10);
     }
     
 }

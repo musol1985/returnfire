@@ -14,6 +14,7 @@ import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
+import com.returnfire.dao.elementos.buildings.EdificioExtractorDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.JugadorModel;
@@ -145,8 +146,8 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 	}
     
     /**
-	    * Envia al servidor que tiene que añadir ese recurso
-	    * Se comprueba que se pueda añadir ese recurso
+	    * Envia al servidor que tiene que aï¿½adir ese recurso
+	    * Se comprueba que se pueda aï¿½adir ese recurso
 	    * 
 	    * @param edificio
 	    * @param recurso
@@ -155,6 +156,9 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
 	    */
     public int addRecursoToEdificio(CeldaDAO celda, EdificioAlmacenDAO daoEdificio, VehiculoTransporteDAO daoVehiculo, RECURSOS tipoRecurso, boolean all){
         List<Long> contenedoresToAdd=new ArrayList<Long>();
+        
+        if(daoEdificio instanceof EdificioExtractorDAO)
+            return 0;
         
         boolean seguir=true;
         Iterator<ContenedorDAO> it=daoVehiculo.getContenedoresByTipoRecurso(tipoRecurso).iterator();
@@ -178,8 +182,8 @@ public class ClientMundoService extends ClientNetWorldService<MundoModel, Jugado
     }
     
     /**
-	    * Envia al servidor que tiene que añadir ese recurso
-	    * Se comprueba que se pueda añadir ese recurso
+	    * Envia al servidor que tiene que aï¿½adir ese recurso
+	    * Se comprueba que se pueda aï¿½adir ese recurso
 	    * 
 	    * @param edificio
 	    * @param recurso
