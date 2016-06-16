@@ -68,14 +68,19 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     
     
     private List<List<MapEntry>> map;
+
+    @Override
+    public int getCELL_SIZE() {
+        return CELL_SIZE;
+    }
+    
+    
     
     @Override
     public void onInstance(IBuilder builder, Object[] params)throws Exception {
         super.onInstance(builder, params); //To change body of generated methods, choose Tools | Templates.
-        
-       //initMap();
-        
-       terrain.move(CELL_SIZE/2, -10, CELL_SIZE/2);
+
+       terrainBody.setPhysicsLocation(localToWorld(new Vector3f(CELL_SIZE/2,-10,CELL_SIZE/2)));
 
        if(getMundo().dao.isLowerRightCorner(dao.getId())){
            terrain.rotate(0,FastMath.PI,0);
@@ -254,6 +259,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             this.dao.addContenedor(dao);
         
         ContenedorModel model=getMundo().getFactory().modelFactory.crearContenedor(dao);
+        model.setLocation(dao.getPos(), this);
         
         estaticos.attachEntity(model);
         
@@ -282,6 +288,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         if(addDAO)
             this.dao.getEdificios().add(dao);
         
+        Vector3f position=dao.getPos();
         EdificioModel model=null;
         if(dao instanceof BaseTierraDAO){
             model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
@@ -292,6 +299,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         }else if(dao instanceof ExtractorHierroDAO){
             model=getMundo().getFactory().modelFactory.crearExtractorHierro(null, (ExtractorHierroDAO)dao);  
         }
+        model.setLocation(position, this);
         
         edificios.attachEntity(model);
         
@@ -315,6 +323,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             this.dao.getEdificios().add(dao);
         
         ConstruyendoModel model=getMundo().getFactory().modelFactory.crearConstruyendo(null, dao);
+        model.setLocation(dao.getPos(), this);
         
         edificios.attachEntity(model);
         
@@ -335,16 +344,20 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     public EstaticoModel addEstatico(EstaticoDAO estaticoDAO, boolean batch)throws Exception{
     	EstaticoModel model=null;
     	
-    	
+    	Vector3f position=estaticoDAO.getPos();
         if(estaticoDAO instanceof RockDAO){                    
-            model=getMundo().getFactory().modelFactory.crearRoca((RockDAO)estaticoDAO, dao);                    
+            model=getMundo().getFactory().modelFactory.crearRoca((RockDAO)estaticoDAO);                    
         }else if(estaticoDAO instanceof ArbolDAO){
-            model=getMundo().getFactory().modelFactory.crearArbol(null, (ArbolDAO)estaticoDAO, dao);   
+            model=getMundo().getFactory().modelFactory.crearArbol(null, (ArbolDAO)estaticoDAO);   
+            position=position.add(0, 5, 0);
         }else if(estaticoDAO instanceof RecursoPetroleoDAO){
             model=getMundo().getFactory().modelFactory.crearRecursoPetroleo(null, (RecursoPetroleoDAO)estaticoDAO);   
         }else if(estaticoDAO instanceof RecursoHierroDAO){
             model=getMundo().getFactory().modelFactory.crearRecursoHierro(null, (RecursoHierroDAO)estaticoDAO);   
         }
+        
+        model.setLocation(position, this);
+        
         estaticos.attachEntity(model);
         
         estaticos.getNode().setShadowMode(shadowMode.Cast);

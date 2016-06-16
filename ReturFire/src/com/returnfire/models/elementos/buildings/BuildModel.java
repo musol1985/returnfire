@@ -50,6 +50,9 @@ public class BuildModel extends Model implements IDraggable{
             edificioMat=edificio.getMaterials();
             
             setEdificioMaterial(dragMat);
+            
+            ghost.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+            ghost.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
 
             ghost.setCollisionShape(edificio.getCollisionShape());
             edificio.addControl(ghost);

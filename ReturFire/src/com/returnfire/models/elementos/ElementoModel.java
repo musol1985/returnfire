@@ -14,6 +14,7 @@ import com.entity.core.items.Model;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.returnfire.dao.elementos.ElementoDAO;
 import com.returnfire.models.CeldaModel;
@@ -65,6 +66,15 @@ public abstract class ElementoModel<T extends ElementoDAO, B extends BatchModel,
         super.onInstance(builder, params); 
 
          setName(dao.getId());
+    }
+    
+    public void setLocation(Vector3f p, CeldaModel c ){
+        //setLocalTranslation();
+        if(body instanceof RigidBodyControl){            
+            ((RigidBodyControl)body).setPhysicsLocation(c.localToWorld(p));
+        }else{
+            setLocalTranslation(p);
+        }
     }
      
      

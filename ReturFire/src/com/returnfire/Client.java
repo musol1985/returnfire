@@ -28,7 +28,7 @@ import com.simsilica.lemur.GuiGlobals;
 @Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos",
     "com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync","com.returnfire.msg"},
         gameName="ReturnFire", version=1, worldService = ClientMundoService.class)
-@Physics(debug = false, active = false)
+@Physics(debug = true, active = false)
 @GUI
 @Executor
 public class Client  extends EntityGame{

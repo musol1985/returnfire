@@ -24,7 +24,6 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	
     @OnCollision(includeSubClass=true)
     public void onColisionConRecursoNatural(RecursoNaturalModel recursoNatural)throws Exception{
-        System.out.println("ieeeeee");
      	if(this.recursoNatural!=recursoNatural){
      		this.recursoNatural=recursoNatural;
      	}
@@ -64,7 +63,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	}
 	
 	  public void onUpdate(float tpf)throws Exception{
-		   if(this.recursoNatural!=null){
+		   if(this.recursoNatural!=null && tRecoleccion>0){                       
 			   if(recursoNatural.isVehiculoEncima(this)){
 				   if(System.currentTimeMillis()-tRecoleccion>dao.getVelocidadRecoleccion(recursoNatural.getDAO().getTipoRecurso())*1000){
 					   onRecolectar();

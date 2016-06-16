@@ -46,96 +46,71 @@ import com.returnfire.models.elementos.environment.RecursoPetroleoModel;
  */
 public class ModelFactory extends BaseService{
     @Instance(attachTo = "")
-    public ArbolModel crearArbol(ArbolModel arbol, ArbolDAO dao, CeldaDAO celda){
-        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        arbol.move(dao.getPos().add(0, 5, 0));//.add(realPos.x,0,realPos.y));
-        arbol.rotate(0, dao.getAng(), 0);
+    public ArbolModel crearArbol(ArbolModel arbol, ArbolDAO dao){
         return arbol;
     } 
     
     
-    public EstaticoModel crearRoca(RockDAO dao, CeldaDAO celda){
+    public EstaticoModel crearRoca(RockDAO dao){
         EstaticoModel model=null;
         if(dao.getSubTipo()==RockDAO.ROCK_TYPE.BROWN_1){
-            model= crearRockBrown1(null, dao, celda);
+            model= crearRockBrown1(null, dao);
         }else if(dao.getSubTipo()==RockDAO.ROCK_TYPE.BROWN_2){
-            model= crearRockBrown2(null, dao, celda);
+            model= crearRockBrown2(null, dao);
         }else{ //if(dao.getTipo()==RockDAO.ROCK_TYPE.BROWN_3){
-            model= crearRockBrown3(null, dao, celda);
+            model= crearRockBrown3(null, dao);
         }
-        
-        model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        model.rotate(0, dao.getAng(), 0);
         
         return model;
     }
     
     @Instance(attachTo = "")
-    public BrownRock1 crearRockBrown1(BrownRock1 rock, RockDAO dao, CeldaDAO celda){
+    public BrownRock1 crearRockBrown1(BrownRock1 rock, RockDAO dao){
         return rock;
     } 
     
     @Instance(attachTo = "")
-    public BrownRock2 crearRockBrown2(BrownRock2 rock, RockDAO dao, CeldaDAO celda){
+    public BrownRock2 crearRockBrown2(BrownRock2 rock, RockDAO dao){
         return rock;
     }
     
     @Instance(attachTo = "")
-    public BrownRock3 crearRockBrown3(BrownRock3 rock, RockDAO dao, CeldaDAO celda){
+    public BrownRock3 crearRockBrown3(BrownRock3 rock, RockDAO dao){
         return rock;
     } 
     
     @Instance(attachTo = "")
     public ConstruyendoModel crearConstruyendo(ConstruyendoModel model, ConstruyendoDAO dao){
-        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        model.rotate(0, dao.getAng(), 0);
         return model;
     } 
     
     @Instance(attachTo = "")
     public BaseTierraPequeModel crearBaseTierra(BaseTierraPequeModel base, EdificioVehiculosDAO dao){
-        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        base.rotate(0, dao.getAng(), 0);
         return base;
     } 
     
     @Instance(attachTo = "")
     public MolinoEolicoModel crearMolinoEolico(MolinoEolicoModel base, MolinoEolicoDAO dao){
-        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        base.rotate(0, dao.getAng(), 0);
         return base;
     }
     
     @Instance(attachTo = "")
     public ExtractorHierroModel crearExtractorHierro(ExtractorHierroModel base, ExtractorHierroDAO dao){
-        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        base.rotate(0, dao.getAng(), 0);
         return base;
     }
     
     @Instance(attachTo = "")
     public ExtractorPetroleoModel crearExtractorPetroleo(ExtractorPetroleoModel base, ExtractorPetroleoDAO dao){
-        //Vector2f realPos=celda.getId().id.mult(MundoModel.CELL_SIZE);
-        base.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        base.rotate(0, dao.getAng(), 0);
         return base;
     }
     
     @Instance(attachTo = "")
     public RecursoPetroleoModel crearRecursoPetroleo(RecursoPetroleoModel model, RecursoPetroleoDAO  dao){
-    	model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        model.rotate(0, dao.getAng(), 0);
         return model;
     } 
     
     @Instance(attachTo = "")
     public RecursoHierroModel crearRecursoHierro(RecursoHierroModel model, RecursoHierroDAO  dao){
-    	model.move(dao.getPos());//.add(realPos.x,0,realPos.y));
-        model.rotate(0, dao.getAng(), 0);
         return model;
     } 
     
@@ -180,7 +155,6 @@ public class ModelFactory extends BaseService{
     
     @Instance(attachTo = "")
     public BarrilModel crearBarril(BarrilModel model, BarrilDAO dao){
-        model.move(dao.getPos());
         return model;
     } 
 }
