@@ -16,11 +16,14 @@ import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.returnfire.GameContext;
+import com.returnfire.map.MapEntry;
+import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
-import com.returnfire.msg.MsgBuild;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -101,6 +104,14 @@ public class BuildModel extends Model implements IDraggable{
 		}else{
 			dragMat.setColor("Color", ColorRGBA.Green);
 		}
+                if(over instanceof CeldaModel){
+                    CeldaModel celda=(CeldaModel)over;
+                    float y=getWorldTranslation().y;
+                    Vector2f p=celda.getMapa().world2Map(getWorldTranslation()).mult(MapEntry.MAP_ENTRY_SIZE);
+                    Vector3f pos=celda.localToWorld(p);
+                    setLocalTranslation(pos.add(0,y,0));
+                    //edificio.setLocalTranslation(celda.dao.getId().id.x*CeldaModel.CELL_SIZE+p.x, edificio.getWorldTranslation().y, celda.dao.getId().id.z*CeldaModel.CELL_SIZE+p.y);                    
+                }
 	}
 	
 	private boolean puedeConstruirse(){

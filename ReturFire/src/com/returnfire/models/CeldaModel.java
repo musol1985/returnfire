@@ -44,6 +44,7 @@ import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.map.CeldaMap;
+import com.returnfire.map.CeldaMapDebug;
 import com.returnfire.map.MapEntry;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
@@ -52,7 +53,8 @@ import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 
 public class CeldaModel extends NetWorldCell<CeldaDAO>{
-	public static final int CELL_SIZE=256;   
+	public static final int CELL_SIZE=256;   //256
+
 	
     @TerrainComponent(LOD = true, realSize = CELL_SIZE, chunkSize = CELL_SIZE/4)
     @MaterialComponent(asset="Materials/Terrain.j3m")
@@ -69,7 +71,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     private EstaticosBatch edificios;
     
     @Service
-    private CeldaMap mapa;
+    private CeldaMapDebug mapa;
 
 
     @Override

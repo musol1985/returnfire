@@ -172,7 +172,7 @@ public class ServerMundoService extends ServerNetWorldService<MundoModel, Jugado
 		JugadorDAO jugador=world.getPlayers().get(msg.from).dao;
 		ConstruyendoDAO dao=new ConstruyendoDAO(jugador, msg.edificio, getCellLocalPosByReal(msg.pos, celda.dao));
 		
-		if(!celda.isZonaOcupada(msg.pos, dao.getSize())){
+		if(!celda.getMapa().isZonaOcupada(msg.pos, dao.getSize())){
 			celda.addConstruyendoEdificio(dao, true, true);
 			new MsgOnBuilding(dao, celda.dao.getId()).send();
 

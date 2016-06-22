@@ -1,8 +1,11 @@
 package com.returnfire.map;
 
+import static com.returnfire.models.CeldaModel.CELL_SIZE;
 import com.returnfire.models.elementos.EstaticoModel;
 
 public class MapEntry {
+        public static final int MAP_ENTRY_SIZE=4;
+        
 	protected EstaticoModel elemento;
 	
 	protected MapEntry vNorte;
