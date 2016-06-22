@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.entity.anot.Entity;
+import com.entity.anot.Service;
 import com.entity.anot.components.model.MaterialComponent;
 import com.entity.anot.components.model.PhysicsBodyComponent;
 import com.entity.anot.components.terrain.CustomHeightTerrain;
@@ -42,6 +43,7 @@ import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.dao.elementos.environment.impl.RockDAO;
+import com.returnfire.map.CeldaMap;
 import com.returnfire.map.MapEntry;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
@@ -66,8 +68,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     @Entity
     private EstaticosBatch edificios;
     
-    
-    private List<List<MapEntry>> map;
+    @Service
+    private CeldaMap mapa;
+
 
     @Override
     public int getCELL_SIZE() {
@@ -110,98 +113,13 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             edificios.batch();
         }
         
-        
+        mapa.iniciar(this);
         /*terrainBody.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
         terrainBody.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);*/
     }
     
-    private void initMap(){
-    	 map=new ArrayList<List<MapEntry>>(CELL_SIZE);
-         for(int x=0;x<CELL_SIZE;x++){
-         	List<MapEntry> mY=new ArrayList<MapEntry>(CELL_SIZE);
-         	for(int y=0;y<CELL_SIZE;y++){
-         		MapEntry me=new MapEntry();
-         		
-         		if(y>0 && x>0){
-         			me.setSur(getMapEntry(x,y-1));
-                                me.setOeste(getMapEntry(x-1,y));
-                        }
-
-         		
-         		mY.add(me);
-         	}
-         	map.add(mY);
-         }
-         
-         //Obtenemos las celdas de alrededor
-         CeldaModel cNorte=GameContext.getService().getCellFromCache(dao.getId().id.add(0, +1));
-         CeldaModel cSur=GameContext.getService().getCellFromCache(dao.getId().id.add(0, -1));
-         CeldaModel cEste=GameContext.getService().getCellFromCache(dao.getId().id.add(-1, 0));
-         CeldaModel cOeste=GameContext.getService().getCellFromCache(dao.getId().id.add(+1, 0));
-         
-         for(int i=0;i<CELL_SIZE;i++){
-        	 if(cNorte!=null)
-        		 cNorte.getMapEntry(i, 0).setSur(getMapEntry(i, CELL_SIZE-1));
-        	 if(cSur!=null)
-        		 getMapEntry(i, 0).setSur(cSur.getMapEntry(i, CELL_SIZE-1));
-        	 if(cEste!=null)
-        		 cEste.getMapEntry(CELL_SIZE-1, i).setOeste(getMapEntry(0 ,i));
-        	 if(cOeste!=null)
-        		 getMapEntry(CELL_SIZE-1, i).setOeste(cOeste.getMapEntry(0 ,i));
-         }
-    }
-    
-    public boolean isZonaOcupada(Vector3f pReal, Vector2 size)throws Exception{
-        return false;/*
-    	Vector2 pos=real2Map(pReal);
-    	
-    	MapEntry meY=getMapEntry(pos.x, pos.z);
-		MapEntry meX=meY;
-		
-    	for(int x=0;x<size.x;x++){
-    		
-    		for(int z=0;z<size.z;z++){
-    			if(meY.isOcupado())
-    				return true;    				
-    			
-    			meY=meY.getNorte();
-    		}
-    		
-    		meX=meX.getOeste();
-    		meY=meX;
-    	}
-    	return false;*/
-    }
-    
-
-    private void addToMap(EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl> e) throws Exception{
-    	Vector2 pos=real2Map(e.getLocalTranslation());
-    	
-    	MapEntry meY=getMapEntry(pos.x, pos.z);
-		MapEntry meX=meY;
-		
-    	for(int x=0;x<e.getDAO().getSize().x;x++){
-    		
-    		for(int z=0;z<e.getDAO().getSize().z;z++){
-    			if(meY.isOcupado())
-    				throw new Exception("Error, imposible ocupar con "+e+" la posicion ("+pos.x+"+"+x+","+pos.z+"+"+z+") de la celda "+dao.getId()+". Est� ocupado por "+meY.getElemento());
-    			meY.setOcupadoPor(e);
-    			
-    			meY=meY.getNorte();
-    			
-    		}
-    		
-    		meX=meX.getOeste();
-    		meY=meX;
-    	}
-    }
-    
-    public MapEntry getMapEntry(int x, int z){
-    	return map.get(x).get(z);
-    }
-    
-    public Vector2 real2Map(Vector3f pos){
-    	return new Vector2((int)pos.x/CELL_SIZE,(int)pos.z/CELL_SIZE);
+    public CeldaMap getMapa(){
+    	return mapa;
     }
     
     @CustomHeightTerrain

@@ -3,12 +3,12 @@ package com.returnfire.map;
 import com.returnfire.models.elementos.EstaticoModel;
 
 public class MapEntry {
-	private EstaticoModel elemento;
+	protected EstaticoModel elemento;
 	
-	private MapEntry vNorte;
-	private MapEntry vSur;
-	private MapEntry vEste;
-	private MapEntry vOeste;
+	protected MapEntry vNorte;
+	protected MapEntry vSur;
+	protected MapEntry vEste;
+	protected MapEntry vOeste;
 	
 	public void setOcupadoPor(EstaticoModel elemento){
 		this.elemento=elemento;
