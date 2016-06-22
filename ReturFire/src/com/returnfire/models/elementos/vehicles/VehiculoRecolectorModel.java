@@ -63,7 +63,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	}
 	
 	  public void onUpdate(float tpf)throws Exception{
-		   if(this.recursoNatural!=null && tRecoleccion>0){                       
+		   if(this.recursoNatural!=null && tRecoleccion>0l){                       
 			   if(recursoNatural.isVehiculoEncima(this)){
 				   if(System.currentTimeMillis()-tRecoleccion>dao.getVelocidadRecoleccion(recursoNatural.getDAO().getTipoRecurso())*1000){
 					   onRecolectar();
@@ -76,6 +76,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
         
     @Override
     public boolean puedeMoverse(){
+        System.out.println(tRecoleccion);
         return tRecoleccion==0l;
     }
 }

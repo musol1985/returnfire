@@ -10,6 +10,7 @@ import com.entity.network.core.listeners.LobbyClientMessageListener;
 import com.returnfire.Client;
 import com.returnfire.dao.JugadorDAO;
 import com.returnfire.service.ServerMundoService;
+import java.util.concurrent.Callable;
 
 /**
  *
@@ -29,8 +30,13 @@ public class LobbyScene extends LobbyClientScene<LobbyClientMessageListener,Serv
 
 	@Override
 	public void onStartGame() {
-		getApp().showScene(getApp().inGame);
-		
+            getApp().enqueue(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    getApp().showScene(getApp().inGame);
+                    return true;
+                }
+            });
 	}
 
     @Override
