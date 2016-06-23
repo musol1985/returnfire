@@ -1,8 +1,5 @@
 package com.returnfire.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.entity.anot.Entity;
 import com.entity.anot.Service;
 import com.entity.anot.components.model.MaterialComponent;
@@ -14,7 +11,6 @@ import com.entity.core.EntityManager;
 import com.entity.core.IBuilder;
 import com.entity.network.core.items.IWorldInGameScene;
 import com.entity.network.core.models.NetWorldCell;
-import com.entity.utils.Vector2;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.PhysicsControl;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -28,7 +24,6 @@ import com.jme3.scene.shape.Box;
 import com.jme3.terrain.Terrain;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
-import com.returnfire.GameContext;
 import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.EstaticoDAO;
@@ -45,7 +40,6 @@ import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
 import com.returnfire.dao.elementos.environment.impl.RockDAO;
 import com.returnfire.map.CeldaMap;
 import com.returnfire.map.CeldaMapDebug;
-import com.returnfire.map.MapEntry;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
@@ -95,6 +89,8 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         terrain.setShadowMode(RenderQueue.ShadowMode.Receive);
         
+        mapa.iniciar(this);
+        
         if(dao.hasEstaticos() || dao.hasContenedores()){
             for(EstaticoDAO estaticoDAO:dao.getEstaticos()){
             	addEstatico(estaticoDAO, false);
@@ -115,7 +111,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             edificios.batch();
         }
         
-        mapa.iniciar(this);
+        
         /*terrainBody.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
         terrainBody.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);*/
     }
@@ -228,7 +224,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             edificios.batch();
         }
         
-        //addToMap(model);
+        mapa.addToMap(model);
         
         return model;
     }

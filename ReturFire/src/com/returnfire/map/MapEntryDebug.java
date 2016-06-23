@@ -1,13 +1,11 @@
 package com.returnfire.map;
 
 import com.entity.core.EntityManager;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
-import com.returnfire.models.CeldaModel;
+import com.returnfire.models.elementos.EstaticoModel;
 
 public class MapEntryDebug extends MapEntry{
 	
@@ -15,7 +13,7 @@ public class MapEntryDebug extends MapEntry{
 	public static Material ROJO;
 	public static Material VERDE;
 	public static Material AZUL;
-        public static Geometry geo;
+    public static Geometry geo;
 	
 	static{
 		AMARILLO = getMaterial(ColorRGBA.Yellow);
@@ -32,7 +30,6 @@ public class MapEntryDebug extends MapEntry{
 	}
 
 	
-	
 	public Geometry caja;
 	public int x;
 	public int y;
@@ -41,16 +38,21 @@ public class MapEntryDebug extends MapEntry{
 		this.x=x;
 		this.y=y;
 	}
+	
+	public void setOcupadoPor(EstaticoModel elemento){
+		super.setOcupadoPor(elemento);
+		ocupar();
+	}
         
-        public void ocupar(){
-            if(caja==null)
-                crearCaja();
-            caja.setMaterial(ROJO);
-        }
-        
-        private void crearCaja(){
-            	caja = geo.clone();
-		caja.setMaterial(VERDE);         
-		caja.move(x*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2,30,y*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2);
-        }
+    public void ocupar(){
+        if(caja==null)
+            crearCaja();
+        caja.setMaterial(ROJO);
+    }
+    
+    private void crearCaja(){
+    	caja = geo.clone();
+    	caja.setMaterial(VERDE);         
+    	caja.move(x*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2,30,y*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2);
+    }
 }

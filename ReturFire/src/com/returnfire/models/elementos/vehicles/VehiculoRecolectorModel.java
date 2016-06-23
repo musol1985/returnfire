@@ -8,7 +8,6 @@ package com.returnfire.models.elementos.vehicles;
 import com.entity.anot.OnCollision;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
-import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.environment.RecursoNaturalDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoRecolectorDAO;
 import com.returnfire.models.elementos.environment.RecursoNaturalModel;
@@ -21,6 +20,8 @@ import com.returnfire.msg.MsgVehiculoRecolectaRecurso;
 public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D extends VehiculoRecolectorDAO> extends VehiculoTransporteModel<T, D>{	
 	private long tRecoleccion=0l;
 	private RecursoNaturalModel<RecursoNaturalDAO, GhostControl> recursoNatural;
+	
+	protected boolean gruaExtendida;
 	
     @OnCollision(includeSubClass=true)
     public void onColisionConRecursoNatural(RecursoNaturalModel recursoNatural)throws Exception{
@@ -44,8 +45,9 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	
 	public void onIniRecolectar(){
 		if(recursoNatural!=null && recursoNatural.isVehiculoEncima(this) && dao.puedeRecolectar(recursoNatural.getDAO().getTipoRecurso())){
-			if(tieneSitio()){
+			if(tieneSitio() && getVehicleControl().getCurrentVehicleSpeedKmHour()<20f){
 				tRecoleccion=System.currentTimeMillis();
+				bloquear();
 			}else{
 				//TODO mostrar icono
 			}
@@ -55,6 +57,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	public void onFinRecolectar(){
 		tRecoleccion=0;
 		recursoNatural=null;
+		desbloquear();
 	}
 	
 	public void onRecolectar(){
@@ -73,10 +76,16 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 			   }
 		   }      
 	   }
-        
-    @Override
-    public boolean puedeMoverse(){
-        System.out.println(tRecoleccion);
-        return tRecoleccion==0l;
-    }
+       
+
+		public boolean isGruaExtendida() {
+			return gruaExtendida;
+		}
+
+		public void setGruaExtendida(boolean gruaExtendida) {
+			this.gruaExtendida = gruaExtendida;
+		}
+		
+		public abstract void extenderGrua();
+		public abstract void contraerGrua();
 }

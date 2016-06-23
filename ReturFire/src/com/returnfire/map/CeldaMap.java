@@ -1,5 +1,7 @@
 package com.returnfire.map;
 
+import static com.returnfire.models.CeldaModel.CELL_SIZE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +9,8 @@ import com.entity.core.items.BaseService;
 import com.entity.utils.Vector2;
 import com.jme3.bullet.control.PhysicsControl;
 import com.jme3.math.Vector3f;
-import com.returnfire.GameContext;
 import com.returnfire.dao.elementos.EstaticoDAO;
 import com.returnfire.models.CeldaModel;
-import static com.returnfire.models.CeldaModel.CELL_SIZE;
 import com.returnfire.models.elementos.EstaticoModel;
 
 public class CeldaMap<T extends MapEntry> extends BaseService{
@@ -66,33 +66,15 @@ public class CeldaMap<T extends MapEntry> extends BaseService{
    }
    
    public boolean isZonaOcupada(Vector3f pReal, Vector2 size)throws Exception{
-       return false;/*
-   	Vector2 pos=real2Map(pReal);
-   	
-   	MapEntry meY=getMapEntry(pos.x, pos.z);
-		MapEntry meX=meY;
-		
-   	for(int x=0;x<size.x;x++){
-   		
-   		for(int z=0;z<size.z;z++){
-   			if(meY.isOcupado())
-   				return true;    				
-   			
-   			meY=meY.getNorte();
-   		}
-   		
-   		meX=meX.getOeste();
-   		meY=meX;
-   	}
-   	return false;*/
+       return false;
    }
    
 
-   private void addToMap(EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl> e) throws Exception{
-	   	Vector2 pos=real2Map(e.getLocalTranslation());
+   public void addToMap(EstaticoModel<? extends EstaticoDAO, ? extends PhysicsControl> e) throws Exception{
+	   	Vector2 pos=cell2Map(e.getLocalTranslation());
 	   	
 	   	MapEntry meY=getMapEntry(pos.x, pos.z);
-			MapEntry meX=meY;
+		MapEntry meX=meY;
 			
 	   	for(int x=0;x<e.getDAO().getSize().x;x++){
 	   		
@@ -102,7 +84,6 @@ public class CeldaMap<T extends MapEntry> extends BaseService{
 	   			meY.setOcupadoPor(e);
 	   			
 	   			meY=meY.getNorte();
-	   			
 	   		}
 	   		
 	   		meX=meX.getOeste();
@@ -114,13 +95,13 @@ public class CeldaMap<T extends MapEntry> extends BaseService{
    		return map.get(x).get(z);
    }
    
-   public Vector2 real2Map(Vector3f pos){
-        return new Vector2((int)pos.x/CeldaModel.CELL_SIZE,(int)pos.z/CeldaModel.CELL_SIZE);
-   }
-   
    public Vector2 world2Map(Vector3f world){
        world=celda.worldToLocal(world);
        return new Vector2((int)world.x/MapEntry.MAP_ENTRY_SIZE,(int)world.z/MapEntry.MAP_ENTRY_SIZE);            
         
+   }
+   
+   public Vector2 cell2Map(Vector3f world){
+       return new Vector2((int)world.x/MapEntry.MAP_ENTRY_SIZE,(int)world.z/MapEntry.MAP_ENTRY_SIZE);                
    }
 }

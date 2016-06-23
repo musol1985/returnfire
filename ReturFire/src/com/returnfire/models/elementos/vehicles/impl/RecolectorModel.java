@@ -1,14 +1,18 @@
 package com.returnfire.models.elementos.vehicles.impl;
 
+import com.entity.adapters.modifiers.ModifierRotation;
+import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.components.model.VehicleComponent;
 import com.entity.anot.components.model.WheelComponent;
 import com.entity.anot.components.model.collision.CustomCollisionShape;
 import com.entity.anot.entities.ModelEntity;
+import com.entity.utils.Utils;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CompoundCollisionShape;
 import com.jme3.bullet.control.VehicleControl;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
-import com.returnfire.dao.elementos.vehiculos.impl.CamionDAO;
+import com.jme3.scene.Node;
 import com.returnfire.dao.elementos.vehiculos.impl.RecolectorDAO;
 import com.returnfire.models.elementos.vehicles.VehiculoRecolectorModel;
 
@@ -24,6 +28,9 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 		})
 	@CustomCollisionShape(methodName="getCollisionShape")
 	public VehicleControl body;
+
+    @SubModelComponent(name = "grua")
+    public Node grua;
 
 
 	
@@ -50,5 +57,27 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 	@Override
 	public Vector3f getPosicionContenedorByCoordenadas(Vector3f coordenadas){
 		return coordenadas.multLocal(-2, 0, -2);
+	}
+
+	@Override
+	public void extenderGrua(){
+		if(!isGruaExtendida()){
+			setGruaExtendida(true);
+			clearAnims();
+			grua.addControl(new ModifierRotation(Utils.getAngles(grua), new Vector3f(FastMath.TWO_PI,0,0), 10000, null));			 
+		}
+	}
+	
+	@Override
+	public void contraerGrua(){
+		if(isGruaExtendida()){
+			setGruaExtendida(false);
+			clearAnims();
+			grua.addControl(new ModifierRotation(Utils.getAngles(grua), new Vector3f(0,0,0), 10000, null));
+		}
+	}
+	
+	private void clearAnims(){
+		grua.removeControl(ModifierRotation.class);
 	}
 }

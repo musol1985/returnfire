@@ -28,6 +28,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     protected float accelerationValue = 0;     
     protected JugadorModel player;
     protected D dao;
+    protected boolean bloquear;
 
 
     @NetSync(timeout=10)
@@ -78,7 +79,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onLeft(boolean value){
     	if(isVehicleControl()){
-            if(puedeMoverse()){
+            if(isBloqueado()){
 	       	 if (value) {
 	                steeringValue += .5f;
 	            } else {
@@ -93,7 +94,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onRight(boolean value){
         if(isVehicleControl()){
-            if(puedeMoverse()){
+            if(isBloqueado()){
         	 if (value) {
                     steeringValue += -.5f;
                 } else {
@@ -108,7 +109,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onAccelerate(boolean value){
         if(isVehicleControl()){
-            if(puedeMoverse()){
+            if(isBloqueado()){
         	if (value) {
                     accelerationValue += getAccelerationForce();
                 } else {
@@ -123,7 +124,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onBrake(boolean value){
     	if(isVehicleControl()){
-            if(puedeMoverse()){
+            if(isBloqueado()){
 	        if (value) {
 	        	getVehicleControl().brake(getBrakeForce());
 	        } else {
@@ -141,6 +142,25 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public VehicleControl getVehicleControl(){
     	return (VehicleControl)getBody();
+    }
+    
+    public void parar(){
+    	getVehicleControl().steer(-steeringValue);
+    	steeringValue=0f;
+    	getVehicleControl().brake(0f);
+    	accelerationValue=0f;
+    	getVehicleControl().setLinearVelocity(new Vector3f(0f,0f,0f));
+    }
+    
+    public void bloquear(){
+    	bloquear=true;
+    	parar();
+    	getVehicleControl().brake(100000f);
+    }
+    
+    public void desbloquear(){
+    	getVehicleControl().brake(0f);
+    	bloquear=false;
     }
     
     
@@ -178,8 +198,8 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
 		return dao;
 	}
     
-    public boolean puedeMoverse(){
-        return true;
+    public boolean isBloqueado(){
+        return bloquear;
     }
 
     

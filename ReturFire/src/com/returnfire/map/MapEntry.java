@@ -1,6 +1,5 @@
 package com.returnfire.map;
 
-import static com.returnfire.models.CeldaModel.CELL_SIZE;
 import com.returnfire.models.elementos.EstaticoModel;
 
 public class MapEntry {
