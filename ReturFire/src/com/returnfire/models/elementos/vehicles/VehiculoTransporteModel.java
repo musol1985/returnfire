@@ -155,6 +155,7 @@ public abstract class VehiculoTransporteModel<T extends PhysicsRigidBody, D exte
 			if(!existeContenedorInPosicion(coordenadas)){
 				c.getDAO().setPos(coordenadas.clone());
 				c.setLocalTranslation(contenedoresReference.getLocalTranslation().add(getPosicionContenedorByCoordenadas(coordenadas)));
+                                return ;
 			}			
 		}
 	}
