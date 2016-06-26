@@ -79,7 +79,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onLeft(boolean value){
     	if(isVehicleControl()){
-            if(isBloqueado()){
+            if(!isBloqueado()){
 	       	 if (value) {
 	                steeringValue += .5f;
 	            } else {
@@ -94,7 +94,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onRight(boolean value){
         if(isVehicleControl()){
-            if(isBloqueado()){
+            if(!isBloqueado()){
         	 if (value) {
                     steeringValue += -.5f;
                 } else {
@@ -109,7 +109,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onAccelerate(boolean value){
         if(isVehicleControl()){
-            if(isBloqueado()){
+            if(!isBloqueado()){
         	if (value) {
                     accelerationValue += getAccelerationForce();
                 } else {
@@ -124,7 +124,7 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     
     public void onBrake(boolean value){
     	if(isVehicleControl()){
-            if(isBloqueado()){
+            if(!isBloqueado()){
 	        if (value) {
 	        	getVehicleControl().brake(getBrakeForce());
 	        } else {
@@ -155,7 +155,6 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
     public void bloquear(){
     	bloquear=true;
     	parar();
-    	getVehicleControl().brake(100000f);
     }
     
     public void desbloquear(){

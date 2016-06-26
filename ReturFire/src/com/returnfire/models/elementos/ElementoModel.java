@@ -72,6 +72,7 @@ public abstract class ElementoModel<T extends ElementoDAO, B extends BatchModel,
         //setLocalTranslation();
         if(body instanceof RigidBodyControl){            
             ((RigidBodyControl)body).setPhysicsLocation(c.localToWorld(p));
+            setLocalTranslation(p);
         }else{
             setLocalTranslation(p);
         }

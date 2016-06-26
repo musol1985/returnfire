@@ -31,7 +31,7 @@ public class ExtractorPetroleoNode extends BuildNode {
 
 	@Override
 	public boolean puedeConstruirseAqui(EstaticoModel edificioColision) {
-		return edificioColision.getDAO() instanceof RecursoPetroleoDAO;
+		return edificioColision!=null && edificioColision.getDAO() instanceof RecursoPetroleoDAO;
 	}
 
 	

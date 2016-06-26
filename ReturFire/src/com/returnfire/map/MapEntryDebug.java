@@ -17,7 +17,7 @@ public class MapEntryDebug extends MapEntry{
 	
 	static{
 		AMARILLO = getMaterial(ColorRGBA.Yellow);
-		ROJO = getMaterial(ColorRGBA.Yellow);
+		ROJO = getMaterial(ColorRGBA.Red);
 		VERDE = getMaterial(ColorRGBA.Yellow);
 		AZUL = getMaterial(ColorRGBA.Yellow);		
                 geo=new Geometry("Box", new Box(MAP_ENTRY_SIZE/2-0.5f, 1, MAP_ENTRY_SIZE/2-0.5f));
@@ -45,14 +45,18 @@ public class MapEntryDebug extends MapEntry{
 	}
         
     public void ocupar(){
-        if(caja==null)
+        if(caja==null){
             crearCaja();
         caja.setMaterial(ROJO);
+        }
+                System.out.println("---->>>>>>>>>>>+"+x+","+y);
+        System.out.println("---->>>>>>>>>>>>>>>>>>>>>>>>>"+(x*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2)+","+(y*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2));
     }
     
     private void crearCaja(){
     	caja = geo.clone();
     	caja.setMaterial(VERDE);         
     	caja.move(x*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2,30,y*(MAP_ENTRY_SIZE)+MAP_ENTRY_SIZE/2);
+
     }
 }

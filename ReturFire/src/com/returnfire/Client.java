@@ -28,7 +28,7 @@ import com.simsilica.lemur.GuiGlobals;
 @Network(messagesPackage={"com.returnfire.dao","com.returnfire.dao.elementos",
     "com.returnfire.dao.elementos.estaticos","com.returnfire.msg.sync","com.returnfire.msg"},
         gameName="ReturnFire", version=1, worldService = ClientMundoService.class)
-@Physics(debug = true, active = false)
+@Physics(debug = false, active = false)
 @GUI
 @Executor
 public class Client  extends EntityGame{
@@ -51,7 +51,7 @@ public class Client  extends EntityGame{
 
     @Override
     public void simpleInitApp() {
-        GuiGlobals.initialize(this);
+        //GuiGlobals.initialize(this);
         super.simpleInitApp(); //To change body of generated methods, choose Tools | Templates.
     }
     

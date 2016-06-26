@@ -40,7 +40,7 @@ public class MolinoEolicoNode extends BuildNode {
 
 	@Override
 	public boolean puedeConstruirseAqui(EstaticoModel edificioColision) {
-		return false;
+		return true;
 	}
 
 	

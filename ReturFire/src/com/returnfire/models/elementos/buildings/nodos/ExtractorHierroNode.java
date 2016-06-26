@@ -15,7 +15,7 @@ public class ExtractorHierroNode extends BuildNode {
 
 	@Override
 	public CollisionShape getCollisionShape() {
-		return new BoxCollisionShape(new Vector3f(11,1,11));
+		return new BoxCollisionShape(new Vector3f(1,1,1));
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class ExtractorHierroNode extends BuildNode {
 
 	@Override
 	public boolean puedeConstruirseAqui(EstaticoModel edificioColision) {
-		return edificioColision.getDAO() instanceof RecursoHierroDAO;
+		return edificioColision!=null && edificioColision.getDAO() instanceof RecursoHierroDAO;
 	}
 
 	

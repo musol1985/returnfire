@@ -48,6 +48,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 			if(tieneSitio() && getVehicleControl().getCurrentVehicleSpeedKmHour()<20f){
 				tRecoleccion=System.currentTimeMillis();
 				bloquear();
+                                extenderGrua();
 			}else{
 				//TODO mostrar icono
 			}
@@ -58,6 +59,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 		tRecoleccion=0;
 		recursoNatural=null;
 		desbloquear();
+                contraerGrua();
 	}
 	
 	public void onRecolectar(){
@@ -66,6 +68,7 @@ public abstract class VehiculoRecolectorModel<T extends PhysicsRigidBody, D exte
 	}
 	
 	  public void onUpdate(float tpf)throws Exception{
+              super.onUpdate(tpf);
 		   if(this.recursoNatural!=null && tRecoleccion>0l){                       
 			   if(recursoNatural.isVehiculoEncima(this)){
 				   if(System.currentTimeMillis()-tRecoleccion>dao.getVelocidadRecoleccion(recursoNatural.getDAO().getTipoRecurso())*1000){

@@ -115,13 +115,16 @@ public class BuildModel extends Model implements IDraggable{
 	}
 	
 	private boolean puedeConstruirse(){
-		if(ghost.getOverlappingCount()>0)
+		if(ghost.getOverlappingCount()>0){
 			for(PhysicsCollisionObject obj:ghost.getOverlappingObjects()){
 				if(obj.getUserObject() instanceof EstaticoModel){
 					return edificio.puedeConstruirseAqui((EstaticoModel)obj.getUserObject());
 				}
 			}
-		return false;
+                }else{
+                    return edificio.puedeConstruirseAqui(null);
+                }
+                return false;
 	}
 
 	public BuildNode getEdificio() {

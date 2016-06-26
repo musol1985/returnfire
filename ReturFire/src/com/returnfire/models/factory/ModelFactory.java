@@ -7,7 +7,6 @@ package com.returnfire.models.factory;
 
 import com.entity.anot.Instance;
 import com.entity.core.items.BaseService;
-import com.returnfire.dao.CeldaDAO;
 import com.returnfire.dao.elementos.ContenedorDAO;
 import com.returnfire.dao.elementos.buildings.ConstruyendoDAO;
 import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
@@ -17,6 +16,7 @@ import com.returnfire.dao.elementos.buildings.impl.ExtractorHierroDAO;
 import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
 import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.dao.elementos.contenedores.BarrilDAO;
+import com.returnfire.dao.elementos.contenedores.CajaDAO;
 import com.returnfire.dao.elementos.environment.impl.ArbolDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoHierroDAO;
 import com.returnfire.dao.elementos.environment.impl.RecursoPetroleoDAO;
@@ -33,6 +33,7 @@ import com.returnfire.models.elementos.buildings.impl.ExtractorPetroleoModel;
 import com.returnfire.models.elementos.buildings.impl.MolinoEolicoModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
 import com.returnfire.models.elementos.contenedores.impl.BarrilModel;
+import com.returnfire.models.elementos.contenedores.impl.CajaModel;
 import com.returnfire.models.elementos.environment.ArbolModel;
 import com.returnfire.models.elementos.environment.BrownRock1;
 import com.returnfire.models.elementos.environment.BrownRock2;
@@ -141,12 +142,17 @@ public class ModelFactory extends BaseService{
         return model;
     } 
     
-    public ContenedorModel crearContenedor(ContenedorDAO dao){
+    public ContenedorModel crearContenedor(ContenedorDAO dao)throws Exception{
     	ContenedorModel model=null;
     	
     	if(dao instanceof BarrilDAO){
             model=crearBarril(null, (BarrilDAO)dao);   
+        }else if(dao instanceof CajaDAO){
+            model=crearCaja(null, (CajaDAO)dao);
         }
+        
+        if(model==null)
+            throw new Exception("No se ha podido crear el contenedor model para el dao: "+dao);
     	
         return model;
     }
@@ -155,6 +161,11 @@ public class ModelFactory extends BaseService{
     
     @Instance(attachTo = "")
     public BarrilModel crearBarril(BarrilModel model, BarrilDAO dao){
+        return model;
+    } 
+    
+    @Instance(attachTo = "")
+    public CajaModel crearCaja(CajaModel model, CajaDAO dao){
         return model;
     } 
 }

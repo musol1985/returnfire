@@ -17,6 +17,11 @@ public class CeldaMapDebug extends CeldaMap<MapEntryDebug>{
                 System.out.println("-+++++.............................."+batch.getChildren().size());
 	}
         
+        public void setOcuparEntry(MapEntryDebug e){
+           batch.attachChild(e.caja);
+           batch.batch(); 
+        }
+        
         public void ocupar(int x, int z){
             MapEntryDebug e=getMapEntry(x, z);
             

@@ -24,7 +24,7 @@ public class BaseTierraPequeNode extends BuildNode {
 
 	@Override
 	public boolean puedeConstruirseAqui(EstaticoModel edificioColision) {
-		return false;
+		return true;
 	}
 
 	

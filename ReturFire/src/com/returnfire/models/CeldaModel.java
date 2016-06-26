@@ -89,7 +89,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         
         terrain.setShadowMode(RenderQueue.ShadowMode.Receive);
         
-        mapa.iniciar(this);
+        //mapa.iniciar(this);
         
         if(dao.hasEstaticos() || dao.hasContenedores()){
             for(EstaticoDAO estaticoDAO:dao.getEstaticos()){
@@ -224,7 +224,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
             edificios.batch();
         }
         
-        mapa.addToMap(model);
+        //mapa.addToMap(model);
         
         return model;
     }
@@ -281,7 +281,7 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
         if(batch)
         	estaticos.batch();
         
-        //addToMap(model);
+        //mapa.addToMap(model);
         
         return  model;
     }

@@ -15,7 +15,7 @@ public class RecolectorDAO extends VehiculoRecolectorDAO{
 
     @Override
     public int getMaxSlots() {
-        return 6;
+        return 3;
     }
 
 	@Override
@@ -25,7 +25,7 @@ public class RecolectorDAO extends VehiculoRecolectorDAO{
 
 	@Override
 	public int getVelocidadRecoleccion(RECURSOS recurso) {
-		return 10;
+		return 2;
 	}
 
 }

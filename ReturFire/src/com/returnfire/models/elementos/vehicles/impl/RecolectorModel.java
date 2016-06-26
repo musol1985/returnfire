@@ -1,5 +1,6 @@
 package com.returnfire.models.elementos.vehicles.impl;
 
+import com.entity.adapters.modifiers.ModifierPosition;
 import com.entity.adapters.modifiers.ModifierRotation;
 import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.components.model.VehicleComponent;
@@ -16,7 +17,7 @@ import com.jme3.scene.Node;
 import com.returnfire.dao.elementos.vehiculos.impl.RecolectorDAO;
 import com.returnfire.models.elementos.vehicles.VehiculoRecolectorModel;
 
-@ModelEntity(asset = "Models/vehicles/camion.j3o", attach = false)
+@ModelEntity(asset = "Models/vehicles/extractor.j3o", attach = false)
 public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, RecolectorDAO>{
 
 	@VehicleComponent(mass=800.0f,
@@ -29,10 +30,10 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 	@CustomCollisionShape(methodName="getCollisionShape")
 	public VehicleControl body;
 
-    @SubModelComponent(name = "grua")
-    public Node grua;
+    @SubModelComponent(name = "extractor")
+    public Node extractor;
 
-
+    private Vector3f extractorPos;
 	
     public CompoundCollisionShape getCollisionShape() {
     	CompoundCollisionShape compoundShape = new CompoundCollisionShape();
@@ -48,15 +49,13 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 
 
 	@Override
-	public Vector3f getCoordenadasContenedorByIndex(int index) {
-		int z=(int)index/2;
-		int x=index-(z*2);
-		return new Vector3f(x,0,z);
+	public Vector3f getCoordenadasContenedorByIndex(int index) {		
+		return new Vector3f(0,0,index);
 	}
 
 	@Override
 	public Vector3f getPosicionContenedorByCoordenadas(Vector3f coordenadas){
-		return coordenadas.multLocal(-2, 0, -2);
+		return coordenadas.multLocal(0, 0, -2);
 	}
 
 	@Override
@@ -64,7 +63,8 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 		if(!isGruaExtendida()){
 			setGruaExtendida(true);
 			clearAnims();
-			grua.addControl(new ModifierRotation(Utils.getAngles(grua), new Vector3f(FastMath.TWO_PI,0,0), 10000, null));			 
+                        extractorPos=extractor.getLocalTranslation().clone();
+                        extractor.addControl(new ModifierPosition(extractor.getLocalTranslation(), extractor.getLocalTranslation().add(0, 0, -0.5f), 1000));		 
 		}
 	}
 	
@@ -73,11 +73,11 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 		if(isGruaExtendida()){
 			setGruaExtendida(false);
 			clearAnims();
-			grua.addControl(new ModifierRotation(Utils.getAngles(grua), new Vector3f(0,0,0), 10000, null));
+                        extractor.addControl(new ModifierPosition(extractor.getLocalTranslation(), extractorPos, 1000));		 
 		}
 	}
 	
 	private void clearAnims(){
-		grua.removeControl(ModifierRotation.class);
+		extractor.removeControl(ModifierPosition.class);
 	}
 }
