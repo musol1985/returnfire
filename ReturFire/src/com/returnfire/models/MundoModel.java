@@ -4,14 +4,19 @@ import com.entity.adapters.DirectionalLightShadow;
 import com.entity.anot.Entity;
 import com.entity.anot.OnUpdate;
 import com.entity.anot.Service;
+import com.entity.anot.Sky;
 import com.entity.anot.components.lights.AmbientLightComponent;
 import com.entity.anot.components.lights.DirectionalLightComponent;
 import com.entity.anot.components.shadows.DirectionalShadowComponent;
-import com.entity.anot.effects.BloomEffect;
 import com.entity.anot.effects.WaterEffect;
+import com.entity.anot.processors.WaterProcessor;
 import com.entity.network.core.models.NetWorld;
 import com.jme3.light.AmbientLight;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.post.filters.BloomFilter;
+import com.jme3.scene.Spatial;
+import com.jme3.water.SimpleWaterProcessor;
 import com.jme3.water.WaterFilter;
 import com.returnfire.GameContext;
 import com.returnfire.dao.MundoDAO;
@@ -28,12 +33,15 @@ import com.returnfire.service.PickService;
 
 
 public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{                
-        @BloomEffect(mode=BloomFilter.GlowMode.Objects, bloomIntensity = 2f, downSamplingFactor = 1, blurScale = 1.5f, exposureCutOff = 0f, exposurePower = 1.3f)
+       // @BloomEffect(mode=BloomFilter.GlowMode.Objects, bloomIntensity = 2f, downSamplingFactor = 1, blurScale = 1.5f, exposureCutOff = 0f, exposurePower = 1.3f)
         public BloomFilter bloom;
 
 
         @WaterEffect(waterHeight = 10f)
         private WaterFilter agua;
+            
+        @Sky(texture = "Textures/sky.jpg")
+        public Spatial sky;
         
         @AmbientLightComponent(color = {1,1,1,1}, mult = 1f)
         private AmbientLight ambient;
@@ -41,6 +49,9 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         @DirectionalLightComponent(color = {1,1,1,0.2f},direction = {1,-1,-0.5f})
         @DirectionalShadowComponent
         private DirectionalLightShadow sol;
+        
+        @WaterProcessor(onInit = "onInitPetroleo")
+        private SimpleWaterProcessor petroleo;
         
         @Service
         private HeightService heightService;
@@ -119,4 +130,19 @@ public class MundoModel extends NetWorld<MundoDAO, CeldaModel, JugadorModel>{
         	}
         }
     }
+    
+    public void onInitPetroleo(final SimpleWaterProcessor petroleo){    
+       petroleo.setReflectionScene(this);
+
+        petroleo.setLightPosition(sol.getDirection());
+        petroleo.setWaterColor(ColorRGBA.Red);
+        petroleo.setWaveSpeed(0.01f);
+        petroleo.setDistortionMix(0.2f);
+    }
+    
+    public Material getPetroleoMat(){
+        return petroleo.getMaterial();
+    }
+    
+    
 }

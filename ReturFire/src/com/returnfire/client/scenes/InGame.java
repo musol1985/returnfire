@@ -55,9 +55,7 @@ public class InGame extends InGameClientScene<InGameClientListener, MundoModel, 
     
     @Entity(attach=false)
     private JugadorModel player;
-    
-    @Sky(texture = "Textures/sky.jpg")
-    private Spatial sky;
+
     
     @WorldService
     private ClientMundoService service;
