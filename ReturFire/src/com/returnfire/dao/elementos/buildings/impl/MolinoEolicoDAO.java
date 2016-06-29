@@ -12,7 +12,7 @@ import com.returnfire.dao.elementos.buildings.EdificioDAO;
 
 @Serializable
 public class MolinoEolicoDAO extends EdificioDAO{
-
+	public static final String ICO="molinoEolico.png";
 	
 	
 	public MolinoEolicoDAO() {
@@ -41,5 +41,15 @@ public class MolinoEolicoDAO extends EdificioDAO{
 		recursos.add(new RecursoDAO(RECURSOS.PETROLEO, 3));
 		
 		return recursos;
+	}
+	
+	@Override
+	public String getNombre() {
+		return "Molino Eolico";
+	}
+	
+	@Override
+	public String getICO() {
+		return ICO;
 	}
 }

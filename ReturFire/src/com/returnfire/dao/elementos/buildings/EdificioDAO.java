@@ -50,6 +50,8 @@ public abstract class EdificioDAO extends EstaticoDAO{
     }
 	
 	public abstract List<RecursoDAO> getRecursosNecesarios();
+	public abstract String getNombre();
+	public abstract String getICO();
 
 	public int getNecesarioByTipo(RECURSOS tipo){
 		return getNecesarioByRecurso(getRecursoNecesarioByTipo(tipo));

@@ -2,6 +2,7 @@ package com.returnfire.models.elementos.vehicles.impl;
 
 import com.entity.adapters.modifiers.ModifierPosition;
 import com.entity.adapters.modifiers.ModifierRotation;
+import com.entity.anot.components.model.OnlyPosition;
 import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.components.model.VehicleComponent;
 import com.entity.anot.components.model.WheelComponent;
@@ -33,7 +34,15 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
     @SubModelComponent(name = "extractor")
     public Node extractor;
 
+    @SubModelComponent(name = "extractor")
+    @OnlyPosition
     private Vector3f extractorPos;
+    
+    @SubModelComponent(name = "tubo")
+    public Node tubo;
+    @SubModelComponent(name = "tubo")
+    @OnlyPosition
+    private Vector3f tuboPos;
 	
     public CompoundCollisionShape getCollisionShape() {
     	CompoundCollisionShape compoundShape = new CompoundCollisionShape();
@@ -63,8 +72,8 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 		if(!isGruaExtendida()){
 			setGruaExtendida(true);
 			clearAnims();
-                        extractorPos=extractor.getLocalTranslation().clone();
-                        extractor.addControl(new ModifierPosition(extractor.getLocalTranslation(), extractor.getLocalTranslation().add(0, 0, -0.5f), 1000));		 
+            extractor.addControl(new ModifierPosition(extractor.getLocalTranslation(), extractor.getLocalTranslation().add(0, 0, -0.5f), 1000));		 
+            tubo.addControl(new ModifierPosition(tubo.getLocalTranslation(), tubo.getLocalTranslation().add(0, -0.5f, 0), 1000));
 		}
 	}
 	
@@ -73,11 +82,12 @@ public class RecolectorModel extends VehiculoRecolectorModel<VehicleControl, Rec
 		if(isGruaExtendida()){
 			setGruaExtendida(false);
 			clearAnims();
-                        extractor.addControl(new ModifierPosition(extractor.getLocalTranslation(), extractorPos, 1000));		 
+			tubo.addControl(new ModifierPosition(tubo.getLocalTranslation(), tuboPos, 1000));		 
 		}
 	}
 	
 	private void clearAnims(){
 		extractor.removeControl(ModifierPosition.class);
+		tubo.removeControl(ModifierPosition.class);
 	}
 }

@@ -13,7 +13,7 @@ import com.returnfire.dao.elementos.buildings.EdificioExtractorDAO;
 
 @Serializable
 public class ExtractorPetroleoDAO extends EdificioExtractorDAO{
-
+	public static final String ICO="extractor.png";
 	
 	
 	public ExtractorPetroleoDAO() {
@@ -71,5 +71,15 @@ public class ExtractorPetroleoDAO extends EdificioExtractorDAO{
 	@Override
 	public int getVelocidadProduccion() {
 		return 1;
+	}
+	
+	@Override
+	public String getNombre() {
+		return "Extractor de Petroleo";
+	}
+	
+	@Override
+	public String getICO() {
+		return ICO;
 	}
 }

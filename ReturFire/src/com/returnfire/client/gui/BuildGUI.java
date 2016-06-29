@@ -13,6 +13,10 @@ import com.entity.modules.gui.items.Button;
 import com.entity.modules.gui.items.Screen;
 import com.entity.modules.gui.items.Sprite;
 import com.returnfire.GameContext;
+import com.returnfire.dao.elementos.buildings.impl.BaseTierraDAO;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorHierroDAO;
+import com.returnfire.dao.elementos.buildings.impl.ExtractorPetroleoDAO;
+import com.returnfire.dao.elementos.buildings.impl.MolinoEolicoDAO;
 import com.returnfire.models.CeldaModel;
 import com.returnfire.models.elementos.buildings.nodos.BaseTierraPequeNode;
 import com.returnfire.models.elementos.buildings.nodos.BuildNode;
@@ -32,19 +36,19 @@ public class BuildGUI extends Screen{
 	
 	
 	@ButtonGUI(sprite=@SpriteGUI(name="btnBT", onLeftClick="clickBaseTierra", position={168,300}, attach=false),
-			icon="Interface/icons/baseTierra.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+			icon="Interface/icons/"+BaseTierraDAO.ICO, imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnBaseTierra;
 	
 	@ButtonGUI(sprite=@SpriteGUI(name="btnBT", onLeftClick="clickMolinoEolico", position={236,300}, attach=false),
-			icon="Interface/icons/molinoEolico.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+			icon="Interface/icons/"+MolinoEolicoDAO.ICO, imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnMolinoEolico;
         
         @ButtonGUI(sprite=@SpriteGUI(name="btnEP", onLeftClick="clickExtractorPetroleo", position={310,300}, attach=false),
-			icon="Interface/icons/extractor.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+			icon="Interface/icons/"+ExtractorPetroleoDAO.ICO, imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnExtractorPetroleo;
         
         @ButtonGUI(sprite=@SpriteGUI(name="btnEP", onLeftClick="clickExtractorHierro", position={379,300}, attach=false),
-			icon="Interface/icons/extractorHierro.png", imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
+			icon="Interface/icons/"+ExtractorHierroDAO.ICO, imgBack="Interface/btnBack.png", imgHover="Interface/btnHover.png", imgDisabled="Interface/btnDisabled.png")
 	public Button btnExtractorHierro;
 
 	public void build(Class<? extends BuildNode> node)throws Exception{

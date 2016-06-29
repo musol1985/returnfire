@@ -126,4 +126,14 @@ public class ConstruyendoDAO extends EdificioAlmacenDAO{
 	public int getCantidadMaximaQuePuedeAlmacenar(RECURSOS tipo) {
 		return getEdificio().getNecesarioByTipo(tipo);
 	}
+
+	@Override
+	public String getNombre() {
+		return getEdificio().getNombre();
+	}
+
+	@Override
+	public String getICO() {
+		return getEdificio().getICO();
+	}
 }

@@ -1,6 +1,9 @@
 package com.returnfire.models.elementos.buildings;
 
+import com.entity.core.EntityManager;
 import com.entity.modules.gui.events.IOnLeftClick;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.returnfire.dao.elementos.buildings.EdificioDAO;
@@ -23,4 +26,6 @@ public abstract class EdificioModel<T extends EdificioDAO,  P extends PhysicsCol
     public Class getBodyType(){
         return RigidBodyControl.class;
     }
+
+
 }

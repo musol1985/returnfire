@@ -18,7 +18,7 @@ public class RecursoPetroleoModel extends RecursoNaturalModel<RecursoPetroleoDAO
     public void onInstance(IBuilder builder, Object[] params) throws Exception {
         super.onInstance(builder, params); //To change body of generated methods, choose Tools | Templates.
 
-                setMaterial(GameContext.getMundo().getPetroleoMat());
+                //setMaterial(GameContext.getMundo().getPetroleoMat());
 
         
     }

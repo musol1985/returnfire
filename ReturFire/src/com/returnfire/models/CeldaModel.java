@@ -42,6 +42,7 @@ import com.returnfire.map.CeldaMap;
 import com.returnfire.map.CeldaMapDebug;
 import com.returnfire.models.batchs.EstaticosBatch;
 import com.returnfire.models.elementos.EstaticoModel;
+import com.returnfire.models.elementos.buildings.EdificioConstruibleModel;
 import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.contenedores.ContenedorModel;
@@ -200,12 +201,12 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
      * @param dao
      * @return
      */
-    public EdificioModel addEdificio(EdificioDAO dao, boolean addDAO, boolean isNew)throws Exception{
+    public EdificioConstruibleModel addEdificio(EdificioDAO dao, boolean addDAO, boolean isNew)throws Exception{
         if(addDAO)
             this.dao.getEdificios().add(dao);
         
         Vector3f position=dao.getPos();
-        EdificioModel model=null;
+        EdificioConstruibleModel model=null;
         if(dao instanceof BaseTierraDAO){
             model=getMundo().getFactory().modelFactory.crearBaseTierra(null, (EdificioVehiculosDAO)dao);   
         }else if(dao instanceof MolinoEolicoDAO){
@@ -292,7 +293,9 @@ public class CeldaModel extends NetWorldCell<CeldaDAO>{
     
     public EdificioDAO onEdificioConstruido(ConstruyendoModel construyendo, EdificioDAO nuevoEdificio)throws Exception{
         edificios.dettachEntity(construyendo);
-        EdificioModel m=addEdificio(nuevoEdificio, true, true);
+        EdificioConstruibleModel m=addEdificio(nuevoEdificio, true, true);
+        
+        m.onConstruido();
         
         return nuevoEdificio;
     }

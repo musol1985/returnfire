@@ -22,9 +22,16 @@ public abstract class EdificioExtractorDAO extends EdificioAlmacenDAO{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public int producir(){
+	/**
+	 * Retorna true/false si ha podido producir el recurso
+	 * @return
+	 */
+	public boolean producir(){
 		RecursoDAO r=getRecursoByTipo(recursoProducido(), true);
-		r.cantidad+=getVelocidadProduccion();
-		return r.cantidad;
+		if(puedeAlmacenarMas(r.tipo)){
+			r.cantidad+=getVelocidadProduccion();
+			return true;
+		}
+		return false;
 	}
 }

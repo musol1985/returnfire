@@ -30,5 +30,7 @@ public class RecursoDAO implements java.io.Serializable{
 		this.tipo = tipo;
 	}
 	
-	
+	public String getNombre(){
+		return tipo.name();
+	}
 }

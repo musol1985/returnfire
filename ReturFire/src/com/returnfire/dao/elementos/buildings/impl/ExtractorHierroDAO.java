@@ -13,7 +13,7 @@ import com.returnfire.dao.elementos.buildings.EdificioExtractorDAO;
 
 @Serializable
 public class ExtractorHierroDAO extends EdificioExtractorDAO{
-
+	public static final String ICO="extractorHierro.png";
 	
 	
 	public ExtractorHierroDAO() {
@@ -71,5 +71,15 @@ public class ExtractorHierroDAO extends EdificioExtractorDAO{
 	@Override
 	public int getVelocidadProduccion() {
 		return 1;
+	}
+	
+	@Override
+	public String getNombre() {
+		return "Mina de Hierro";
+	}
+	
+	@Override
+	public String getICO() {
+		return ICO;
 	}
 }

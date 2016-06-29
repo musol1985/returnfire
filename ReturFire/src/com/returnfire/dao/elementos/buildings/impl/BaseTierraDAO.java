@@ -13,7 +13,7 @@ import com.returnfire.dao.elementos.buildings.EdificioVehiculosDAO;
 
 @Serializable
 public class BaseTierraDAO extends EdificioVehiculosDAO{
-
+	public static final String ICO="baseTierra.png";
 	
 	
 	public BaseTierraDAO() {
@@ -39,5 +39,15 @@ public class BaseTierraDAO extends EdificioVehiculosDAO{
 		recursos.add(new RecursoDAO(RECURSOS.PIEZAS, 5));
 		
 		return recursos;
+	}
+
+	@Override
+	public String getNombre() {
+		return "Base tierra";
+	}
+
+	@Override
+	public String getICO() {
+		return ICO;
 	}
 }

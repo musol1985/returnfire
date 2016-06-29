@@ -16,5 +16,4 @@ public class CamionDAO extends VehiculoTransporteDAO{
     public int getMaxSlots() {
         return 16;
     }
-
 }

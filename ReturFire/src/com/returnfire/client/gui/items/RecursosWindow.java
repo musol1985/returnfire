@@ -13,21 +13,20 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial;
 import com.returnfire.GameContext;
+import com.returnfire.client.gui.controls.Row;
 import com.returnfire.client.gui.controls.Window;
 import com.returnfire.client.scenes.InGame;
-import com.returnfire.dao.elementos.RecursoDAO;
 import com.returnfire.dao.elementos.RecursoDAO.RECURSOS;
 import com.returnfire.dao.elementos.buildings.EdificioAlmacenDAO;
 import com.returnfire.dao.elementos.vehiculos.VehiculoTransporteDAO;
 import com.returnfire.models.elementos.buildings.IAlmacenable;
-import com.returnfire.models.elementos.buildings.impl.ConstruyendoModel;
 import com.returnfire.models.elementos.vehicles.VehiculoTransporteModel;
 
 /**
  *
  * @author Edu
  */
-public class RecursosWindow extends Window<RecursosRow> implements ICameraUpdate{
+public class RecursosWindow extends Window<Row> implements ICameraUpdate{
     public static final int WIDTH=460;
     
     private IAlmacenable edificio;
@@ -38,6 +37,10 @@ public class RecursosWindow extends Window<RecursosRow> implements ICameraUpdate
         window.instance("recursosWindow", pos, WIDTH);        
         window.edificio=edificio;
         window.vehiculo=v;
+        
+        RecursosTituloRow titulo=(RecursosTituloRow)EntityManager.instanceGeneric(RecursosTituloRow.class);   
+        window.addRow("titulo", titulo);
+        
         ((InGame)EntityManager.getCurrentScene()).addCamUpdate(window);        
         return window;
     }
@@ -93,9 +96,12 @@ public class RecursosWindow extends Window<RecursosRow> implements ICameraUpdate
     	VehiculoTransporteDAO vt=(VehiculoTransporteDAO)vehiculo.getDao();
     	EdificioAlmacenDAO ea=(EdificioAlmacenDAO)edificio.getAlmacenDAO();
     	
-    	for(Entry<String,RecursosRow> row:rows.entrySet()){    
-    		RECURSOS tipoRecurso=row.getValue().getTipoRecurso();
-        	row.getValue().setText(vt.getCantidadContenedorByTipoRecurso(tipoRecurso), ea.getCantidadRecursoByTipo(tipoRecurso));
+    	for(Entry<String,Row> r:rows.entrySet()){    
+    		if(r.getValue() instanceof RecursosRow){
+    			RecursosRow row=(RecursosRow)r.getValue();
+    			RECURSOS tipoRecurso=row.getTipoRecurso();
+    			row.setText(vt.getCantidadContenedorByTipoRecurso(tipoRecurso), ea.getCantidadRecursoByTipo(tipoRecurso));
+    		}
     	}
 
     }

@@ -10,6 +10,7 @@ import com.entity.anot.components.model.SubModelComponent;
 import com.entity.anot.network.NetSync;
 import com.entity.core.IBuilder;
 import com.entity.core.items.NetworkModel;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.objects.PhysicsRigidBody;
@@ -17,6 +18,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.returnfire.dao.elementos.VehiculoDAO;
 import com.returnfire.models.JugadorModel;
+import com.returnfire.models.elementos.buildings.EdificioModel;
 import com.returnfire.msg.sync.Posicion;
 
 /**
@@ -201,5 +203,9 @@ public abstract class VehiculoModel<T extends PhysicsRigidBody, D extends Vehicu
         return bloquear;
     }
 
-    
+    public boolean isColisionConEdificio(EdificioModel m){
+        Vector3f extents=((BoundingBox)m.getWorldBound()).getExtent(null);
+        float radius=extents.x>extents.z?extents.x:extents.z;        
+        return m.getWorldTranslation().distance(getWorldTranslation())<radius;
+    }
 }
